@@ -8,7 +8,10 @@ CI.run do
   step "Security: Gem audit", "bin/bundler-audit"
   step "Security: Importmap vulnerability audit", "bin/importmap audit"
   step "Security: Brakeman code analysis", "bin/brakeman --quiet --no-pager --exit-on-warn --exit-on-error"
-  step "Tests: Rails", "bin/rails test"
+
+  # Request specs render layouts that reference the Tailwind build, so build it first.
+  step "Assets: Build CSS", "bin/rails tailwindcss:build"
+  step "Tests: RSpec", "bin/rspec"
   step "Tests: Seeds", "env RAILS_ENV=test bin/rails db:seed:replant"
 
   # Optional: Run system tests
