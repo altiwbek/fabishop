@@ -37,5 +37,8 @@ module MegaShop
         routing_specs: false
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
+
+    # Mailer previews live under spec/ now that the suite uses RSpec.
+    config.action_mailer.preview_paths << Rails.root.join("spec/mailers/previews").to_s
   end
 end
