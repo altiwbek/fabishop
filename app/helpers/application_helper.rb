@@ -30,9 +30,9 @@ module ApplicationHelper
 
     pagy.series(**vars).each do |item|
       html << case item
-              when Integer then anchor.call(item, classes: link)
-              when String  then %(<span class="#{current}" aria-current="page">#{pagy.label_for(item)}</span>)
-              when :gap    then %(<span class="#{disabled}">#{pagy_t("pagy.gap")}</span>)
+      when Integer then anchor.call(item, classes: link)
+      when String  then %(<span class="#{current}" aria-current="page">#{pagy.label_for(item)}</span>)
+      when :gap    then %(<span class="#{disabled}">#{pagy_t("pagy.gap")}</span>)
       end
     end
 
