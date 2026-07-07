@@ -27,5 +27,15 @@ module MegaShop
     # libvips isn't installed in this environment; use ImageMagick (mini_magick)
     # for image analysis/variants.
     config.active_storage.variant_processor = :mini_magick
+
+    # Use RSpec + FactoryBot for generated code; skip other test scaffolding.
+    config.generators do |g|
+      g.test_framework :rspec,
+        fixtures: true,
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false
+      g.fixture_replacement :factory_bot, dir: "spec/factories"
+    end
   end
 end
