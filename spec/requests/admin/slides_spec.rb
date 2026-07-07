@@ -42,12 +42,16 @@ RSpec.describe "Admin::Slides", type: :request do
         expect(response).to redirect_to(admin_slides_path)
       end
 
-      it "re-renders with invalid params" do
+      it "re-renders the form with invalid params" do
         expect {
           post admin_slides_path, params: { slide: { title: "" } }
         }.not_to change(Slide, :count)
 
         expect(response).to have_http_status(422)
+        # Assert the form actually re-rendered. A template error would raise
+        # here (request specs re-raise) and fail loudly, rather than being
+        # swallowed.
+        expect(response.body).to include("Create slide")
       end
     end
 
