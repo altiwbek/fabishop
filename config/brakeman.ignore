@@ -1,0 +1,28 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Mass Assignment",
+      "warning_code": 70,
+      "fingerprint": "32231352d7843eb8b9437397e4482b17bd70a80e2a16a287b772eae866cfcb54",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/admin/users_controller.rb",
+      "line": 57,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:user).permit(:name, :email_address, :role, :password, :password_confirmation)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::UsersController",
+        "method": "user_params"
+      },
+      "user_input": null,
+      "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
+      "note": "Intentional: Admin::UsersController is owner-only (before_action :require_owner!, except: :index). Assigning :role is the purpose of the staff-management screen, and only the store owner can reach create/update."
+    }
+  ],
+  "brakeman_version": "8.0.5"
+}
