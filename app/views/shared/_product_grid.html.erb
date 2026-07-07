@@ -1,0 +1,43 @@
+<%#
+  locals:
+    products   - the paginated products
+    pagy       - pagy object
+    sort_url   - URL the sort form submits to (GET). If nil, no sort toolbar.
+%>
+<% sort_url = local_assigns[:sort_url] %>
+
+<% if sort_url %>
+  <%= form_with url: sort_url, method: :get, data: { controller: "auto-submit" } do %>
+    <div class="toolbox">
+      <div class="toolbox-left">
+        <div class="toolbox-info">Showing <strong><%= products.size %></strong> of <strong><%= pagy.count %></strong> products</div>
+      </div>
+      <div class="toolbox-right">
+        <div class="toolbox-sort">
+          <label>Sort by:</label>
+          <div class="select-custom">
+            <%= select_tag :sort,
+                  options_for_select([["Newest","newest"],["Most Popular","popular"],["Top Rated","rating"],
+                    ["Price: Low to High","price_asc"],["Price: High to Low","price_desc"],["Name","name"]], params[:sort]),
+                  class: "form-control", data: { action: "change->auto-submit#submit" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<% if products.any? %>
+  <div class="row">
+    <% products.each do |product| %>
+      <div class="col-6 col-md-4 col-lg-3"><%= render "products/card", product: product %></div>
+    <% end %>
+  </div>
+  <%== pagy_bootstrap_nav(pagy) if pagy.pages > 1 %>
+<% else %>
+  <div class="empty-state">
+    <i class="icon-bags"></i>
+    <h3>No products here yet</h3>
+    <%= link_to "Browse all products", products_path, class: "btn btn-outline-primary-2" %>
+  </div>
+<% end %>

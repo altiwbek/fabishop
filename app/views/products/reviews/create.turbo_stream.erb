@@ -1,0 +1,14 @@
+<% if @review.persisted? %>
+  <%= turbo_stream.replace "new_review" do %>
+    <div id="new_review">
+      <div class="alert alert-success">
+        <i class="icon-check-circle mr-1"></i>
+        Thank you! Your review has been submitted and will appear once approved.
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <%= turbo_stream.replace "new_review" do %>
+    <%= render "products/reviews/form", product: @product, review: @review %>
+  <% end %>
+<% end %>

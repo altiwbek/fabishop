@@ -1,0 +1,37 @@
+<%= form_with model: [ :admin, @category ], html: { class: "max-w-2xl" } do |f| %>
+  <%= admin_form_errors(@category) %>
+  <div class="bg-white rounded-xl shadow-sm p-6 space-y-4">
+    <div>
+      <%= f.label :name, class: label_classes %>
+      <%= f.text_field :name, class: input_classes %>
+    </div>
+    <div>
+      <%= f.label :parent_id, "Parent category (optional)", class: label_classes %>
+      <%= f.collection_select :parent_id, Category.where.not(id: @category.id).ordered, :id, :name, { include_blank: "None (top level)" }, class: input_classes %>
+    </div>
+    <div>
+      <%= f.label :description, class: label_classes %>
+      <%= f.text_area :description, rows: 3, class: input_classes %>
+    </div>
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <%= f.label :position, class: label_classes %>
+        <%= f.number_field :position, class: input_classes %>
+      </div>
+      <label class="flex items-center gap-2 text-sm text-gray-700 mt-7">
+        <%= f.check_box :featured, class: "rounded border-gray-300 text-indigo-600" %> Featured on homepage
+      </label>
+    </div>
+    <div>
+      <%= f.label :image, "Category image", class: label_classes %>
+      <% if @category.image.attached? %>
+        <%= image_tag url_for(@category.image), class: "w-24 h-24 object-cover rounded mb-2" %>
+      <% end %>
+      <%= f.file_field :image, accept: "image/*", class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-700" %>
+    </div>
+  </div>
+  <div class="mt-6 flex gap-3">
+    <%= f.submit(@category.persisted? ? "Save" : "Create", class: btn_primary) %>
+    <%= link_to "Cancel", admin_categories_path, class: btn_secondary %>
+  </div>
+<% end %>

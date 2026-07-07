@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content_for(:title).presence || "MegaShop — Electronics & Lifestyle Store" %></title>
+  <meta name="description" content="<%= content_for(:description).presence || "MegaShop online store — cameras, watches, smartphones and more." %>">
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <link rel="stylesheet" href="/molla/assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+  <link rel="stylesheet" href="/molla/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/molla/assets/css/plugins/owl-carousel/owl.carousel.css">
+  <link rel="stylesheet" href="/molla/assets/css/plugins/magnific-popup/magnific-popup.css">
+  <link rel="stylesheet" href="/molla/assets/css/plugins/jquery.countdown.css">
+  <link rel="stylesheet" href="/molla/assets/css/style.css">
+  <link rel="stylesheet" href="/molla/assets/css/skins/skin-demo-3.css">
+  <link rel="stylesheet" href="/molla/assets/css/demos/demo-3.css">
+  <%= stylesheet_link_tag "storefront", "data-turbo-track": "reload" %>
+
+  <%= javascript_importmap_tags %>
+</head>
+
+<body data-turbo="false">
+  <div class="page-wrapper">
+    <%= render "layouts/storefront/header" %>
+
+    <main class="main">
+      <div id="flash-container"><%= render "layouts/storefront/flash" %></div>
+      <%= yield %>
+    </main>
+
+    <%= render "layouts/storefront/footer" %>
+  </div>
+
+  <button id="scroll-top" title="Back to top"><i class="icon-arrow-up"></i></button>
+
+  <!-- Molla template scripts (jQuery based) -->
+  <script src="/molla/assets/js/jquery.min.js"></script>
+  <script src="/molla/assets/js/bootstrap.bundle.min.js"></script>
+  <script src="/molla/assets/js/jquery.hoverIntent.min.js"></script>
+  <script src="/molla/assets/js/jquery.waypoints.min.js"></script>
+  <script src="/molla/assets/js/superfish.min.js"></script>
+  <script src="/molla/assets/js/owl.carousel.min.js"></script>
+  <script src="/molla/assets/js/bootstrap-input-spinner.js"></script>
+  <script src="/molla/assets/js/jquery.plugin.min.js"></script>
+  <script src="/molla/assets/js/jquery.magnific-popup.min.js"></script>
+  <script src="/molla/assets/js/jquery.countdown.min.js"></script>
+  <script src="/molla/assets/js/jquery.elevateZoom.min.js"></script>
+  <script src="/molla/assets/js/main.js"></script>
+</body>
+</html>

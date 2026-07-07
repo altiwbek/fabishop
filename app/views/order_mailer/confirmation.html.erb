@@ -1,0 +1,61 @@
+<div style="max-width:600px;margin:0 auto;font-family:Arial,Helvetica,sans-serif;color:#333;">
+  <div style="background:#222;padding:24px;text-align:center;">
+    <span style="font-size:26px;font-weight:bold;color:#fff;">MegaShop<span style="color:#08c;">.</span></span>
+  </div>
+
+  <div style="padding:32px 28px;background:#fff;">
+    <h1 style="font-size:22px;margin:0 0 8px;">Thanks for your order, <%= @order.first_name.presence || "friend" %>! 🎉</h1>
+    <p style="color:#666;line-height:1.6;margin:0 0 24px;">
+      We've received your order and it's now being processed. Your order number is
+      <strong><%= @order.number %></strong>.
+    </p>
+
+    <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
+      <thead>
+        <tr style="text-align:left;border-bottom:2px solid #eee;">
+          <th style="padding:8px 0;font-size:13px;color:#999;">Item</th>
+          <th style="padding:8px 0;font-size:13px;color:#999;text-align:center;">Qty</th>
+          <th style="padding:8px 0;font-size:13px;color:#999;text-align:right;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.order_items.each do |item| %>
+          <tr style="border-bottom:1px solid #f2f2f2;">
+            <td style="padding:12px 0;font-size:14px;"><%= item.product_name %></td>
+            <td style="padding:12px 0;font-size:14px;text-align:center;"><%= item.quantity %></td>
+            <td style="padding:12px 0;font-size:14px;text-align:right;"><%= number_to_currency item.line_total %></td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="2" style="padding:8px 0;text-align:right;color:#666;">Subtotal</td><td style="text-align:right;"><%= number_to_currency @order.subtotal %></td></tr>
+        <tr><td colspan="2" style="padding:4px 0;text-align:right;color:#666;">Shipping</td><td style="text-align:right;"><%= @order.shipping.zero? ? "Free" : number_to_currency(@order.shipping) %></td></tr>
+        <tr><td colspan="2" style="padding:8px 0;text-align:right;font-weight:bold;font-size:16px;">Total</td><td style="text-align:right;font-weight:bold;font-size:16px;"><%= number_to_currency @order.total %></td></tr>
+      </tfoot>
+    </table>
+
+    <div style="background:#f7f7f7;border-radius:8px;padding:16px 20px;margin-bottom:24px;">
+      <p style="margin:0 0 4px;font-size:13px;color:#999;text-transform:uppercase;">Shipping to</p>
+      <p style="margin:0;line-height:1.5;">
+        <%= @order.customer_name %><br>
+        <%= @order.address %><br>
+        <%= [ @order.city, @order.postal_code, @order.country ].compact_blank.join(", ") %>
+      </p>
+    </div>
+
+    <div style="text-align:center;margin-bottom:16px;">
+      <a href="<%= order_url(@order) %>" style="display:inline-block;background:#08c;color:#fff;text-decoration:none;padding:12px 28px;border-radius:4px;font-weight:bold;">
+        View your order
+      </a>
+    </div>
+    <p style="color:#999;font-size:13px;text-align:center;">
+      You can also track it any time at
+      <a href="<%= track_url %>" style="color:#08c;">MegaShop.store/track</a>
+      using order <strong><%= @order.number %></strong> and your email.
+    </p>
+  </div>
+
+  <div style="padding:20px;text-align:center;color:#aaa;font-size:12px;">
+    © <%= Date.current.year %> MegaShop Store · This is a demo store, no payment was taken.
+  </div>
+</div>

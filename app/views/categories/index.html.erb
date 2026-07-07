@@ -1,0 +1,44 @@
+<% content_for :title, "Categories — MegaShop" %>
+
+<div class="page-header text-center" style="background-image: url('/molla/assets/images/page-header-bg.jpg')">
+  <div class="container">
+    <h1 class="page-title">Categories<span>Browse by type</span></h1>
+  </div>
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active">Categories</li>
+    </ol>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div class="container">
+    <div class="row">
+      <% @categories.each do |category| %>
+        <div class="col-6 col-md-4 col-lg-3">
+          <div class="product-category">
+            <%= link_to category_path(category) do %>
+              <figure class="category-media">
+                <% if category.image.attached? %>
+                  <%= image_tag url_for(category.image), alt: category.name, style: "height:220px;object-fit:cover;width:100%;" %>
+                <% else %>
+                  <div class="d-flex align-items-center justify-content-center" style="height:220px;background:#f4f4f4;">
+                    <i class="icon-category" style="font-size:5rem;color:#08c;"></i>
+                  </div>
+                <% end %>
+              </figure>
+              <div class="category-content">
+                <h3 class="category-name"><%= category.name %></h3>
+                <span><%= pluralize(category.products_count, "product") %></span>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

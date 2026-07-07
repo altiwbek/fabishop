@@ -1,0 +1,18 @@
+<article class="post post-sm mb-4">
+  <figure class="post-media rounded">
+    <%= link_to post_path(post) do %>
+      <img src="<%= post_cover_url(post) %>" alt="<%= post.title %>" style="width:100%;height:220px;object-fit:cover;">
+    <% end %>
+  </figure>
+  <div class="post-body pt-3">
+    <div class="post-date">
+      <span class="day"><%= post.published_at&.day %></span>
+      <span class="month"><%= post.published_at&.strftime("%b") %></span>
+    </div>
+    <h3 class="post-title">
+      <%= link_to post.title, post_path(post) %>
+    </h3>
+    <p class="post-content"><%= post_excerpt(post) %></p>
+    <%= link_to "Read more", post_path(post), class: "btn btn-link btn-underline" %>
+  </div>
+</article>

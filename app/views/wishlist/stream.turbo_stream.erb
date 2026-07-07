@@ -1,0 +1,13 @@
+<%= turbo_stream.replace "wishlist-indicator" do %>
+  <%= render "wishlist/indicator", wishlist: current_wishlist %>
+<% end %>
+
+<%= turbo_stream.replace "wishlist-contents" do %>
+  <%= render "wishlist/contents", wishlist: current_wishlist %>
+<% end %>
+
+<% if @toast.present? %>
+  <%= turbo_stream.append "flash-container" do %>
+    <%= render "shared/toast", message: @toast, kind: "success" %>
+  <% end %>
+<% end %>

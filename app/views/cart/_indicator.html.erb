@@ -1,0 +1,53 @@
+<div class="dropdown cart-dropdown" id="cart-indicator">
+  <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+    <div class="icon">
+      <i class="icon-shopping-cart"></i>
+      <span class="cart-count"><%= cart.total_quantity %></span>
+    </div>
+    <p>Cart</p>
+  </a>
+
+  <div class="dropdown-menu dropdown-menu-right">
+    <% if cart.empty? %>
+      <p class="text-center text-muted mb-0 py-2">Your cart is empty.</p>
+    <% else %>
+      <div class="dropdown-cart-products">
+        <% cart.line_items.each do |product, qty| %>
+          <div class="product">
+            <div class="product-cart-details">
+              <h4 class="product-title">
+                <%= link_to product.name, product_path(product) %>
+              </h4>
+              <span class="cart-product-info">
+                <span class="cart-product-qty"><%= qty %></span>
+                x <%= number_to_currency product.price %>
+              </span>
+            </div>
+            <figure class="product-image-container">
+              <%= link_to product_path(product), class: "product-image" do %>
+                <%= image_tag product_image_url(product), alt: product.name %>
+              <% end %>
+            </figure>
+            <%= button_to cart_remove_path(product.id), method: :delete,
+                  class: "btn-remove", title: "Remove Product",
+                  form: { data: { turbo: true } } do %>
+              <i class="icon-close"></i>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="dropdown-cart-total">
+        <span>Total</span>
+        <span class="cart-total-price"><%= number_to_currency cart.total_price %></span>
+      </div>
+
+      <div class="dropdown-cart-action">
+        <%= link_to "View Cart", cart_path, class: "btn btn-primary" %>
+        <%= link_to cart_path, class: "btn btn-outline-primary-2" do %>
+          <span>Checkout</span><i class="icon-long-arrow-right"></i>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

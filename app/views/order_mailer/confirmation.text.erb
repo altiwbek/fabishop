@@ -1,0 +1,23 @@
+Thanks for your order, <%= @order.first_name.presence || "friend" %>!
+
+We've received your order and it's now being processed.
+Order number: <%= @order.number %>
+
+ITEMS
+<% @order.order_items.each do |item| -%>
+- <%= item.product_name %> x<%= item.quantity %>  —  <%= number_to_currency item.line_total %>
+<% end -%>
+
+Subtotal: <%= number_to_currency @order.subtotal %>
+Shipping: <%= @order.shipping.zero? ? "Free" : number_to_currency(@order.shipping) %>
+Total:    <%= number_to_currency @order.total %>
+
+SHIPPING TO
+<%= @order.customer_name %>
+<%= @order.address %>
+<%= [ @order.city, @order.postal_code, @order.country ].compact_blank.join(", ") %>
+
+View your order: <%= order_url(@order) %>
+Track it anytime at <%= track_url %> using your order number and email.
+
+© <%= Date.current.year %> MegaShop Store — demo store, no payment was taken.

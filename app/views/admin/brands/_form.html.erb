@@ -1,0 +1,30 @@
+<%= form_with model: [ :admin, @brand ], html: { class: "max-w-2xl" } do |f| %>
+  <%= admin_form_errors(@brand) %>
+  <div class="bg-white rounded-xl shadow-sm p-6 space-y-4">
+    <div>
+      <%= f.label :name, class: label_classes %>
+      <%= f.text_field :name, class: input_classes %>
+    </div>
+    <div>
+      <%= f.label :website, class: label_classes %>
+      <%= f.url_field :website, class: input_classes, placeholder: "https://…" %>
+    </div>
+    <div>
+      <%= f.label :description, class: label_classes %>
+      <%= f.text_area :description, rows: 3, class: input_classes %>
+    </div>
+    <div>
+      <%= f.label :position, class: label_classes %>
+      <%= f.number_field :position, class: "#{input_classes} w-32" %>
+    </div>
+    <div>
+      <%= f.label :logo, class: label_classes %>
+      <% if @brand.logo.attached? %><%= image_tag url_for(@brand.logo), class: "w-24 h-24 object-contain mb-2" %><% end %>
+      <%= f.file_field :logo, accept: "image/*", class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-700" %>
+    </div>
+  </div>
+  <div class="mt-6 flex gap-3">
+    <%= f.submit(@brand.persisted? ? "Save" : "Create", class: btn_primary) %>
+    <%= link_to "Cancel", admin_brands_path, class: btn_secondary %>
+  </div>
+<% end %>

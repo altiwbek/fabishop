@@ -1,0 +1,24 @@
+<% content_for :title, "Shopping Cart — MegaShop" %>
+
+<div class="page-header text-center" style="background-image: url('/molla/assets/images/page-header-bg.jpg')">
+  <div class="container">
+    <h1 class="page-title">Shopping Cart<span>Review your items</span></h1>
+  </div>
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active" aria-current="page">Cart</li>
+    </ol>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div class="cart">
+    <div class="container">
+      <%= render "cart/contents", cart: current_cart %>
+    </div>
+  </div>
+</div>

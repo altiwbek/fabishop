@@ -1,0 +1,13 @@
+<% if products.any? %>
+  <% products.each do |product| %>
+    <%= link_to product_path(product), class: "autocomplete-item", data: { turbo: false } do %>
+      <%= image_tag product_image_url(product), alt: product.name %>
+      <span class="ac-name"><%= product.name %></span>
+      <span class="ac-price"><%= number_to_currency product.price %></span>
+    <% end %>
+  <% end %>
+  <%= link_to "See all results for “#{query}”", search_path(q: query),
+        class: "autocomplete-item justify-content-center text-primary", data: { turbo: false } %>
+<% else %>
+  <div class="autocomplete-item text-muted">No products found for “<%= query %>”.</div>
+<% end %>

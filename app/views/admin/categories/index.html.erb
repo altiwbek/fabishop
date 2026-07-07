@@ -1,0 +1,36 @@
+<div class="flex items-center justify-between mb-6">
+  <p class="text-gray-500 text-sm"><%= pluralize(@categories.size, "category") %></p>
+  <%= link_to new_admin_category_path, class: btn_primary do %><i class="las la-plus"></i> New Category<% end %>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="text-left text-gray-500 border-b border-gray-100">
+        <tr>
+          <th class="px-4 py-3">Name</th>
+          <th class="px-4 py-3">Parent</th>
+          <th class="px-4 py-3">Products</th>
+          <th class="px-4 py-3">Featured</th>
+          <th class="px-4 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <% @categories.each do |category| %>
+          <tr class="hover:bg-gray-50">
+            <td class="px-4 py-3 font-medium text-gray-900"><%= category.name %></td>
+            <td class="px-4 py-3 text-gray-600"><%= category.parent&.name || "—" %></td>
+            <td class="px-4 py-3"><%= category.products_count %></td>
+            <td class="px-4 py-3"><%= boolean_badge category.featured %></td>
+            <td class="px-4 py-3 text-right space-x-2 whitespace-nowrap">
+              <%= link_to "Edit", edit_admin_category_path(category), class: "text-indigo-600 hover:underline" %>
+              <%= button_to "Delete", admin_category_path(category), method: :delete, class: "text-red-500 hover:underline inline",
+                    form: { class: "inline", data: { turbo_confirm: "Delete #{category.name}?" } } %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <% if @categories.empty? %><div class="p-10 text-center text-gray-400">No categories yet.</div><% end %>
+</div>

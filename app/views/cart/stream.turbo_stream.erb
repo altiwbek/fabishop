@@ -1,0 +1,13 @@
+<%= turbo_stream.replace "cart-indicator" do %>
+  <%= render "cart/indicator", cart: current_cart %>
+<% end %>
+
+<%= turbo_stream.replace "cart-contents" do %>
+  <%= render "cart/contents", cart: current_cart %>
+<% end %>
+
+<% if @toast.present? %>
+  <%= turbo_stream.append "flash-container" do %>
+    <%= render "shared/toast", message: @toast, kind: "success" %>
+  <% end %>
+<% end %>

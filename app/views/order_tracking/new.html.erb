@@ -1,0 +1,42 @@
+<% content_for :title, "Track My Order — MegaShop" %>
+
+<div class="page-header text-center" style="background-image: url('/molla/assets/images/page-header-bg.jpg')">
+  <div class="container">
+    <h1 class="page-title">Track My Order<span>Check your order status</span></h1>
+  </div>
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active">Track Order</li>
+    </ol>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <p class="text-center text-muted mb-4">
+          Enter the order number from your confirmation email along with the email address you used at checkout.
+        </p>
+
+        <%= form_with url: track_path, method: :post, data: { turbo: false }, class: "card p-4 border-0 shadow-sm" do %>
+          <div class="form-group">
+            <label for="number">Order Number</label>
+            <%= text_field_tag :number, @number, class: "form-control", placeholder: "e.g. DRD-20260706-A1B2C3", required: true %>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <%= email_field_tag :email, @email, class: "form-control", placeholder: "you@example.com", required: true %>
+          </div>
+          <button type="submit" class="btn btn-outline-primary-2 btn-block">
+            <span>Track Order</span><i class="icon-long-arrow-right"></i>
+          </button>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

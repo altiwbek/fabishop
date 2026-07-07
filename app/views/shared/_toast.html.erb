@@ -1,0 +1,9 @@
+<div class="alert alert-<%= local_assigns.fetch(:kind, "success") %> alert-dismissible flash-toast text-center mb-0"
+     role="alert" data-controller="toast">
+  <div class="container">
+    <i class="icon-check-circle mr-1"></i><%= message %>
+    <button type="button" class="close" data-action="toast#dismiss" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+</div>

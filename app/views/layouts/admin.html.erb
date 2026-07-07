@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= [ @page_title, "MegaShop Admin" ].compact.join(" · ") %></title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+  <link rel="stylesheet" href="/molla/assets/vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css">
+</head>
+<body class="h-full bg-gray-100 text-gray-800 antialiased">
+  <div class="flex min-h-full" data-controller="sidebar">
+    <%= render "admin/shared/sidebar" %>
+
+    <div class="flex-1 flex flex-col lg:pl-64 min-w-0">
+      <!-- Topbar -->
+      <header class="sticky top-0 z-20 bg-white border-b border-gray-200">
+        <div class="flex items-center justify-between h-16 px-4 sm:px-6">
+          <div class="flex items-center gap-3">
+            <button class="lg:hidden text-gray-500" data-action="sidebar#toggle">
+              <i class="las la-bars text-2xl"></i>
+            </button>
+            <h1 class="text-lg font-semibold text-gray-900"><%= @page_title %></h1>
+          </div>
+          <div class="flex items-center gap-4">
+            <%= link_to root_path, target: "_blank", class: "text-sm text-gray-500 hover:text-indigo-600 flex items-center gap-1" do %>
+              <i class="las la-external-link-alt"></i> View store
+            <% end %>
+            <div class="flex items-center gap-2">
+              <span class="w-9 h-9 rounded-full bg-indigo-600 text-white grid place-items-center text-sm font-semibold">
+                <%= current_user&.initials %>
+              </span>
+              <div class="hidden sm:block leading-tight">
+                <div class="text-sm font-medium text-gray-900"><%= current_user&.display_name %></div>
+                <div class="text-xs text-gray-500 capitalize"><%= current_user&.role %></div>
+              </div>
+              <%= button_to session_path, method: :delete, class: "ml-2 text-gray-400 hover:text-red-500", title: "Sign out" do %>
+                <i class="las la-sign-out-alt text-xl"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="flex-1 p-4 sm:p-6 lg:p-8">
+        <%= render "admin/shared/flash" %>
+        <%= yield %>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

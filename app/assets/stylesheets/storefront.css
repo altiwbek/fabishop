@@ -1,0 +1,78 @@
+/* Storefront tweaks layered on top of the Molla demo-3 skin. */
+.logo-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #222;
+  line-height: 1;
+}
+.logo-text span { color: #08c; }
+
+#scroll-top {
+  position: fixed;
+  bottom: 30px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  border: none;
+  background: rgba(34, 34, 34, 0.5);
+  color: #fff;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s, visibility .3s, background .3s;
+  cursor: pointer;
+}
+#scroll-top.show { opacity: 1; visibility: visible; }
+#scroll-top:hover { background: #08c; }
+
+.live-search-results { position: relative; }
+.autocomplete-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ebebeb;
+  border-top: none;
+  z-index: 1050;
+  max-height: 420px;
+  overflow-y: auto;
+  box-shadow: 0 10px 20px rgba(0,0,0,.08);
+}
+.autocomplete-list:empty { display: none; }
+.autocomplete-item {
+  display: flex;
+  align-items: center;
+  padding: .8rem 1.2rem;
+  border-bottom: 1px solid #f2f2f2;
+  color: #333;
+}
+.autocomplete-item:hover { background: #f7f7f7; color: #08c; }
+.autocomplete-item img { width: 44px; height: 44px; object-fit: cover; margin-right: 1rem; }
+.autocomplete-item .ac-name { font-weight: 500; font-size: 1.3rem; }
+.autocomplete-item .ac-price { margin-left: auto; color: #08c; font-weight: 600; }
+
+.flash-toast { margin-bottom: 0; border-radius: 0; }
+
+.badge-pulse { animation: badgePulse .4s ease; }
+@keyframes badgePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* CSS-only star rating input (radios rendered 5..1, reversed with flex) */
+.star-rating { display: inline-flex; flex-direction: row-reverse; }
+.star-rating input { display: none; }
+.star-rating label { color: #d7d7d7; cursor: pointer; font-size: 2.2rem; padding: 0 .1rem; margin: 0; transition: color .15s; }
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label { color: #fcb941; }
+
+.review-form { max-width: 720px; }
+
+.empty-state { padding: 6rem 2rem; text-align: center; color: #999; }
+.empty-state i { font-size: 6rem; color: #e1e1e1; display: block; margin-bottom: 1.5rem; }

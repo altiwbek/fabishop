@@ -1,0 +1,48 @@
+<div class="product product-2" id="<%= dom_id(product) %>">
+  <figure class="product-media">
+    <% if product.new_arrival %>
+      <span class="product-label label-circle label-new">New</span>
+    <% elsif product.on_sale? %>
+      <span class="product-label label-circle label-sale">-<%= product.discount_percent %>%</span>
+    <% end %>
+
+    <%= link_to product_path(product) do %>
+      <%= image_tag product_image_url(product), class: "product-image", alt: product.name %>
+      <% if product_has_second_image?(product) %>
+        <%= image_tag product_image_url(product, index: 1), class: "product-image-hover", alt: product.name %>
+      <% end %>
+    <% end %>
+
+    <div class="product-action-vertical">
+      <%= button_to wishlist_toggle_path(product.id), method: :post,
+            class: "btn-product-icon btn-wishlist btn-expandable #{'added' if current_wishlist.include?(product)}",
+            title: "Add to wishlist", form: { data: { turbo: true } } do %>
+        <span>add to wishlist</span>
+      <% end %>
+    </div>
+
+    <div class="product-action product-action-dark">
+      <% if product.in_stock? %>
+        <%= button_to cart_add_path(product.id), method: :post,
+              class: "btn-product btn-cart", title: "Add to cart",
+              form: { data: { turbo: true }, class: "d-inline" } do %>
+          <span>add to cart</span>
+        <% end %>
+      <% else %>
+        <span class="btn-product btn-cart disabled" style="opacity:.6;cursor:not-allowed;"><span>out of stock</span></span>
+      <% end %>
+      <%= link_to product_path(product), class: "btn-product btn-quickview", title: "View product" do %>
+        <span>view</span>
+      <% end %>
+    </div>
+  </figure>
+
+  <div class="product-body">
+    <div class="product-cat">
+      <%= link_to product.category.name, category_path(product.category) %>
+    </div>
+    <h3 class="product-title"><%= link_to product.name, product_path(product) %></h3>
+    <%= price_tag(product) %>
+    <%= star_rating(product.rating, product.reviews_count) %>
+  </div>
+</div>

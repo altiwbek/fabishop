@@ -1,0 +1,37 @@
+<div class="flex items-center justify-between mb-6">
+  <p class="text-gray-500 text-sm"><%= pluralize(@brands.size, "brand") %></p>
+  <%= link_to new_admin_brand_path, class: btn_primary do %><i class="las la-plus"></i> New Brand<% end %>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm overflow-hidden">
+  <table class="w-full text-sm">
+    <thead class="text-left text-gray-500 border-b border-gray-100">
+      <tr>
+        <th class="px-4 py-3">Brand</th>
+        <th class="px-4 py-3">Website</th>
+        <th class="px-4 py-3">Products</th>
+        <th class="px-4 py-3"></th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-100">
+      <% @brands.each do |brand| %>
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-3">
+            <div class="flex items-center gap-3">
+              <% if brand.logo.attached? %><%= image_tag url_for(brand.logo), class: "w-8 h-8 object-contain" %><% end %>
+              <span class="font-medium text-gray-900"><%= brand.name %></span>
+            </div>
+          </td>
+          <td class="px-4 py-3 text-gray-500"><%= brand.website.presence || "—" %></td>
+          <td class="px-4 py-3"><%= brand.products_count %></td>
+          <td class="px-4 py-3 text-right space-x-2 whitespace-nowrap">
+            <%= link_to "Edit", edit_admin_brand_path(brand), class: "text-indigo-600 hover:underline" %>
+            <%= button_to "Delete", admin_brand_path(brand), method: :delete, class: "text-red-500 hover:underline inline",
+                  form: { class: "inline", data: { turbo_confirm: "Delete #{brand.name}?" } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% if @brands.empty? %><div class="p-10 text-center text-gray-400">No brands yet.</div><% end %>
+</div>

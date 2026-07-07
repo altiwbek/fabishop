@@ -1,0 +1,95 @@
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+  <div class="flex flex-wrap gap-2">
+    <% [["all","All"],["published","Published"],["draft","Drafts"],["low_stock","Low stock"]].each do |key, label| %>
+      <% active = (params[:status].presence || "all") == key %>
+      <%= link_to label, admin_products_path(status: (key == "all" ? nil : key), q: params[:q]),
+            class: "px-3 py-1.5 rounded-lg text-sm font-medium #{active ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}" %>
+    <% end %>
+  </div>
+  <div class="flex gap-2">
+    <%= form_with url: admin_products_path, method: :get, class: "flex gap-2" do %>
+      <%= hidden_field_tag :status, params[:status] %>
+      <%= search_field_tag :q, params[:q], placeholder: "Search products…", class: "#{input_classes} w-56" %>
+      <button class="<%= btn_secondary %>"><i class="las la-search"></i></button>
+    <% end %>
+    <%= link_to new_admin_product_path, class: btn_primary do %>
+      <i class="las la-plus"></i> New Product
+    <% end %>
+  </div>
+</div>
+
+<%= form_with url: bulk_admin_products_path, method: :patch, data: { controller: "bulk-select" } do %>
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+    <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-100 bg-gray-50">
+      <label class="flex items-center gap-2 text-sm text-gray-600">
+        <input type="checkbox" data-action="bulk-select#toggleAll" data-bulk-select-target="all" class="rounded border-gray-300 text-indigo-600">
+        Select all
+      </label>
+      <div class="flex items-center gap-2 ml-auto">
+        <%= select_tag :bulk_action, options_for_select([["Bulk actions",""],["Publish","publish"],["Unpublish","unpublish"],["Mark featured","feature"],["Delete","delete"]]),
+              class: "#{input_classes} w-auto py-1.5" %>
+        <button class="<%= btn_secondary %>" data-action="bulk-select#confirm">Apply</button>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead class="text-left text-gray-500 border-b border-gray-100">
+          <tr>
+            <th class="px-4 py-3 w-8"></th>
+            <th class="px-4 py-3">Product</th>
+            <th class="px-4 py-3">Category</th>
+            <th class="px-4 py-3">Price</th>
+            <th class="px-4 py-3">Stock</th>
+            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <% @products.each do |product| %>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3">
+                <%= check_box_tag "product_ids[]", product.id, false, data: { bulk_select_target: "item" }, class: "rounded border-gray-300 text-indigo-600" %>
+              </td>
+              <td class="px-4 py-3">
+                <div class="flex items-center gap-3">
+                  <img src="<%= product_image_url(product) %>" class="w-10 h-10 rounded object-cover bg-gray-100">
+                  <div>
+                    <%= link_to product.name, admin_product_path(product), class: "font-medium text-gray-900 hover:text-indigo-600" %>
+                    <% if product.sku.present? %><div class="text-xs text-gray-400"><%= product.sku %></div><% end %>
+                  </div>
+                </div>
+              </td>
+              <td class="px-4 py-3 text-gray-600"><%= product.category.name %></td>
+              <td class="px-4 py-3 font-medium text-gray-900"><%= number_to_currency product.price %></td>
+              <td class="px-4 py-3">
+                <% if product.stock.zero? %>
+                  <%= status_badge "Out", color: :red %>
+                <% elsif product.low_stock? %>
+                  <%= status_badge "#{product.stock} left", color: :yellow %>
+                <% else %>
+                  <span class="text-gray-600"><%= product.stock %></span>
+                <% end %>
+              </td>
+              <td class="px-4 py-3"><%= boolean_badge product.published, true_text: "Live", false_text: "Draft" %></td>
+              <td class="px-4 py-3 text-right">
+                <%= link_to edit_admin_product_path(product), class: "text-gray-400 hover:text-indigo-600", title: "Edit" do %>
+                  <i class="las la-edit text-lg"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <% if @products.empty? %>
+      <div class="p-10 text-center text-gray-400">
+        <i class="las la-box text-4xl block mb-2"></i>
+        No products found. <%= link_to "Create one", new_admin_product_path, class: "text-indigo-600" %>.
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="mt-4"><%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %></div>

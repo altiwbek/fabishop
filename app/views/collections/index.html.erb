@@ -1,0 +1,43 @@
+<% content_for :title, "Collections — MegaShop" %>
+
+<div class="page-header text-center" style="background-image: url('/molla/assets/images/page-header-bg.jpg')">
+  <div class="container">
+    <h1 class="page-title">Collections<span>Curated for you</span></h1>
+  </div>
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active">Collections</li>
+    </ol>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div class="container">
+    <div class="row">
+      <% @collections.each_with_index do |collection, i| %>
+        <div class="col-md-6 mb-4">
+          <div class="banner banner-overlay">
+            <%= link_to collection_path(collection) do %>
+              <% if collection.cover.attached? %>
+                <%= image_tag url_for(collection.cover), alt: collection.name, style: "width:100%;height:280px;object-fit:cover;" %>
+              <% else %>
+                <img src="/molla/assets/images/demos/demo-3/banners/banner-<%= (i % 4) + 1 %>.jpg" alt="<%= collection.name %>" style="width:100%;height:280px;object-fit:cover;">
+              <% end %>
+            <% end %>
+            <div class="banner-content banner-content-bottom">
+              <h4 class="banner-subtitle text-white"><%= collection.subtitle %></h4>
+              <h3 class="banner-title text-white"><a href="<%= collection_path(collection) %>"><%= collection.name %></a></h3>
+              <%= link_to collection_path(collection), class: "banner-link" do %>
+                Explore <%= pluralize(collection.products.published.count, "item") %><i class="icon-long-arrow-right"></i>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

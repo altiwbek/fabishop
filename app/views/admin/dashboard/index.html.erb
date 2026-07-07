@@ -1,0 +1,148 @@
+<% stat_cards = [
+     { label: "Revenue",   value: number_to_currency(@revenue), icon: "la-dollar-sign", color: "green",  sub: "#{@orders_count} orders" },
+     { label: "Orders",    value: @orders_count,                icon: "la-shopping-bag", color: "indigo", sub: "#{@pending_orders} pending" },
+     { label: "Products",  value: @stats[:products],            icon: "la-box",          color: "indigo", sub: "#{@stats[:published]} published" },
+     { label: "Low Stock", value: @stats[:low_stock],           icon: "la-exclamation-triangle", color: "yellow", sub: "#{@stats[:out_of_stock]} out of stock" }
+   ] %>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
+  <% color_map = { "indigo" => "bg-indigo-500", "green" => "bg-green-500", "yellow" => "bg-yellow-500", "red" => "bg-red-500" } %>
+  <% stat_cards.each do |card| %>
+    <div class="bg-white rounded-xl shadow-sm p-5 flex items-center gap-4">
+      <div class="w-12 h-12 rounded-lg <%= color_map[card[:color]] %> text-white grid place-items-center shrink-0">
+        <i class="las <%= card[:icon] %> text-2xl"></i>
+      </div>
+      <div class="min-w-0">
+        <div class="text-2xl font-bold text-gray-900 truncate"><%= card[:value] %></div>
+        <div class="text-sm font-medium text-gray-600"><%= card[:label] %></div>
+        <div class="text-xs text-gray-400"><%= card[:sub] %></div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Category breakdown -->
+  <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
+    <div class="flex items-center justify-between mb-5">
+      <h3 class="font-semibold text-gray-900">Products by Category</h3>
+      <%= link_to "Manage", admin_categories_path, class: "text-sm text-indigo-600 hover:underline" %>
+    </div>
+    <% if @category_breakdown.any? %>
+      <div class="space-y-3">
+        <% @category_breakdown.each do |name, count| %>
+          <div>
+            <div class="flex justify-between text-sm mb-1">
+              <span class="text-gray-700"><%= name %></span>
+              <span class="font-medium text-gray-900"><%= count %></span>
+            </div>
+            <div class="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+              <div class="h-full bg-indigo-500 rounded-full" style="width: <%= (count.to_f / @max_category_count * 100).round %>%"></div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-sm text-gray-400">No products assigned to categories yet.</p>
+    <% end %>
+
+    <hr class="my-6">
+    <h3 class="font-semibold text-gray-900 mb-4">Recently Added</h3>
+    <div class="divide-y divide-gray-100">
+      <% @recent_products.each do |product| %>
+        <div class="flex items-center gap-3 py-2.5">
+          <img src="<%= product_image_url(product) %>" class="w-10 h-10 rounded object-cover bg-gray-100">
+          <div class="flex-1 min-w-0">
+            <%= link_to product.name, admin_product_path(product), class: "text-sm font-medium text-gray-900 hover:text-indigo-600 truncate block" %>
+            <span class="text-xs text-gray-400"><%= product.category.name %></span>
+          </div>
+          <%= boolean_badge product.published, true_text: "Live", false_text: "Draft" %>
+          <span class="text-sm font-semibold text-gray-700"><%= number_to_currency product.price %></span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Side column -->
+  <div class="space-y-6">
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+          <i class="las la-shopping-bag text-indigo-500"></i> Recent Orders
+        </h3>
+        <%= link_to "All →", admin_orders_path, class: "text-sm text-indigo-600 hover:underline" %>
+      </div>
+      <% if @recent_orders.any? %>
+        <div class="space-y-3">
+          <% @recent_orders.each do |order| %>
+            <div class="flex items-center justify-between text-sm">
+              <div class="min-w-0">
+                <%= link_to order.number, admin_order_path(order), class: "font-medium text-gray-900 hover:text-indigo-600" %>
+                <div class="text-xs text-gray-400 truncate"><%= order.customer_name %></div>
+              </div>
+              <div class="text-right shrink-0">
+                <div class="font-semibold text-gray-900"><%= number_to_currency order.total %></div>
+                <%= status_badge order.status.capitalize, color: order.status_color %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-sm text-gray-400">No orders yet.</p>
+      <% end %>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+        <i class="las la-exclamation-triangle text-yellow-500"></i> Low Stock Alerts
+      </h3>
+      <% if @low_stock_products.any? %>
+        <div class="space-y-3">
+          <% @low_stock_products.each do |product| %>
+            <div class="flex items-center justify-between">
+              <%= link_to product.name, admin_product_path(product), class: "text-sm text-gray-700 hover:text-indigo-600 truncate mr-2" %>
+              <%= status_badge "#{product.stock} left", color: :yellow %>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="text-sm text-gray-400">Everything is well stocked. 🎉</p>
+      <% end %>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
+        <i class="las la-star text-indigo-500"></i> Reviews to Moderate
+      </h3>
+      <% if @pending_reviews.any? %>
+        <div class="space-y-3">
+          <% @pending_reviews.each do |review| %>
+            <div class="text-sm">
+              <div class="flex items-center gap-1 text-yellow-500">
+                <% review.rating.times { %><i class="las la-star text-xs"></i><% } %>
+              </div>
+              <p class="text-gray-700 truncate"><%= review.title.presence || review.body %></p>
+              <span class="text-xs text-gray-400">on <%= review.product.name %></span>
+            </div>
+          <% end %>
+        </div>
+        <%= link_to "Moderate all →", admin_reviews_path, class: "inline-block mt-4 text-sm text-indigo-600 hover:underline" %>
+      <% else %>
+        <p class="text-sm text-gray-400">No reviews waiting. 👍</p>
+      <% end %>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm p-6">
+      <h3 class="font-semibold text-gray-900 mb-4">Most Viewed</h3>
+      <div class="space-y-2">
+        <% @top_viewed.each_with_index do |product, i| %>
+          <div class="flex items-center gap-2 text-sm">
+            <span class="text-gray-400 w-4"><%= i + 1 %></span>
+            <%= link_to product.name, admin_product_path(product), class: "flex-1 text-gray-700 hover:text-indigo-600 truncate" %>
+            <span class="text-xs text-gray-400"><%= product.views_count %> views</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

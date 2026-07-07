@@ -1,0 +1,22 @@
+<% content_for :title, "My Wishlist — MegaShop" %>
+
+<div class="page-header text-center" style="background-image: url('/molla/assets/images/page-header-bg.jpg')">
+  <div class="container">
+    <h1 class="page-title">My Wishlist<span>Saved for later</span></h1>
+  </div>
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+    </ol>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div class="container">
+    <%= render "wishlist/contents", wishlist: current_wishlist %>
+  </div>
+</div>

@@ -1,0 +1,185 @@
+<% content_for :title, "MegaShop — Electronics & Lifestyle Store" %>
+
+<!-- Hero -->
+<div class="intro-section pt-3 pb-3 mb-2">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="intro-slider-container slider-container-ratio mb-2 mb-lg-0">
+          <div class="intro-slider owl-carousel owl-simple owl-nav-inside" data-toggle="owl"
+               data-owl-options='{ "dots": true, "nav": false, "responsive": { "768": { "nav": true, "dots": false } } }'>
+            <% @slides.each do |slide| %>
+              <div class="intro-slide">
+                <figure class="slide-image">
+                  <picture>
+                    <%= image_tag(slide.image) %>
+                  </picture>
+                </figure><!-- End .slide-image -->
+
+                <div class="intro-content">
+                  <h3 class="intro-subtitle text-primary">
+                    <%= slide.subtitle %>
+                  </h3><!-- End .h3 intro-subtitle -->
+                  <h1 class="intro-title">
+                    <%= slide.title_html %>
+                  </h1><!-- End .intro-title -->
+
+                  <% if slide.price.present? %>
+                    <div class="intro-price">
+                      <% if slide.price_label.present? %><sup><%= slide.price_label %></sup><% end %>
+                      <span class="text-primary"><%= slide.price %></span>
+                    </div>
+                  <% end %>
+
+                  <% if slide.button_label.present? %>
+                    <%= link_to (slide.button_url.presence || products_path), class: "btn btn-primary" do %>
+                      <span><%= slide.button_label %></span><i class="icon-long-arrow-right"></i>
+                    <% end %>
+                  <% end %>
+
+                </div><!-- End .intro-content -->
+              </div><!-- End .intro-slide -->
+
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="intro-banners">
+          <% @top_collections.first(3).each_with_index do |collection, i| %>
+            <div class="banner banner-overlay mb-2">
+              <%= link_to collection_path(collection) do %>
+                <img src="/molla/assets/images/demos/demo-3/banners/banner-<%= i + 1 %>.jpg" alt="<%= collection.name %>">
+              <% end %>
+              <div class="banner-content">
+                <h4 class="banner-subtitle"><a href="<%= collection_path(collection) %>"><%= collection.subtitle.presence || "Collection" %></a></h4>
+                <h3 class="banner-title"><a href="<%= collection_path(collection) %>"><%= collection.name %></a></h3>
+                <%= link_to collection_path(collection), class: "banner-link" do %>
+                  Shop Now<i class="icon-long-arrow-right"></i>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Service boxes -->
+<div class="container">
+  <div class="icon-boxes-container bg-transparent pt-0 pb-0 mb-5">
+    <div class="row">
+      <% [["icon-rocket","Free Shipping","Orders over $99"],
+          ["icon-rotate-left","Free Returns","Within 30 days"],
+          ["icon-info-circle","Get 20% Off 1 Item","When you sign up"],
+          ["icon-life-ring","We Support","24/7 amazing services"]].each do |icon, title, sub| %>
+        <div class="col-sm-6 col-lg-3">
+          <div class="icon-box icon-box-side">
+            <span class="icon-box-icon"><i class="<%= icon %>"></i></span>
+            <div class="icon-box-content">
+              <h3 class="icon-box-title"><%= title %></h3>
+              <p><%= sub %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Featured categories -->
+<% if @featured_categories.any? %>
+  <div class="container">
+    <h2 class="title text-center mb-4">Shop by Category</h2>
+    <div class="row justify-content-center">
+      <% @featured_categories.each do |category| %>
+        <div class="col-6 col-sm-4 col-lg-2">
+          <%= link_to category_path(category), class: "text-center d-block mb-4 category-tile" do %>
+            <span class="d-block mb-2" style="font-size:4rem;color:#08c;"><i class="icon-category"></i></span>
+            <h3 class="cat-name" style="font-size:1.4rem;font-weight:600;color:#333;"><%= category.name %></h3>
+            <span class="text-muted" style="font-size:1.2rem;"><%= pluralize(category.products_count, "product") %></span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<!-- Deal of the day -->
+<% if @deal_product %>
+  <div class="container">
+    <div class="bg-light p-4 mb-5 rounded d-flex flex-column flex-md-row align-items-center">
+      <img src="<%= product_image_url(@deal_product) %>" alt="<%= @deal_product.name %>" style="width:180px;height:180px;object-fit:cover;">
+      <div class="ml-md-4 mt-3 mt-md-0 text-center text-md-left flex-grow-1">
+        <span class="badge badge-primary mb-2">Deal of the Day · Save <%= @deal_product.discount_percent %>%</span>
+        <h3 class="mb-1"><%= link_to @deal_product.name, product_path(@deal_product), class: "text-dark" %></h3>
+        <p class="text-muted mb-2"><%= @deal_product.subtitle %></p>
+        <div class="product-price">
+          <span class="old-price"><%= number_to_currency @deal_product.compare_at_price %></span>
+          <span class="new-price"><%= number_to_currency @deal_product.price %></span>
+        </div>
+      </div>
+      <%= link_to "Grab the deal", product_path(@deal_product), class: "btn btn-primary ml-md-4 mt-3 mt-md-0" %>
+    </div>
+  </div>
+<% end %>
+
+<!-- Products tabs: New Arrivals / Featured -->
+<div class="container">
+  <ul class="nav nav-pills nav-border-anim justify-content-center mb-3" role="tablist">
+    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tab-new" role="tab">New Arrivals</a></li>
+    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tab-featured" role="tab">Featured</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane p-0 fade show active" id="tab-new" role="tabpanel">
+      <div class="row">
+        <% @new_products.each do |product| %>
+          <div class="col-6 col-md-4 col-lg-3"><%= render "products/card", product: product %></div>
+        <% end %>
+      </div>
+    </div>
+    <div class="tab-pane p-0 fade" id="tab-featured" role="tabpanel">
+      <div class="row">
+        <% if @featured_products.any? %>
+          <% @featured_products.each do |product| %>
+            <div class="col-6 col-md-4 col-lg-3"><%= render "products/card", product: product %></div>
+          <% end %>
+        <% else %>
+          <p class="text-muted text-center w-100">No featured products yet.</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Brands -->
+<% if @brands.any? %>
+  <div class="container">
+    <hr class="mt-1 mb-5">
+    <div class="row justify-content-center align-items-center brands-row">
+      <% @brands.each_with_index do |brand, i| %>
+        <div class="col-4 col-sm-3 col-lg-2 text-center mb-3">
+          <img src="/molla/assets/images/brands/<%= (i % 9) + 1 %>.png" alt="<%= brand.name %>" style="max-width:100%;opacity:.7;">
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<!-- Latest from blog -->
+<% if @posts.any? %>
+  <div class="container">
+    <h2 class="title text-center mb-4">From our Blog</h2>
+    <div class="row">
+      <% @posts.each do |post| %>
+        <div class="col-md-4">
+          <%= render "posts/card", post: post %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<div class="mb-5"></div>

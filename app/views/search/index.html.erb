@@ -1,0 +1,41 @@
+<% content_for :title, "Search: #{@query} — MegaShop" %>
+
+<div class="page-header text-center" style="background-image: url('/molla/assets/images/page-header-bg.jpg')">
+  <div class="container">
+    <h1 class="page-title">Search results<span><%= @query.presence || "All products" %></span></h1>
+  </div>
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active">Search</li>
+    </ol>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div class="container">
+    <p class="mb-3"><%= pagy_info(@pagy) rescue "#{@products.size} results" %> for
+      <strong>“<%= @query %>”</strong></p>
+
+    <% if @products.any? %>
+      <div class="row">
+        <% @products.each do |product| %>
+          <div class="col-6 col-md-4 col-lg-3">
+            <%= render "products/card", product: product %>
+          </div>
+        <% end %>
+      </div>
+      <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+    <% else %>
+      <div class="empty-state">
+        <i class="icon-search"></i>
+        <h3>No products matched your search</h3>
+        <p>Try a different keyword or browse our categories.</p>
+        <%= link_to "Browse all products", products_path, class: "btn btn-outline-primary-2" %>
+      </div>
+    <% end %>
+  </div>
+</div>

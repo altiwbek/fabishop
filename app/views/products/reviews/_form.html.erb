@@ -1,0 +1,44 @@
+<div id="new_review">
+  <h3>Write a review</h3>
+  <%= form_with model: [ product, review ], url: product_reviews_path(product),
+        data: { turbo: true }, class: "review-form" do |f| %>
+    <% if review.errors.any? %>
+      <div class="alert alert-danger">
+        <%= review.errors.full_messages.to_sentence %>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <label class="d-block">Your rating</label>
+      <div class="star-rating">
+        <% 5.downto(1) do |n| %>
+          <%= f.radio_button :rating, n, checked: (review.rating || 5) == n, id: "review_rating_#{n}" %>
+          <label for="review_rating_<%= n %>" title="<%= n %> stars"><i class="icon-star"></i></label>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 form-group">
+        <label>Name *</label>
+        <%= f.text_field :author_name, class: "form-control", required: true %>
+      </div>
+      <div class="col-md-6 form-group">
+        <label>Email</label>
+        <%= f.email_field :author_email, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Title</label>
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <label>Your review *</label>
+      <%= f.text_area :body, class: "form-control", rows: 4, required: true %>
+    </div>
+
+    <%= f.submit "Submit review", class: "btn btn-outline-primary-2" %>
+  <% end %>
+</div>

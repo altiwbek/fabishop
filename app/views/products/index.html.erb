@@ -1,0 +1,131 @@
+<% content_for :title, "All Products — MegaShop" %>
+
+<div class="page-header text-center" style="background-image: url('/molla/assets/images/page-header-bg.jpg')">
+  <div class="container">
+    <h1 class="page-title">Products<span>Shop the full catalog</span></h1>
+  </div>
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item active">Products</li>
+    </ol>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div class="container">
+    <%= form_with url: products_path, method: :get, data: { controller: "auto-submit" } do %>
+      <div class="row">
+        <div class="col-lg-9 order-lg-last">
+          <div class="toolbox">
+            <div class="toolbox-left">
+              <div class="toolbox-info">Showing <strong><%= @products.size %></strong> of <strong><%= @pagy.count %></strong> products</div>
+            </div>
+            <div class="toolbox-right">
+              <div class="toolbox-sort">
+                <label>Sort by:</label>
+                <div class="select-custom">
+                  <%= select_tag :sort,
+                        options_for_select([["Newest","newest"],["Most Popular","popular"],["Top Rated","rating"],
+                          ["Price: Low to High","price_asc"],["Price: High to Low","price_desc"],["Name","name"]], params[:sort]),
+                        class: "form-control", data: { action: "change->auto-submit#submit" } %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% if @products.any? %>
+            <div class="row">
+              <% @products.each do |product| %>
+                <div class="col-6 col-md-4"><%= render "products/card", product: product %></div>
+              <% end %>
+            </div>
+            <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+          <% else %>
+            <div class="empty-state">
+              <i class="icon-bags"></i>
+              <h3>No products match your filters</h3>
+              <%= link_to "Clear filters", products_path, class: "btn btn-outline-primary-2" %>
+            </div>
+          <% end %>
+        </div>
+
+        <aside class="col-lg-3">
+          <div class="sidebar sidebar-shop">
+            <div class="widget widget-clean">
+              <label>Filters:</label>
+              <%= link_to "Clean All", products_path, class: "sidebar-filter-clear" %>
+            </div>
+
+            <div class="widget widget-collapsible">
+              <h3 class="widget-title">Category</h3>
+              <div class="widget-body">
+                <div class="filter-items filter-items-count">
+                  <% @categories.each do |category| %>
+                    <div class="filter-item">
+                      <div class="custom-control custom-checkbox">
+                        <%= radio_button_tag "category_id", category.id, params[:category_id].to_s == category.id.to_s,
+                              id: "cat_#{category.id}", class: "custom-control-input",
+                              data: { action: "change->auto-submit#submit" } %>
+                        <label class="custom-control-label" for="cat_<%= category.id %>"><%= category.name %></label>
+                      </div>
+                      <span class="item-count"><%= category.products_count %></span>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+            <div class="widget widget-collapsible">
+              <h3 class="widget-title">Brand</h3>
+              <div class="widget-body">
+                <div class="filter-items">
+                  <% @brands.each do |brand| %>
+                    <div class="filter-item">
+                      <div class="custom-control custom-checkbox">
+                        <%= radio_button_tag "brand_id", brand.id, params[:brand_id].to_s == brand.id.to_s,
+                              id: "brand_#{brand.id}", class: "custom-control-input",
+                              data: { action: "change->auto-submit#submit" } %>
+                        <label class="custom-control-label" for="brand_<%= brand.id %>"><%= brand.name %></label>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+
+            <div class="widget widget-collapsible">
+              <h3 class="widget-title">Price</h3>
+              <div class="widget-body">
+                <div class="d-flex align-items-center">
+                  <%= number_field_tag :min_price, params[:min_price], placeholder: "Min", class: "form-control mr-1", min: 0 %>
+                  <%= number_field_tag :max_price, params[:max_price], placeholder: "Max", class: "form-control ml-1", min: 0 %>
+                </div>
+                <button type="submit" class="btn btn-outline-primary-2 btn-sm btn-block mt-2">Apply price</button>
+              </div>
+            </div>
+
+            <div class="widget widget-collapsible">
+              <h3 class="widget-title">Availability</h3>
+              <div class="widget-body">
+                <div class="custom-control custom-checkbox">
+                  <%= check_box_tag :on_sale, "1", params[:on_sale].present?, id: "f_sale",
+                        class: "custom-control-input", data: { action: "change->auto-submit#submit" } %>
+                  <label class="custom-control-label" for="f_sale">On sale</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <%= check_box_tag :in_stock, "1", params[:in_stock].present?, id: "f_stock",
+                        class: "custom-control-input", data: { action: "change->auto-submit#submit" } %>
+                  <label class="custom-control-label" for="f_stock">In stock</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    <% end %>
+  </div>
+</div>

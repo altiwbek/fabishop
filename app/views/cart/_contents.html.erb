@@ -1,0 +1,90 @@
+<div id="cart-contents">
+  <% if cart.empty? %>
+    <div class="empty-state">
+      <i class="icon-shopping-cart"></i>
+      <h3>Your cart is empty</h3>
+      <p>Looks like you haven't added anything yet.</p>
+      <%= link_to "Start shopping", products_path, class: "btn btn-outline-primary-2" %>
+    </div>
+  <% else %>
+    <div class="row">
+      <div class="col-lg-9">
+        <table class="table table-cart table-mobile">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% cart.line_items.each do |product, qty| %>
+              <tr>
+                <td class="product-col">
+                  <div class="product">
+                    <figure class="product-media">
+                      <%= link_to product_path(product) do %>
+                        <%= image_tag product_image_url(product), alt: product.name %>
+                      <% end %>
+                    </figure>
+                    <h3 class="product-title"><%= link_to product.name, product_path(product) %></h3>
+                  </div>
+                </td>
+                <td class="price-col"><%= number_to_currency product.price %></td>
+                <td class="quantity-col">
+                  <%= form_with url: cart_item_path(product.id), method: :patch,
+                        data: { turbo: true, controller: "auto-submit" }, class: "cart-product-quantity" do %>
+                    <%= number_field_tag :quantity, qty, min: 1, max: 99, class: "form-control",
+                          data: { action: "change->auto-submit#submit" } %>
+                  <% end %>
+                </td>
+                <td class="total-col"><%= number_to_currency product.price * qty %></td>
+                <td class="remove-col">
+                  <%= button_to cart_remove_path(product.id), method: :delete,
+                        class: "btn-remove", title: "Remove", form: { data: { turbo: true } } do %>
+                    <i class="icon-close"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <div class="cart-bottom">
+          <%= button_to "Clear cart", cart_clear_path, method: :delete,
+                class: "btn btn-outline-dark-2", form: { data: { turbo: true } } %>
+        </div>
+      </div>
+
+      <aside class="col-lg-3">
+        <div class="summary summary-cart">
+          <h3 class="summary-title">Cart Total</h3>
+          <% subtotal = cart.total_price %>
+          <% shipping = subtotal >= 99 ? 0 : 9.99 %>
+          <table class="table table-summary">
+            <tbody>
+              <tr class="summary-subtotal">
+                <td>Subtotal:</td>
+                <td><%= number_to_currency subtotal %></td>
+              </tr>
+              <tr>
+                <td>Shipping:</td>
+                <td><%= shipping.zero? ? "Free" : number_to_currency(shipping) %></td>
+              </tr>
+              <tr class="summary-total">
+                <td>Total:</td>
+                <td><%= number_to_currency subtotal + shipping %></td>
+              </tr>
+            </tbody>
+          </table>
+          <%= link_to cart.empty? ? "#" : checkout_path, class: "btn btn-outline-primary-2 btn-order btn-block", data: { turbo: false } do %>
+            <span class="btn-text">Proceed to Checkout</span>
+            <span class="btn-hover-text">Review &amp; Place Order</span>
+          <% end %>
+        </div>
+      </aside>
+    </div>
+  <% end %>
+</div>

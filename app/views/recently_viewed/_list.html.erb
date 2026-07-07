@@ -1,0 +1,11 @@
+<% if products.any? %>
+  <div class="row">
+    <% products.each do |product| %>
+      <div class="col-6 col-md-3">
+        <%= render "products/card", product: product %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="text-center text-muted py-3">Products you view will appear here.</p>
+<% end %>

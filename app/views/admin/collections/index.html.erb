@@ -1,0 +1,36 @@
+<div class="flex items-center justify-between mb-6">
+  <p class="text-gray-500 text-sm"><%= pluralize(@collections.size, "collection") %></p>
+  <%= link_to new_admin_collection_path, class: btn_primary do %><i class="las la-plus"></i> New Collection<% end %>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+  <% @collections.each do |collection| %>
+    <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div class="h-32 bg-gray-100">
+        <% if collection.cover.attached? %>
+          <%= image_tag url_for(collection.cover), class: "w-full h-full object-cover" %>
+        <% else %>
+          <div class="w-full h-full grid place-items-center text-gray-300"><i class="las la-layer-group text-4xl"></i></div>
+        <% end %>
+      </div>
+      <div class="p-4">
+        <div class="flex items-start justify-between">
+          <div>
+            <h3 class="font-semibold text-gray-900"><%= collection.name %></h3>
+            <p class="text-xs text-gray-400"><%= collection.subtitle %></p>
+          </div>
+          <div class="flex gap-1">
+            <% if collection.featured %><%= status_badge "Featured", color: :indigo %><% end %>
+            <%= boolean_badge collection.active, true_text: "Active", false_text: "Hidden" %>
+          </div>
+        </div>
+        <p class="text-sm text-gray-500 mt-2"><%= pluralize(collection.products.count, "product") %></p>
+        <div class="mt-4 flex gap-2">
+          <%= link_to "Manage", admin_collection_path(collection), class: "#{btn_secondary} text-xs py-1.5 px-3" %>
+          <%= link_to "Edit", edit_admin_collection_path(collection), class: "#{btn_secondary} text-xs py-1.5 px-3" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<% if @collections.empty? %><div class="p-10 text-center text-gray-400 bg-white rounded-xl">No collections yet.</div><% end %>

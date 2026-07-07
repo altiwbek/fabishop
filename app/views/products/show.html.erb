@@ -1,0 +1,191 @@
+<% content_for :title, "#{@product.name} — MegaShop" %>
+<% content_for :description, @product.subtitle.presence || truncate(@product.description.to_plain_text, length: 150) %>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item"><%= link_to "Products", products_path %></li>
+      <li class="breadcrumb-item"><%= link_to @product.category.name, category_path(@product.category) %></li>
+      <li class="breadcrumb-item active"><%= @product.name %></li>
+    </ol>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div class="container">
+    <div class="product-details-top">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="product-gallery product-gallery-vertical">
+            <div class="row">
+              <figure class="product-main-image">
+                <% main = product_image_url(@product) %>
+                <img id="product-zoom" src="<%= main %>" data-zoom-image="<%= main %>" alt="<%= @product.name %>">
+                <a href="#" id="btn-product-gallery" class="btn-product-gallery"><i class="icon-arrows"></i></a>
+              </figure>
+
+              <div id="product-zoom-gallery" class="product-image-gallery">
+                <% if @product.images.attached? %>
+                  <% @product.images.each_with_index do |img, i| %>
+                    <% u = url_for(img) %>
+                    <a class="product-gallery-item <%= 'active' if i.zero? %>" href="#" data-image="<%= u %>" data-zoom-image="<%= u %>">
+                      <img src="<%= u %>" alt="view <%= i + 1 %>">
+                    </a>
+                  <% end %>
+                <% else %>
+                  <a class="product-gallery-item active" href="#" data-image="<%= main %>" data-zoom-image="<%= main %>">
+                    <img src="<%= main %>" alt="view">
+                  </a>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="product-details">
+            <h1 class="product-title"><%= @product.name %></h1>
+
+            <div class="ratings-container">
+              <div class="ratings"><div class="ratings-val" style="width: <%= @product.rating_percent %>%;"></div></div>
+              <a class="ratings-text" href="#product-review-link" id="review-link">( <%= @product.reviews_count %> Reviews )</a>
+            </div>
+
+            <% if @product.on_sale? %>
+              <div class="product-price">
+                <span class="old-price"><%= number_to_currency @product.compare_at_price %></span>
+                <span class="new-price"><%= number_to_currency @product.price %></span>
+              </div>
+            <% else %>
+              <div class="product-price"><%= number_to_currency @product.price %></div>
+            <% end %>
+
+            <div class="product-content">
+              <p><%= @product.subtitle.presence || truncate(@product.description.to_plain_text, length: 260) %></p>
+            </div>
+
+            <div class="details-filter-row details-row-size">
+              <label>Availability:</label>
+              <% if @product.in_stock? %>
+                <span class="text-success">In stock<% if @product.low_stock? %> — only <%= @product.stock %> left!<% end %></span>
+              <% else %>
+                <span class="text-danger">Out of stock</span>
+              <% end %>
+            </div>
+
+            <%= form_with url: cart_add_path(@product.id), method: :post, data: { turbo: true } do %>
+              <div class="details-filter-row details-row-size">
+                <label for="qty">Qty:</label>
+                <div class="product-details-quantity">
+                  <%= number_field_tag :quantity, 1, id: "qty", class: "form-control", min: 1,
+                        max: [ @product.stock, 1 ].max, step: 1 %>
+                </div>
+              </div>
+
+              <div class="product-details-action">
+                <% if @product.in_stock? %>
+                  <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                <% else %>
+                  <button type="button" class="btn-product btn-cart disabled" disabled><span>out of stock</span></button>
+                <% end %>
+                <div class="details-action-wrapper">
+                  <%= button_to wishlist_toggle_path(@product.id), method: :post,
+                        class: "btn-product btn-wishlist #{'added' if current_wishlist.include?(@product)}",
+                        title: "Wishlist", form: { data: { turbo: true }, class: "d-inline" } do %>
+                    <span>Add to Wishlist</span>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="product-details-footer">
+              <div class="product-cat">
+                <span>Category:</span>
+                <%= link_to @product.category.name, category_path(@product.category) %>
+                <% if @product.brand %>
+                  &nbsp;| <span>Brand:</span> <%= @product.brand.name %>
+                <% end %>
+              </div>
+              <div class="product-details-footer-sku ml-auto">
+                <% if @product.sku.present? %><small class="text-muted">SKU: <%= @product.sku %></small><% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="product-details-tab">
+      <ul class="nav nav-pills justify-content-center" role="tablist">
+        <li class="nav-item"><a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab">Description</a></li>
+        <li class="nav-item"><a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab">Shipping & Returns</a></li>
+        <li class="nav-item"><a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab">Reviews (<%= @product.reviews_count %>)</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel">
+          <div class="product-desc-content trix-content">
+            <% if @product.description.to_plain_text.present? %>
+              <%= @product.description %>
+            <% else %>
+              <p>No description available for this product yet.</p>
+            <% end %>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel">
+          <div class="product-desc-content">
+            <h3>Delivery & returns</h3>
+            <p>Free standard shipping on orders over $99. We deliver within 3–7 business days.
+              Not happy? Return any item within 30 days for a full refund.</p>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="product-review-tab" role="tabpanel">
+          <div class="reviews">
+            <h3>Reviews (<%= @product.reviews_count %>)</h3>
+            <% if @reviews.any? %>
+              <% @reviews.each do |review| %>
+                <div class="review">
+                  <div class="row no-gutters">
+                    <div class="col-auto">
+                      <h4><%= review.author_name %></h4>
+                      <div class="ratings-container">
+                        <div class="ratings"><div class="ratings-val" style="width: <%= review.rating_percent %>%;"></div></div>
+                      </div>
+                      <span class="review-date"><%= time_ago_in_words(review.created_at) %> ago</span>
+                    </div>
+                    <div class="col">
+                      <h4><%= review.title.presence || "Review" %></h4>
+                      <div class="review-content"><p><%= review.body %></p></div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            <% else %>
+              <p class="text-muted">No reviews yet — be the first to review this product.</p>
+            <% end %>
+
+            <hr>
+            <%= render "products/reviews/form", product: @product, review: @review %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related -->
+    <% if @related.any? %>
+      <h2 class="title text-center mb-4">You May Also Like</h2>
+      <div class="row">
+        <% @related.each do |product| %>
+          <div class="col-6 col-md-3"><%= render "products/card", product: product %></div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <!-- Recently viewed (lazy Turbo Frame) -->
+    <h2 class="title text-center mb-4 mt-5">Recently Viewed</h2>
+    <turbo-frame id="recently_viewed" src="<%= recently_viewed_path(exclude: @product.slug) %>" loading="lazy">
+      <p class="text-center text-muted py-3">Loading…</p>
+    </turbo-frame>
+  </div>
+</div>

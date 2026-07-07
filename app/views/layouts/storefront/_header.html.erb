@@ -1,0 +1,140 @@
+<header class="header header-intro-clearance header-3">
+  <div class="header-top">
+    <div class="container">
+      <div class="header-left">
+        <a href="tel:#"><i class="icon-phone"></i>Call: +996 (700) 123-456</a>
+      </div>
+
+      <div class="header-right">
+        <ul class="top-menu">
+          <li>
+            <a href="#">Links</a>
+            <ul>
+              <li><a href="<%= posts_path %>">Blog</a></li>
+              <li><a href="<%= wishlist_path %>">Wishlist</a></li>
+              <li><a href="<%= track_path %>">Track My Order</a></li>
+              <% if authenticated? %>
+                <li><a href="<%= admin_root_path %>">Admin dashboard</a></li>
+                <li><%= button_to "Sign out", session_path, method: :delete, form: { data: { turbo: false } }, class: "btn-link-plain" %></li>
+              <% else %>
+                <li><a href="<%= new_session_path %>">Staff sign in</a></li>
+              <% end %>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-middle">
+    <div class="container">
+      <div class="header-left">
+        <button class="mobile-menu-toggler">
+          <span class="sr-only">Toggle mobile menu</span>
+          <i class="icon-bars"></i>
+        </button>
+
+        <a href="<%= root_path %>" class="logo">
+          <span class="logo-text">MegaShop<span>.</span></span>
+        </a>
+      </div>
+
+      <div class="header-center">
+        <div class="header-search header-search-extended header-search-visible d-none d-lg-block"
+             data-controller="autocomplete">
+          <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+          <%= form_with url: search_path, method: :get, data: { turbo: false } do %>
+            <div class="header-search-wrapper search-wrapper-wide live-search-results">
+              <label for="q" class="sr-only">Search</label>
+              <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+              <%= search_field_tag :q, params[:q],
+                    class: "form-control", placeholder: "Search products...", autocomplete: "off",
+                    data: { autocomplete_target: "input", action: "input->autocomplete#search" } %>
+              <div class="autocomplete-list" data-autocomplete-target="results"></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="wishlist">
+          <a href="<%= wishlist_path %>" title="Wishlist">
+            <div class="icon">
+              <i class="icon-heart-o"></i>
+              <%= render "wishlist/indicator", wishlist: current_wishlist %>
+            </div>
+            <p>Wishlist</p>
+          </a>
+        </div>
+
+        <%= render "cart/indicator", cart: current_cart %>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-bottom sticky-header">
+    <div class="container">
+      <div class="header-left">
+        <div class="dropdown category-dropdown">
+          <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
+            Browse Categories <i class="icon-angle-down"></i>
+          </a>
+          <div class="dropdown-menu">
+            <nav class="side-nav">
+              <ul class="menu-vertical sf-arrows">
+                <% nav_categories.each do |category| %>
+                  <li class="<%= 'submenu' if category.children.any? %>">
+                    <%= link_to category.name, category_path(category), class: (category.children.any? ? "sf-with-ul" : "") %>
+                    <% if category.children.any? %>
+                      <ul>
+                        <% category.children.ordered.each do |child| %>
+                          <li><%= link_to child.name, category_path(child) %></li>
+                        <% end %>
+                      </ul>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <nav class="main-nav">
+          <ul class="menu sf-arrows">
+            <li class="<%= 'active' if current_page?(root_path) %>">
+              <%= link_to "Home", root_path %>
+            </li>
+
+            <li>
+              <%= link_to "Categories", categories_path, class: "sf-with-ul" %>
+              <ul>
+                <% nav_categories.each do |category| %>
+                  <li><%= link_to category.name, category_path(category) %></li>
+                <% end %>
+              </ul>
+            </li>
+
+            <li>
+              <%= link_to "Collections", collections_path, class: "sf-with-ul" %>
+              <ul>
+                <% nav_collections.each do |collection| %>
+                  <li><%= link_to collection.name, collection_path(collection) %></li>
+                <% end %>
+              </ul>
+            </li>
+
+            <li><%= link_to "Products", products_path %></li>
+            <li><%= link_to "Blog", posts_path %></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="header-right">
+        <i class="la la-truck" style="font-size: 2.5rem; margin-right: .8rem;"></i>
+        <p>Free Shipping over $99</p>
+      </div>
+    </div>
+  </div>
+</header>

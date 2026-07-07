@@ -1,0 +1,35 @@
+<% content_for :title, "#{@category.name} — MegaShop" %>
+
+<div class="page-header text-center" style="background-image: url('/molla/assets/images/page-header-bg.jpg')">
+  <div class="container">
+    <h1 class="page-title"><%= @category.name %><span>Category</span></h1>
+  </div>
+</div>
+
+<nav aria-label="breadcrumb" class="breadcrumb-nav">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><%= link_to "Home", root_path %></li>
+      <li class="breadcrumb-item"><%= link_to "Categories", categories_path %></li>
+      <li class="breadcrumb-item active"><%= @category.name %></li>
+    </ol>
+  </div>
+</nav>
+
+<div class="page-content">
+  <div class="container">
+    <% if @category.description.present? %>
+      <p class="lead text-muted mb-4"><%= @category.description %></p>
+    <% end %>
+
+    <% if @category.children.any? %>
+      <div class="mb-4">
+        <% @category.children.ordered.each do |child| %>
+          <%= link_to child.name, category_path(child), class: "btn btn-outline-primary-2 btn-sm mr-2 mb-2" %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= render "shared/product_grid", products: @products, pagy: @pagy, sort_url: category_path(@category) %>
+  </div>
+</div>
