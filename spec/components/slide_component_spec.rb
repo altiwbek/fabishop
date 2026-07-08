@@ -17,6 +17,14 @@ RSpec.describe SlideComponent, type: :component do
     expect(page).to have_css("figure.slide-image img")
   end
 
+  it "renders a placeholder image when no image is attached" do
+    slide.image.detach
+
+    render_inline(described_class.new(slide: slide))
+
+    expect(page).to have_css("figure.slide-image img")
+  end
+
   it "renders a title with a manual line break" do
     slide.title = "Big|Deals"
 

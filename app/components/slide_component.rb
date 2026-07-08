@@ -14,4 +14,10 @@ class SlideComponent < ViewComponent::Base
   def button_url
     slide.button_url.presence || helpers.products_path
   end
+
+  # Falls back to a placeholder when a slide has no image attached, so the
+  # hero never renders a broken image or raises on an unattached attachment.
+  def image_url
+    helpers.slide_image_url(slide)
+  end
 end
