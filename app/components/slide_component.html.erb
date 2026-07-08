@@ -1,0 +1,30 @@
+<div class="intro-slide">
+  <figure class="slide-image">
+    <picture>
+      <%= image_tag(slide.image) %>
+    </picture>
+  </figure><!-- End .slide-image -->
+
+  <div class="intro-content">
+    <h3 class="intro-subtitle text-primary">
+      <%= slide.subtitle %>
+    </h3><!-- End .h3 intro-subtitle -->
+    <h1 class="intro-title">
+      <%= slide.title_html %>
+    </h1><!-- End .intro-title -->
+
+    <% if slide.price.present? %>
+      <div class="intro-price">
+        <% if slide.price_label.present? %><sup><%= slide.price_label %></sup><% end %>
+        <span class="text-primary"><%= slide.price %></span>
+      </div>
+    <% end %>
+
+    <% if slide.button_label.present? %>
+      <%= link_to button_url, class: "btn btn-primary" do %>
+        <span><%= slide.button_label %></span><i class="icon-long-arrow-right"></i>
+      <% end %>
+    <% end %>
+
+  </div><!-- End .intro-content -->
+</div><!-- End .intro-slide -->
