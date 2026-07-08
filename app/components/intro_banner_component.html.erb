@@ -1,0 +1,16 @@
+<div class="banner banner-overlay mb-2">
+  <%= link_to collection_path(collection) do %>
+    <% if collection.cover.attached? %>
+      <%= image_tag url_for(collection.cover), alt: collection.name, style: IMAGE_STYLE %>
+    <% else %>
+      <img src="<%= fallback_image_path %>" alt="<%= collection.name %>" style="<%= IMAGE_STYLE %>">
+    <% end %>
+  <% end %>
+  <div class="banner-content">
+    <h4 class="banner-subtitle"><a href="<%= collection_path(collection) %>"><%= collection.subtitle.presence || "Collection" %></a></h4>
+    <h3 class="banner-title"><a href="<%= collection_path(collection) %>"><%= collection.name %></a></h3>
+    <%= link_to collection_path(collection), class: "banner-link" do %>
+      Shop Now<i class="icon-long-arrow-right"></i>
+    <% end %>
+  </div>
+</div>
