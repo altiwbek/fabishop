@@ -1,31 +1,67 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  language_name: "English"
+
+  nav:
+    home: "Home"
+    categories: "Categories"
+    collections: "Collections"
+    products: "Products"
+    blog: "Blog"
+
+  header:
+    call: "Call: +996 (700) 123-456"
+    links: "Links"
+    wishlist: "Wishlist"
+    track_order: "Track My Order"
+    admin_dashboard: "Admin dashboard"
+    sign_out: "Sign out"
+    staff_sign_in: "Staff sign in"
+    browse_categories: "Browse Categories"
+    search_placeholder: "Search products..."
+    search: "Search"
+    free_shipping: "Free Shipping over $99"
+    language: "Language"
+
+  footer:
+    about: "Your one-stop shop for cameras, smartwatches, smartphones and lifestyle gear — curated collections and honest reviews."
+    questions: "Got Questions? Call us 24/7"
+    shop: "Shop"
+    all_products: "All products"
+    categories: "Categories"
+    my_account: "My Account"
+    view_cart: "View Cart"
+    my_wishlist: "My Wishlist"
+    track_order: "Track My Order"
+    blog: "Blog"
+    staff_sign_in: "Staff sign in"
+    copyright: "Copyright © %{year} MegaShop Store. All Rights Reserved."
+    terms: "Terms Of Use"
+    privacy: "Privacy Policy"
+
+  common:
+    add_to_cart: "Add to cart"
+    quick_view: "Quick view"
+    add_to_wishlist: "Add to wishlist"
+    in_stock: "In stock"
+    out_of_stock: "Out of stock"
+    read_more: "Read more"
+    close: "Close"
+
+  admin:
+    tag: "Admin"
+    view_store: "View store"
+    sign_out: "Sign out"
+    nav:
+      dashboard: "Dashboard"
+      orders: "Orders"
+      catalog: "Catalog"
+      products: "Products"
+      categories: "Categories"
+      brands: "Brands"
+      collections: "Collections"
+      content: "Content"
+      sliders: "Homepage Sliders"
+      posts: "Blog Posts"
+      reviews: "Reviews"
+      settings: "Settings"
+      users: "Staff & Users"

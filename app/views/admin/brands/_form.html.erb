@@ -1,18 +1,12 @@
 <%= form_with model: [ :admin, @brand ], html: { class: "max-w-2xl" } do |f| %>
   <%= admin_form_errors(@brand) %>
   <div class="bg-white rounded-xl shadow-sm p-6 space-y-4">
-    <div>
-      <%= f.label :name, class: label_classes %>
-      <%= f.text_field :name, class: input_classes %>
-    </div>
+    <%= render "admin/shared/translated_field", form: f, attribute: :name, label: "Name" %>
     <div>
       <%= f.label :website, class: label_classes %>
       <%= f.url_field :website, class: input_classes, placeholder: "https://…" %>
     </div>
-    <div>
-      <%= f.label :description, class: label_classes %>
-      <%= f.text_area :description, rows: 3, class: input_classes %>
-    </div>
+    <%= render "admin/shared/translated_field", form: f, attribute: :description, label: "Description", as: :text_area %>
     <div>
       <%= f.label :position, class: label_classes %>
       <%= f.number_field :position, class: "#{input_classes} w-32" %>

@@ -49,6 +49,6 @@ class Admin::CategoriesController < Admin::BaseController
   end
 
   def category_params
-    params.require(:category).permit(:name, :description, :position, :featured, :parent_id, :image)
+    params.require(:category).permit(*translated_keys(:name, :description), :position, :featured, :parent_id, :image)
   end
 end

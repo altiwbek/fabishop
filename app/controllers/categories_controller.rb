@@ -19,7 +19,7 @@ class CategoriesController < StorefrontController
     when "price_desc" then scope.order(price: :desc)
     when "rating"     then scope.top_rated
     when "popular"    then scope.popular
-    when "name"       then scope.order(:name)
+    when "name"       then scope.order_by_translation(:name)
     else scope.recent
     end
   end

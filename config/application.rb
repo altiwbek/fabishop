@@ -28,6 +28,12 @@ module MegaShop
     # for image analysis/variants.
     config.active_storage.variant_processor = :mini_magick
 
+    # Internationalization: English (default), Russian, Kyrgyz.
+    # Missing ru/ky translations fall back to English.
+    config.i18n.available_locales = [ :en, :ru, :ky ]
+    config.i18n.default_locale = :en
+    config.i18n.fallbacks = [ :en ]
+
     # Use RSpec + FactoryBot for generated code; skip other test scaffolding.
     config.generators do |g|
       g.test_framework :rspec,

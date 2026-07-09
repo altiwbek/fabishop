@@ -2,18 +2,9 @@
   <%= admin_form_errors(@post) %>
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
     <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 space-y-4">
-      <div>
-        <%= f.label :title, class: label_classes %>
-        <%= f.text_field :title, class: input_classes %>
-      </div>
-      <div>
-        <%= f.label :subtitle, class: label_classes %>
-        <%= f.text_field :subtitle, class: input_classes %>
-      </div>
-      <div>
-        <%= f.label :excerpt, "Excerpt (list preview)", class: label_classes %>
-        <%= f.text_area :excerpt, rows: 2, class: input_classes %>
-      </div>
+      <%= render "admin/shared/translated_field", form: f, attribute: :title, label: "Title" %>
+      <%= render "admin/shared/translated_field", form: f, attribute: :subtitle, label: "Subtitle" %>
+      <%= render "admin/shared/translated_field", form: f, attribute: :excerpt, label: "Excerpt (list preview)", as: :text_area, rows: 2 %>
       <div>
         <%= f.label :body, class: label_classes %>
         <div class="border border-gray-300 rounded-lg overflow-hidden">

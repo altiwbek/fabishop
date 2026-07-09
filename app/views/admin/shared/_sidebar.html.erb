@@ -2,26 +2,26 @@
        data-sidebar-target="panel">
   <div class="h-16 flex items-center gap-2 px-6 border-b border-gray-800">
     <span class="text-2xl font-bold tracking-tight">MegaShop<span class="text-indigo-400">.</span></span>
-    <span class="text-xs uppercase tracking-widest text-gray-500 ml-1">Admin</span>
+    <span class="text-xs uppercase tracking-widest text-gray-500 ml-1"><%= t("admin.tag") %></span>
   </div>
 
   <nav class="p-4 space-y-1 overflow-y-auto" style="max-height: calc(100vh - 4rem);">
-    <%= admin_nav_link "Dashboard", admin_root_path, icon: "la-th-large", active_when: admin_controller?(:dashboard) %>
-    <%= admin_nav_link "Orders", admin_orders_path, icon: "la-shopping-bag", active_when: admin_controller?(:orders) %>
+    <%= admin_nav_link t("admin.nav.dashboard"), admin_root_path, icon: "la-th-large", active_when: admin_controller?(:dashboard) %>
+    <%= admin_nav_link t("admin.nav.orders"), admin_orders_path, icon: "la-shopping-bag", active_when: admin_controller?(:orders) %>
 
-    <p class="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-gray-500">Catalog</p>
-    <%= admin_nav_link "Products", admin_products_path, icon: "la-box", active_when: admin_controller?(:products, :product_images) %>
-    <%= admin_nav_link "Categories", admin_categories_path, icon: "la-sitemap", active_when: admin_controller?(:categories) %>
-    <%= admin_nav_link "Brands", admin_brands_path, icon: "la-copyright", active_when: admin_controller?(:brands) %>
-    <%= admin_nav_link "Collections", admin_collections_path, icon: "la-layer-group", active_when: admin_controller?(:collections, :collection_products) %>
+    <p class="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-gray-500"><%= t("admin.nav.catalog") %></p>
+    <%= admin_nav_link t("admin.nav.products"), admin_products_path, icon: "la-box", active_when: admin_controller?(:products, :product_images) %>
+    <%= admin_nav_link t("admin.nav.categories"), admin_categories_path, icon: "la-sitemap", active_when: admin_controller?(:categories) %>
+    <%= admin_nav_link t("admin.nav.brands"), admin_brands_path, icon: "la-copyright", active_when: admin_controller?(:brands) %>
+    <%= admin_nav_link t("admin.nav.collections"), admin_collections_path, icon: "la-layer-group", active_when: admin_controller?(:collections, :collection_products) %>
 
-    <p class="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-gray-500">Content</p>
-    <%= admin_nav_link "Homepage Sliders", admin_slides_path, icon: "la-images", active_when: admin_controller?(:slides) %>
-    <%= admin_nav_link "Blog Posts", admin_posts_path, icon: "la-newspaper", active_when: admin_controller?(:posts) %>
-    <%= admin_nav_link "Reviews", admin_reviews_path, icon: "la-star", active_when: admin_controller?(:reviews) %>
+    <p class="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-gray-500"><%= t("admin.nav.content") %></p>
+    <%= admin_nav_link t("admin.nav.sliders"), admin_slides_path, icon: "la-images", active_when: admin_controller?(:slides) %>
+    <%= admin_nav_link t("admin.nav.posts"), admin_posts_path, icon: "la-newspaper", active_when: admin_controller?(:posts) %>
+    <%= admin_nav_link t("admin.nav.reviews"), admin_reviews_path, icon: "la-star", active_when: admin_controller?(:reviews) %>
 
-    <p class="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-gray-500">Settings</p>
-    <%= admin_nav_link "Staff & Users", admin_users_path, icon: "la-users", active_when: admin_controller?(:users) %>
+    <p class="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-gray-500"><%= t("admin.nav.settings") %></p>
+    <%= admin_nav_link t("admin.nav.users"), admin_users_path, icon: "la-users", active_when: admin_controller?(:users) %>
   </nav>
 </aside>
 

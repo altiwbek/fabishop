@@ -10,22 +10,15 @@
       <p class="text-xs text-gray-400 mt-1">Wide landscape image works best (approx 1100×500).</p>
     </div>
 
-    <div>
-      <%= f.label :subtitle, "Subtitle (small text on top)", class: label_classes %>
-      <%= f.text_field :subtitle, class: input_classes, placeholder: "e.g. Daily Deals" %>
-    </div>
+    <%= render "admin/shared/translated_field", form: f, attribute: :subtitle, label: "Subtitle (small text on top)" %>
 
     <div>
-      <%= f.label :title, "Title", class: label_classes %>
-      <%= f.text_field :title, class: input_classes, placeholder: "e.g. Camera Season|Sale." %>
+      <%= render "admin/shared/translated_field", form: f, attribute: :title, label: "Title" %>
       <p class="text-xs text-gray-400 mt-1">Use a <code>|</code> where you want a line break.</p>
     </div>
 
     <div class="grid grid-cols-2 gap-4">
-      <div>
-        <%= f.label :price_label, "Price label", class: label_classes %>
-        <%= f.text_field :price_label, class: input_classes, placeholder: "e.g. Save up to" %>
-      </div>
+      <%= render "admin/shared/translated_field", form: f, attribute: :price_label, label: "Price label" %>
       <div>
         <%= f.label :price, "Price / highlight", class: label_classes %>
         <%= f.text_field :price, class: input_classes, placeholder: "e.g. $150.00" %>
@@ -33,10 +26,7 @@
     </div>
 
     <div class="grid grid-cols-2 gap-4">
-      <div>
-        <%= f.label :button_label, class: label_classes %>
-        <%= f.text_field :button_label, class: input_classes, placeholder: "e.g. Shop the deals" %>
-      </div>
+      <%= render "admin/shared/translated_field", form: f, attribute: :button_label, label: "Button label" %>
       <div>
         <%= f.label :button_url, "Button link", class: label_classes %>
         <%= f.text_field :button_url, class: input_classes, placeholder: "/products or /collections/new-trends" %>

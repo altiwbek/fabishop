@@ -1,4 +1,7 @@
 class Slide < ApplicationRecord
+  extend Mobility
+  translates :title, :subtitle, :price_label, :button_label
+
   has_one_attached :image
 
   validates :title, presence: true

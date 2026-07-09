@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_05_221734) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_09_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -54,11 +54,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_221734) do
 
   create_table "brands", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.text "description"
-    t.string "name", null: false
     t.integer "position", default: 0, null: false
     t.integer "products_count", default: 0, null: false
     t.string "slug", null: false
+    t.jsonb "translations", default: {}, null: false
     t.datetime "updated_at", null: false
     t.string "website"
     t.index ["slug"], name: "index_brands_on_slug", unique: true
@@ -66,13 +65,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_221734) do
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.text "description"
     t.boolean "featured", default: false, null: false
-    t.string "name", null: false
     t.bigint "parent_id"
     t.integer "position", default: 0, null: false
     t.integer "products_count", default: 0, null: false
     t.string "slug", null: false
+    t.jsonb "translations", default: {}, null: false
     t.datetime "updated_at", null: false
     t.index ["parent_id"], name: "index_categories_on_parent_id"
     t.index ["position"], name: "index_categories_on_position"
@@ -93,12 +91,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_221734) do
   create_table "collections", force: :cascade do |t|
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
-    t.text "description"
     t.boolean "featured", default: false, null: false
-    t.string "name", null: false
     t.integer "position", default: 0, null: false
     t.string "slug", null: false
-    t.string "subtitle"
+    t.jsonb "translations", default: {}, null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_collections_on_slug", unique: true
   end
@@ -153,12 +149,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_221734) do
   create_table "posts", force: :cascade do |t|
     t.bigint "author_id"
     t.datetime "created_at", null: false
-    t.text "excerpt"
     t.boolean "published", default: false, null: false
     t.datetime "published_at"
     t.string "slug", null: false
-    t.string "subtitle"
-    t.string "title", null: false
+    t.jsonb "translations", default: {}, null: false
     t.datetime "updated_at", null: false
     t.integer "views_count", default: 0, null: false
     t.index ["author_id"], name: "index_posts_on_author_id"
@@ -172,7 +166,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_221734) do
     t.decimal "compare_at_price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.boolean "featured", default: false, null: false
-    t.string "name", null: false
     t.boolean "new_arrival", default: false, null: false
     t.boolean "on_sale", default: false, null: false
     t.decimal "price", precision: 10, scale: 2, default: "0.0", null: false
@@ -183,7 +176,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_221734) do
     t.string "sku"
     t.string "slug", null: false
     t.integer "stock", default: 0, null: false
-    t.string "subtitle"
+    t.jsonb "translations", default: {}, null: false
     t.datetime "updated_at", null: false
     t.integer "views_count", default: 0, null: false
     t.index ["brand_id"], name: "index_products_on_brand_id"
@@ -220,14 +213,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_221734) do
 
   create_table "slides", force: :cascade do |t|
     t.boolean "active", default: true, null: false
-    t.string "button_label"
     t.string "button_url"
     t.datetime "created_at", null: false
     t.integer "position", default: 0, null: false
     t.string "price"
-    t.string "price_label"
-    t.string "subtitle"
-    t.string "title", null: false
+    t.jsonb "translations", default: {}, null: false
     t.datetime "updated_at", null: false
     t.index ["position"], name: "index_slides_on_position"
   end

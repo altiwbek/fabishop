@@ -47,6 +47,6 @@ class Admin::PostsController < Admin::BaseController
   end
 
   def post_params
-    params.require(:post).permit(:title, :subtitle, :excerpt, :body, :published, :author_id, :cover)
+    params.require(:post).permit(*translated_keys(:title, :subtitle, :excerpt), :body, :published, :author_id, :cover)
   end
 end

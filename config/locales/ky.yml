@@ -1,0 +1,67 @@
+ky:
+  language_name: "Кыргызча"
+
+  nav:
+    home: "Башкы бет"
+    categories: "Категориялар"
+    collections: "Коллекциялар"
+    products: "Товарлар"
+    blog: "Блог"
+
+  header:
+    call: "Чалыңыз: +996 (700) 123-456"
+    links: "Шилтемелер"
+    wishlist: "Тандалмалар"
+    track_order: "Буйрутманы көзөмөлдөө"
+    admin_dashboard: "Админ панели"
+    sign_out: "Чыгуу"
+    staff_sign_in: "Кызматкер катары кирүү"
+    browse_categories: "Категорияларды кароо"
+    search_placeholder: "Товарларды издөө..."
+    search: "Издөө"
+    free_shipping: "$99 жогору акысыз жеткирүү"
+    language: "Тил"
+
+  footer:
+    about: "Камералар, смарт-сааттар, смартфондор жана турмуш-тиричилик товарлары үчүн бирден-бир дүкөн — тандалган коллекциялар жана чынчыл пикирлер."
+    questions: "Суроолор барбы? 24/7 чалыңыз"
+    shop: "Дүкөн"
+    all_products: "Бардык товарлар"
+    categories: "Категориялар"
+    my_account: "Менин аккаунтум"
+    view_cart: "Себетти кароо"
+    my_wishlist: "Менин тандалмаларым"
+    track_order: "Буйрутманы көзөмөлдөө"
+    blog: "Блог"
+    staff_sign_in: "Кызматкер катары кирүү"
+    copyright: "© %{year} MegaShop Store. Бардык укуктар корголгон."
+    terms: "Колдонуу шарттары"
+    privacy: "Купуялык саясаты"
+
+  common:
+    add_to_cart: "Себетке кошуу"
+    quick_view: "Тез кароо"
+    add_to_wishlist: "Тандалмага кошуу"
+    in_stock: "Бар"
+    out_of_stock: "Түгөнгөн"
+    read_more: "Толугураак"
+    close: "Жабуу"
+
+  admin:
+    tag: "Админ"
+    view_store: "Дүкөндү ачуу"
+    sign_out: "Чыгуу"
+    nav:
+      dashboard: "Башкаруу панели"
+      orders: "Буйрутмалар"
+      catalog: "Каталог"
+      products: "Товарлар"
+      categories: "Категориялар"
+      brands: "Бренддер"
+      collections: "Коллекциялар"
+      content: "Мазмун"
+      sliders: "Слайдерлер"
+      posts: "Блог жазуулары"
+      reviews: "Пикирлер"
+      settings: "Жөндөөлөр"
+      users: "Колдонуучулар"

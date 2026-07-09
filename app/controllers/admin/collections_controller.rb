@@ -9,7 +9,7 @@ class Admin::CollectionsController < Admin::BaseController
   def show
     @page_title = @collection.name
     @in_collection = @collection.products.order("collection_products.position").to_a
-    @available = Product.where.not(id: @in_collection.map(&:id)).order(:name)
+    @available = Product.where.not(id: @in_collection.map(&:id)).order_by_translation(:name)
   end
 
   def new
@@ -52,6 +52,6 @@ class Admin::CollectionsController < Admin::BaseController
   end
 
   def collection_params
-    params.require(:collection).permit(:name, :subtitle, :description, :position, :featured, :active, :cover)
+    params.require(:collection).permit(*translated_keys(:name, :subtitle, :description), :position, :featured, :active, :cover)
   end
 end

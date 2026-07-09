@@ -29,6 +29,9 @@ gem "friendly_id", "~> 5.5"
 # Pagination [https://github.com/ddnexus/pagy]
 gem "pagy", "~> 9.0"
 
+# Per-locale model translations stored in jsonb [https://github.com/shioyama/mobility]
+gem "mobility", "~> 1.3"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

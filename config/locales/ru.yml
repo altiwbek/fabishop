@@ -1,0 +1,67 @@
+ru:
+  language_name: "Русский"
+
+  nav:
+    home: "Главная"
+    categories: "Категории"
+    collections: "Коллекции"
+    products: "Товары"
+    blog: "Блог"
+
+  header:
+    call: "Звоните: +996 (700) 123-456"
+    links: "Ссылки"
+    wishlist: "Избранное"
+    track_order: "Отследить заказ"
+    admin_dashboard: "Панель администратора"
+    sign_out: "Выйти"
+    staff_sign_in: "Вход для персонала"
+    browse_categories: "Просмотр категорий"
+    search_placeholder: "Поиск товаров..."
+    search: "Поиск"
+    free_shipping: "Бесплатная доставка от $99"
+    language: "Язык"
+
+  footer:
+    about: "Ваш универсальный магазин камер, смарт-часов, смартфонов и товаров для жизни — подобранные коллекции и честные отзывы."
+    questions: "Есть вопросы? Звоните нам круглосуточно"
+    shop: "Магазин"
+    all_products: "Все товары"
+    categories: "Категории"
+    my_account: "Мой аккаунт"
+    view_cart: "Корзина"
+    my_wishlist: "Избранное"
+    track_order: "Отследить заказ"
+    blog: "Блог"
+    staff_sign_in: "Вход для персонала"
+    copyright: "© %{year} MegaShop Store. Все права защищены."
+    terms: "Условия использования"
+    privacy: "Политика конфиденциальности"
+
+  common:
+    add_to_cart: "В корзину"
+    quick_view: "Быстрый просмотр"
+    add_to_wishlist: "В избранное"
+    in_stock: "В наличии"
+    out_of_stock: "Нет в наличии"
+    read_more: "Подробнее"
+    close: "Закрыть"
+
+  admin:
+    tag: "Админ"
+    view_store: "Открыть магазин"
+    sign_out: "Выйти"
+    nav:
+      dashboard: "Панель"
+      orders: "Заказы"
+      catalog: "Каталог"
+      products: "Товары"
+      categories: "Категории"
+      brands: "Бренды"
+      collections: "Коллекции"
+      content: "Контент"
+      sliders: "Слайдеры"
+      posts: "Блог"
+      reviews: "Отзывы"
+      settings: "Настройки"
+      users: "Пользователи"

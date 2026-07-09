@@ -1,4 +1,7 @@
 class Category < ApplicationRecord
+  extend Mobility
+  translates :name, :description
+
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -8,9 +11,9 @@ class Category < ApplicationRecord
 
   has_one_attached :image
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true
 
-  scope :ordered, -> { order(:position, :name) }
+  scope :ordered, -> { order(:position).order_by_translation(:name) }
   scope :roots, -> { where(parent_id: nil) }
   scope :featured, -> { where(featured: true) }
 

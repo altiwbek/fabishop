@@ -46,7 +46,7 @@ class Admin::SlidesController < Admin::BaseController
   end
 
   def slide_params
-    params.require(:slide).permit(:title, :subtitle, :price_label, :price,
-                                  :button_label, :button_url, :position, :active, :image)
+    params.require(:slide).permit(*translated_keys(:title, :subtitle, :price_label, :button_label),
+                                  :price, :button_url, :position, :active, :image)
   end
 end

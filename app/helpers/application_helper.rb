@@ -9,6 +9,28 @@ module ApplicationHelper
     slide.image.attached? ? url_for(slide.image) : fallback
   end
 
+  # Human-readable native names for the languages we support, keyed by locale.
+  LOCALE_NAMES = { en: "English", ru: "Русский", ky: "Кыргызча" }.freeze
+  LOCALE_SHORT = { en: "EN", ru: "RU", ky: "KY" }.freeze
+
+  def available_locales
+    I18n.available_locales
+  end
+
+  def locale_name(locale)
+    LOCALE_NAMES[locale.to_sym] || locale.to_s
+  end
+
+  def locale_short(locale)
+    LOCALE_SHORT[locale.to_sym] || locale.to_s.upcase
+  end
+
+  # URL for the current page switched to another locale, preserving the path and
+  # existing query params.
+  def switch_locale_url(locale)
+    url_for(request.query_parameters.merge(locale: locale, only_path: true))
+  end
+
   # Tailwind-styled pagination for the admin area, which does not load Bootstrap
   # CSS (so pagy_bootstrap_nav renders unstyled there). Mirrors Pagy's series
   # API: Integer -> link, String -> current page, :gap -> ellipsis.

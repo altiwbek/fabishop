@@ -46,6 +46,6 @@ class Admin::BrandsController < Admin::BaseController
   end
 
   def brand_params
-    params.require(:brand).permit(:name, :description, :website, :position, :logo)
+    params.require(:brand).permit(*translated_keys(:name, :description), :website, :position, :logo)
   end
 end
