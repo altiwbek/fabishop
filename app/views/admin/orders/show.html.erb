@@ -1,13 +1,13 @@
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
   <%= link_to admin_orders_path, class: "text-sm text-gray-500 hover:text-indigo-600" do %>
-    <i class="las la-arrow-left"></i> Back to orders
+    <i class="las la-arrow-left"></i> <%= t("admin.form.back") %>
   <% end %>
   <div class="flex items-center gap-3">
-    <%= status_badge @order.status.capitalize, color: @order.status_color %>
+    <%= status_badge t("admin.orders.statuses.#{@order.status}"), color: @order.status_color %>
     <%= form_with url: admin_order_path(@order), method: :patch, class: "flex items-center gap-2" do %>
-      <%= select_tag "order[status]", options_for_select(Order.statuses.keys.map { |s| [ s.capitalize, s ] }, @order.status),
+      <%= select_tag "order[status]", options_for_select(Order.statuses.keys.map { |s| [ t("admin.orders.statuses.#{s}"), s ] }, @order.status),
             class: "#{input_classes} w-auto py-1.5" %>
-      <button class="<%= btn_primary %>">Update</button>
+      <button class="<%= btn_primary %>"><%= t("admin.show.update") %></button>
     <% end %>
   </div>
 </div>
@@ -22,7 +22,7 @@
     </div>
     <table class="w-full text-sm">
       <thead class="text-left text-gray-500 border-b border-gray-100">
-        <tr><th class="py-2">Product</th><th class="py-2">Price</th><th class="py-2">Qty</th><th class="py-2 text-right">Total</th></tr>
+        <tr><th class="py-2"><%= t("admin.products.cols.product") %></th><th class="py-2"><%= t("admin.products.cols.price") %></th><th class="py-2"><%= t("admin.show.qty") %></th><th class="py-2 text-right"><%= t("admin.orders.cols.total") %></th></tr>
       </thead>
       <tbody class="divide-y divide-gray-100">
         <% @order.order_items.each do |item| %>
@@ -42,29 +42,29 @@
         <% end %>
       </tbody>
       <tfoot class="text-sm">
-        <tr><td colspan="3" class="py-1 text-right text-gray-500">Subtotal</td><td class="py-1 text-right"><%= number_to_currency @order.subtotal %></td></tr>
-        <tr><td colspan="3" class="py-1 text-right text-gray-500">Shipping</td><td class="py-1 text-right"><%= @order.shipping.zero? ? "Free" : number_to_currency(@order.shipping) %></td></tr>
-        <tr class="font-bold text-gray-900"><td colspan="3" class="py-2 text-right">Total</td><td class="py-2 text-right"><%= number_to_currency @order.total %></td></tr>
+        <tr><td colspan="3" class="py-1 text-right text-gray-500"><%= t("admin.show.subtotal") %></td><td class="py-1 text-right"><%= number_to_currency @order.subtotal %></td></tr>
+        <tr><td colspan="3" class="py-1 text-right text-gray-500"><%= t("admin.show.shipping") %></td><td class="py-1 text-right"><%= @order.shipping.zero? ? t("admin.show.free") : number_to_currency(@order.shipping) %></td></tr>
+        <tr class="font-bold text-gray-900"><td colspan="3" class="py-2 text-right"><%= t("admin.orders.cols.total") %></td><td class="py-2 text-right"><%= number_to_currency @order.total %></td></tr>
       </tfoot>
     </table>
   </div>
 
   <div class="space-y-6">
     <div class="bg-white rounded-xl shadow-sm p-6 text-sm">
-      <h3 class="font-semibold text-gray-900 mb-3">Customer</h3>
+      <h3 class="font-semibold text-gray-900 mb-3"><%= t("admin.orders.cols.customer") %></h3>
       <p class="font-medium"><%= @order.customer_name %></p>
       <p class="text-gray-600"><%= mail_to @order.email, @order.email, class: "text-indigo-600 hover:underline" %></p>
       <% if @order.phone.present? %><p class="text-gray-600"><%= @order.phone %></p><% end %>
     </div>
     <div class="bg-white rounded-xl shadow-sm p-6 text-sm">
-      <h3 class="font-semibold text-gray-900 mb-3">Shipping Address</h3>
+      <h3 class="font-semibold text-gray-900 mb-3"><%= t("admin.show.shipping_address") %></h3>
       <p class="text-gray-600"><%= @order.address %></p>
       <p class="text-gray-600"><%= [ @order.city, @order.postal_code ].compact_blank.join(", ") %></p>
       <p class="text-gray-600"><%= @order.country %></p>
     </div>
     <% if @order.notes.present? %>
       <div class="bg-white rounded-xl shadow-sm p-6 text-sm">
-        <h3 class="font-semibold text-gray-900 mb-3">Order Notes</h3>
+        <h3 class="font-semibold text-gray-900 mb-3"><%= t("admin.show.order_notes") %></h3>
         <p class="text-gray-600"><%= @order.notes %></p>
       </div>
     <% end %>

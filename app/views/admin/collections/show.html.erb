@@ -1,6 +1,6 @@
 <div class="flex items-center justify-between mb-6">
-  <%= link_to "← Back to collections", admin_collections_path, class: "text-sm text-gray-500 hover:text-indigo-600" %>
-  <%= link_to edit_admin_collection_path(@collection), class: btn_secondary do %><i class="las la-edit"></i> Edit details<% end %>
+  <%= link_to t("admin.form.back"), admin_collections_path, class: "text-sm text-gray-500 hover:text-indigo-600" %>
+  <%= link_to edit_admin_collection_path(@collection), class: btn_secondary do %><i class="las la-edit"></i> <%= t("admin.show.edit_details") %><% end %>
 </div>
 
 <div class="mb-6">
@@ -10,7 +10,7 @@
 
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
   <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
-    <h3 class="font-semibold text-gray-900 mb-4">Products in this collection (<%= @in_collection.size %>)</h3>
+    <h3 class="font-semibold text-gray-900 mb-4"><%= t("admin.show.products_in_collection", count: @in_collection.size) %></h3>
     <% if @in_collection.any? %>
       <div class="divide-y divide-gray-100">
         <% @in_collection.each do |product| %>
@@ -19,7 +19,7 @@
             <%= link_to product.name, admin_product_path(product), class: "flex-1 text-sm font-medium text-gray-900 hover:text-indigo-600" %>
             <span class="text-sm text-gray-500"><%= number_to_currency product.price %></span>
             <%= button_to admin_collection_collection_product_path(@collection, product.id), method: :delete,
-                  class: "text-red-500 hover:text-red-700", title: "Remove",
+                  class: "text-red-500 hover:text-red-700", title: t("admin.form.remove"),
                   form: { class: "inline" } do %>
               <i class="las la-times-circle text-lg"></i>
             <% end %>
@@ -27,18 +27,18 @@
         <% end %>
       </div>
     <% else %>
-      <p class="text-sm text-gray-400">No products yet. Add some from the panel on the right.</p>
+      <p class="text-sm text-gray-400"><%= t("admin.show.no_products_add") %></p>
     <% end %>
   </div>
 
   <div class="bg-white rounded-xl shadow-sm p-6">
-    <h3 class="font-semibold text-gray-900 mb-4">Add a product</h3>
+    <h3 class="font-semibold text-gray-900 mb-4"><%= t("admin.show.add_product") %></h3>
     <%= form_with url: admin_collection_collection_products_path(@collection), method: :post, class: "space-y-3" do %>
       <%= select_tag :product_id,
             options_from_collection_for_select(@available, :id, :name),
-            class: input_classes, prompt: "Choose a product…" %>
-      <button class="<%= btn_primary %> w-full justify-center"><i class="las la-plus"></i> Add to collection</button>
+            class: input_classes, prompt: t("admin.show.choose_product") %>
+      <button class="<%= btn_primary %> w-full justify-center"><i class="las la-plus"></i> <%= t("admin.show.add_to_collection") %></button>
     <% end %>
-    <p class="text-xs text-gray-400 mt-3"><%= @available.size %> products available to add.</p>
+    <p class="text-xs text-gray-400 mt-3"><%= t("admin.show.available_to_add", count: @available.size) %></p>
   </div>
 </div>

@@ -1,8 +1,8 @@
 <div id="product_status" class="flex items-center gap-3">
-  <%= boolean_badge product.published, true_text: "Published", false_text: "Draft" %>
+  <%= boolean_badge product.published, true_text: t("admin.common.published"), false_text: t("admin.common.draft") %>
   <%= button_to toggle_published_admin_product_path(product), method: :patch, class: btn_secondary,
         form: { data: { turbo: true } } do %>
     <i class="las la-<%= product.published? ? 'eye-slash' : 'eye' %>"></i>
-    <%= product.published? ? "Unpublish" : "Publish" %>
+    <%= product.published? ? t("admin.show.unpublish") : t("admin.show.publish") %>
   <% end %>
 </div>

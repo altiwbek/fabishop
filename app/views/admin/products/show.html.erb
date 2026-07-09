@@ -1,14 +1,14 @@
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
   <%= link_to admin_products_path, class: "text-sm text-gray-500 hover:text-indigo-600" do %>
-    <i class="las la-arrow-left"></i> Back to products
+    <i class="las la-arrow-left"></i> <%= t("admin.form.back") %>
   <% end %>
   <div class="flex items-center gap-3">
     <%= render "admin/products/status", product: @product %>
     <%= link_to product_path(@product), target: "_blank", class: btn_secondary do %>
-      <i class="las la-external-link-alt"></i> View on store
+      <i class="las la-external-link-alt"></i> <%= t("admin.show.view_on_store") %>
     <% end %>
     <%= link_to edit_admin_product_path(@product), class: btn_primary do %>
-      <i class="las la-edit"></i> Edit
+      <i class="las la-edit"></i> <%= t("admin.actions.edit") %>
     <% end %>
   </div>
 </div>
@@ -49,13 +49,13 @@
 
   <div class="space-y-6">
     <div class="bg-white rounded-xl shadow-sm p-6 space-y-3 text-sm">
-      <h3 class="font-semibold text-gray-900 mb-2">Details</h3>
-      <div class="flex justify-between"><span class="text-gray-500">Category</span><span class="font-medium"><%= @product.category.name %></span></div>
-      <div class="flex justify-between"><span class="text-gray-500">Brand</span><span class="font-medium"><%= @product.brand&.name || "—" %></span></div>
-      <div class="flex justify-between"><span class="text-gray-500">SKU</span><span class="font-medium"><%= @product.sku.presence || "—" %></span></div>
-      <div class="flex justify-between"><span class="text-gray-500">Stock</span><span class="font-medium"><%= @product.stock %></span></div>
-      <div class="flex justify-between"><span class="text-gray-500">Views</span><span class="font-medium"><%= @product.views_count %></span></div>
-      <div class="flex justify-between items-center"><span class="text-gray-500">Rating</span>
+      <h3 class="font-semibold text-gray-900 mb-2"><%= t("admin.show.details") %></h3>
+      <div class="flex justify-between"><span class="text-gray-500"><%= t("admin.form.category") %></span><span class="font-medium"><%= @product.category.name %></span></div>
+      <div class="flex justify-between"><span class="text-gray-500"><%= t("admin.show.brand") %></span><span class="font-medium"><%= @product.brand&.name || t("admin.common.none") %></span></div>
+      <div class="flex justify-between"><span class="text-gray-500"><%= t("admin.form.sku") %></span><span class="font-medium"><%= @product.sku.presence || t("admin.common.none") %></span></div>
+      <div class="flex justify-between"><span class="text-gray-500"><%= t("admin.form.stock") %></span><span class="font-medium"><%= @product.stock %></span></div>
+      <div class="flex justify-between"><span class="text-gray-500"><%= t("admin.show.views") %></span><span class="font-medium"><%= @product.views_count %></span></div>
+      <div class="flex justify-between items-center"><span class="text-gray-500"><%= t("admin.show.rating") %></span>
         <span class="font-medium flex items-center gap-1 text-yellow-500">
           <i class="las la-star"></i><%= @product.rating %> <span class="text-gray-400">(<%= @product.reviews_count %>)</span>
         </span>
@@ -63,7 +63,7 @@
     </div>
 
     <div class="bg-white rounded-xl shadow-sm p-6">
-      <h3 class="font-semibold text-gray-900 mb-3">Collections</h3>
+      <h3 class="font-semibold text-gray-900 mb-3"><%= t("admin.form.collections") %></h3>
       <% if @product.collections.any? %>
         <div class="flex flex-wrap gap-2">
           <% @product.collections.each do |c| %>
@@ -71,17 +71,17 @@
           <% end %>
         </div>
       <% else %>
-        <p class="text-sm text-gray-400">Not in any collection.</p>
+        <p class="text-sm text-gray-400"><%= t("admin.show.not_in_collection") %></p>
       <% end %>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm p-6">
       <div class="flex flex-wrap gap-2">
-        <% if @product.featured? %><%= status_badge("Featured", color: :indigo) %><% end %>
-        <% if @product.new_arrival? %><%= status_badge("New", color: :green) %><% end %>
-        <% if @product.on_sale? %><%= status_badge("On sale", color: :red) %><% end %>
+        <% if @product.featured? %><%= status_badge(t("admin.common.featured"), color: :indigo) %><% end %>
+        <% if @product.new_arrival? %><%= status_badge(t("admin.show.new"), color: :green) %><% end %>
+        <% if @product.on_sale? %><%= status_badge(t("admin.show.on_sale"), color: :red) %><% end %>
         <% unless @product.featured? || @product.new_arrival? || @product.on_sale? %>
-          <span class="text-sm text-gray-400">No special flags.</span>
+          <span class="text-sm text-gray-400"><%= t("admin.show.no_flags") %></span>
         <% end %>
       </div>
     </div>
