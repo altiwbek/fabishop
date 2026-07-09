@@ -2,50 +2,50 @@
   <%= admin_form_errors(@slide) %>
   <div class="bg-white rounded-xl shadow-sm p-6 space-y-4">
     <div>
-      <%= f.label :image, "Background image", class: label_classes %>
+      <%= f.label :image, t("admin.form.background_image"), class: label_classes %>
       <% if @slide.image.attached? %>
         <%= image_tag url_for(@slide.image), class: "w-full h-40 object-cover rounded-lg mb-2" %>
       <% end %>
       <%= f.file_field :image, accept: "image/*", class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-700" %>
-      <p class="text-xs text-gray-400 mt-1">Wide landscape image works best (approx 1100×500).</p>
+      <p class="text-xs text-gray-400 mt-1"><%= t("admin.form.bg_hint") %></p>
     </div>
 
-    <%= render "admin/shared/translated_field", form: f, attribute: :subtitle, label: "Subtitle (small text on top)" %>
+    <%= render "admin/shared/translated_field", form: f, attribute: :subtitle, label: t("admin.form.subtitle_top") %>
 
     <div>
-      <%= render "admin/shared/translated_field", form: f, attribute: :title, label: "Title" %>
-      <p class="text-xs text-gray-400 mt-1">Use a <code>|</code> where you want a line break.</p>
+      <%= render "admin/shared/translated_field", form: f, attribute: :title, label: t("admin.form.title") %>
+      <p class="text-xs text-gray-400 mt-1"><%= t("admin.form.title_pipe_hint") %></p>
     </div>
 
     <div class="grid grid-cols-2 gap-4">
-      <%= render "admin/shared/translated_field", form: f, attribute: :price_label, label: "Price label" %>
+      <%= render "admin/shared/translated_field", form: f, attribute: :price_label, label: t("admin.form.price_label") %>
       <div>
-        <%= f.label :price, "Price / highlight", class: label_classes %>
+        <%= f.label :price, t("admin.form.price_highlight"), class: label_classes %>
         <%= f.text_field :price, class: input_classes, placeholder: "e.g. $150.00" %>
       </div>
     </div>
 
     <div class="grid grid-cols-2 gap-4">
-      <%= render "admin/shared/translated_field", form: f, attribute: :button_label, label: "Button label" %>
+      <%= render "admin/shared/translated_field", form: f, attribute: :button_label, label: t("admin.form.button_label") %>
       <div>
-        <%= f.label :button_url, "Button link", class: label_classes %>
+        <%= f.label :button_url, t("admin.form.button_link"), class: label_classes %>
         <%= f.text_field :button_url, class: input_classes, placeholder: "/products or /collections/new-trends" %>
       </div>
     </div>
 
     <div class="grid grid-cols-2 gap-4">
       <div>
-        <%= f.label :position, class: label_classes %>
+        <%= f.label :position, t("admin.form.position"), class: label_classes %>
         <%= f.number_field :position, class: input_classes %>
       </div>
       <label class="flex items-center gap-2 text-sm text-gray-700 mt-7">
-        <%= f.check_box :active, class: "rounded border-gray-300 text-indigo-600" %> Active (show on homepage)
+        <%= f.check_box :active, class: "rounded border-gray-300 text-indigo-600" %> <%= t("admin.form.active_homepage") %>
       </label>
     </div>
   </div>
 
   <div class="mt-6 flex gap-3">
-    <%= f.submit(@slide.persisted? ? "Save slide" : "Create slide", class: btn_primary) %>
-    <%= link_to "Cancel", admin_slides_path, class: btn_secondary %>
+    <%= f.submit(@slide.persisted? ? t("admin.form.save_slide") : t("admin.form.create_slide"), class: btn_primary) %>
+    <%= link_to t("admin.actions.cancel"), admin_slides_path, class: btn_secondary %>
   </div>
 <% end %>

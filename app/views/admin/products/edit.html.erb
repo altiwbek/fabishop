@@ -1,8 +1,8 @@
 <div class="flex items-center justify-between mb-6">
   <%= link_to admin_product_path(@product), class: "text-sm text-gray-500 hover:text-indigo-600" do %>
-    <i class="las la-arrow-left"></i> Back to product
+    <i class="las la-arrow-left"></i> <%= t("admin.form.back") %>
   <% end %>
-  <%= button_to "Delete", admin_product_path(@product), method: :delete, class: btn_danger,
-        form: { data: { turbo_confirm: "Delete this product permanently?" } } %>
+  <%= button_to t("admin.actions.delete"), admin_product_path(@product), method: :delete, class: btn_danger,
+        form: { data: { turbo_confirm: t("admin.form.delete_product_permanently") } } %>
 </div>
 <%= render "form" %>

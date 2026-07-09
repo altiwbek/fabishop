@@ -6,12 +6,12 @@ class Admin::CollectionProductsController < Admin::BaseController
     @collection.collection_products.find_or_create_by(product: product) do |cp|
       cp.position = (@collection.collection_products.maximum(:position) || 0) + 1
     end
-    redirect_to admin_collection_path(@collection), notice: "#{product.name} added."
+    redirect_to admin_collection_path(@collection), notice: t("admin.flash.collection_product.added", name: product.name)
   end
 
   def destroy
     @collection.collection_products.where(product_id: params[:id]).destroy_all
-    redirect_to admin_collection_path(@collection), notice: "Product removed.", status: :see_other
+    redirect_to admin_collection_path(@collection), notice: t("admin.flash.collection_product.removed"), status: :see_other
   end
 
   private

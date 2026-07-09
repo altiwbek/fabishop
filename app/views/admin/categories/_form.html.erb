@@ -1,23 +1,23 @@
 <%= form_with model: [ :admin, @category ], html: { class: "max-w-2xl" } do |f| %>
   <%= admin_form_errors(@category) %>
   <div class="bg-white rounded-xl shadow-sm p-6 space-y-4">
-    <%= render "admin/shared/translated_field", form: f, attribute: :name, label: "Name" %>
+    <%= render "admin/shared/translated_field", form: f, attribute: :name, label: t("admin.form.name") %>
     <div>
-      <%= f.label :parent_id, "Parent category (optional)", class: label_classes %>
-      <%= f.collection_select :parent_id, Category.where.not(id: @category.id).ordered, :id, :name, { include_blank: "None (top level)" }, class: input_classes %>
+      <%= f.label :parent_id, t("admin.form.parent_optional"), class: label_classes %>
+      <%= f.collection_select :parent_id, Category.where.not(id: @category.id).ordered, :id, :name, { include_blank: t("admin.form.parent_none") }, class: input_classes %>
     </div>
-    <%= render "admin/shared/translated_field", form: f, attribute: :description, label: "Description", as: :text_area %>
+    <%= render "admin/shared/translated_field", form: f, attribute: :description, label: t("admin.form.description"), as: :text_area %>
     <div class="grid grid-cols-2 gap-4">
       <div>
-        <%= f.label :position, class: label_classes %>
+        <%= f.label :position, t("admin.form.position"), class: label_classes %>
         <%= f.number_field :position, class: input_classes %>
       </div>
       <label class="flex items-center gap-2 text-sm text-gray-700 mt-7">
-        <%= f.check_box :featured, class: "rounded border-gray-300 text-indigo-600" %> Featured on homepage
+        <%= f.check_box :featured, class: "rounded border-gray-300 text-indigo-600" %> <%= t("admin.form.featured_home") %>
       </label>
     </div>
     <div>
-      <%= f.label :image, "Category image", class: label_classes %>
+      <%= f.label :image, t("admin.form.category_image"), class: label_classes %>
       <% if @category.image.attached? %>
         <%= image_tag url_for(@category.image), class: "w-24 h-24 object-cover rounded mb-2" %>
       <% end %>
@@ -25,7 +25,7 @@
     </div>
   </div>
   <div class="mt-6 flex gap-3">
-    <%= f.submit(@category.persisted? ? "Save" : "Create", class: btn_primary) %>
-    <%= link_to "Cancel", admin_categories_path, class: btn_secondary %>
+    <%= f.submit(@category.persisted? ? t("admin.actions.save") : t("admin.actions.create"), class: btn_primary) %>
+    <%= link_to t("admin.actions.cancel"), admin_categories_path, class: btn_secondary %>
   </div>
 <% end %>

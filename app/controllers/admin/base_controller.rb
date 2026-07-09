@@ -20,7 +20,7 @@ class Admin::BaseController < ApplicationController
   # Owner-only areas can call `require_owner!` in a before_action.
   def require_owner!
     return if current_user&.owner?
-    redirect_to admin_root_path, alert: "Only the store owner can do that."
+    redirect_to admin_root_path, alert: t("admin.flash.owner_only")
   end
 
   def set_page_title

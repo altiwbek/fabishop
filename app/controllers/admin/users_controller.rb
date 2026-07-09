@@ -3,25 +3,25 @@ class Admin::UsersController < Admin::BaseController
   before_action :set_user, only: %i[ edit update destroy ]
 
   def index
-    @page_title = "Staff & Users"
+    @page_title = t("admin.nav.users")
     @users = User.order(:role, :name)
   end
 
   def new
-    @page_title = "New Staff Member"
+    @page_title = t("admin.titles.new_staff")
     @user = User.new
   end
 
   def edit
-    @page_title = "Edit User"
+    @page_title = t("admin.titles.edit_user")
   end
 
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to admin_users_path, notice: "User created."
+      redirect_to admin_users_path, notice: t("admin.flash.user.created")
     else
-      @page_title = "New Staff Member"
+      @page_title = t("admin.titles.new_staff")
       render :new, status: :unprocessable_entity
     end
   end
@@ -31,19 +31,19 @@ class Admin::UsersController < Admin::BaseController
     attrs = user_params
     attrs = attrs.except(:password, :password_confirmation) if attrs[:password].blank?
     if @user.update(attrs)
-      redirect_to admin_users_path, notice: "User updated."
+      redirect_to admin_users_path, notice: t("admin.flash.user.updated")
     else
-      @page_title = "Edit User"
+      @page_title = t("admin.titles.edit_user")
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     if @user == current_user
-      redirect_to admin_users_path, alert: "You can't delete your own account."
+      redirect_to admin_users_path, alert: t("admin.flash.user.self_delete")
     else
       @user.destroy
-      redirect_to admin_users_path, notice: "User removed.", status: :see_other
+      redirect_to admin_users_path, notice: t("admin.flash.user.deleted"), status: :see_other
     end
   end
 

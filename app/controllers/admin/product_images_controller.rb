@@ -4,7 +4,7 @@ class Admin::ProductImagesController < Admin::BaseController
   def create
     files = Array(params.dig(:product, :images)).reject(&:blank?)
     @product.images.attach(files) if files.any?
-    redirect_to edit_admin_product_path(@product), notice: "Images added."
+    redirect_to edit_admin_product_path(@product), notice: t("admin.flash.image.added")
   end
 
   def destroy
@@ -12,7 +12,7 @@ class Admin::ProductImagesController < Admin::BaseController
     image.purge_later
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.remove("product_image_#{params[:id]}") }
-      format.html { redirect_to edit_admin_product_path(@product), notice: "Image removed." }
+      format.html { redirect_to edit_admin_product_path(@product), notice: t("admin.flash.image.removed") }
     end
   end
 
