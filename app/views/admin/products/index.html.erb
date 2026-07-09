@@ -1,6 +1,6 @@
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
   <div class="flex flex-wrap gap-2">
-    <% [["all","All"],["published","Published"],["draft","Drafts"],["low_stock","Low stock"]].each do |key, label| %>
+    <% [["all", t("admin.products.filters.all")], ["published", t("admin.products.filters.published")], ["draft", t("admin.products.filters.draft")], ["low_stock", t("admin.products.filters.low_stock")]].each do |key, label| %>
       <% active = (params[:status].presence || "all") == key %>
       <%= link_to label, admin_products_path(status: (key == "all" ? nil : key), q: params[:q]),
             class: "px-3 py-1.5 rounded-lg text-sm font-medium #{active ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}" %>
@@ -9,11 +9,11 @@
   <div class="flex gap-2">
     <%= form_with url: admin_products_path, method: :get, class: "flex gap-2" do %>
       <%= hidden_field_tag :status, params[:status] %>
-      <%= search_field_tag :q, params[:q], placeholder: "Search products…", class: "#{input_classes} w-56" %>
+      <%= search_field_tag :q, params[:q], placeholder: t("admin.products.search_placeholder"), class: "#{input_classes} w-56" %>
       <button class="<%= btn_secondary %>"><i class="las la-search"></i></button>
     <% end %>
     <%= link_to new_admin_product_path, class: btn_primary do %>
-      <i class="las la-plus"></i> New Product
+      <i class="las la-plus"></i> <%= t("admin.products.new") %>
     <% end %>
   </div>
 </div>
@@ -23,12 +23,12 @@
     <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-100 bg-gray-50">
       <label class="flex items-center gap-2 text-sm text-gray-600">
         <input type="checkbox" data-action="bulk-select#toggleAll" data-bulk-select-target="all" class="rounded border-gray-300 text-indigo-600">
-        Select all
+        <%= t("admin.common.select_all") %>
       </label>
       <div class="flex items-center gap-2 ml-auto">
-        <%= select_tag :bulk_action, options_for_select([["Bulk actions",""],["Publish","publish"],["Unpublish","unpublish"],["Mark featured","feature"],["Delete","delete"]]),
+        <%= select_tag :bulk_action, options_for_select([[t("admin.common.bulk_actions"),""],[t("admin.products.bulk.publish"),"publish"],[t("admin.products.bulk.unpublish"),"unpublish"],[t("admin.products.bulk.feature"),"feature"],[t("admin.products.bulk.delete"),"delete"]]),
               class: "#{input_classes} w-auto py-1.5" %>
-        <button class="<%= btn_secondary %>" data-action="bulk-select#confirm">Apply</button>
+        <button class="<%= btn_secondary %>" data-action="bulk-select#confirm"><%= t("admin.actions.apply") %></button>
       </div>
     </div>
 
@@ -37,11 +37,11 @@
         <thead class="text-left text-gray-500 border-b border-gray-100">
           <tr>
             <th class="px-4 py-3 w-8"></th>
-            <th class="px-4 py-3">Product</th>
-            <th class="px-4 py-3">Category</th>
-            <th class="px-4 py-3">Price</th>
-            <th class="px-4 py-3">Stock</th>
-            <th class="px-4 py-3">Status</th>
+            <th class="px-4 py-3"><%= t("admin.products.cols.product") %></th>
+            <th class="px-4 py-3"><%= t("admin.products.cols.category") %></th>
+            <th class="px-4 py-3"><%= t("admin.products.cols.price") %></th>
+            <th class="px-4 py-3"><%= t("admin.products.cols.stock") %></th>
+            <th class="px-4 py-3"><%= t("admin.common.status") %></th>
             <th class="px-4 py-3"></th>
           </tr>
         </thead>
@@ -64,16 +64,16 @@
               <td class="px-4 py-3 font-medium text-gray-900"><%= number_to_currency product.price %></td>
               <td class="px-4 py-3">
                 <% if product.stock.zero? %>
-                  <%= status_badge "Out", color: :red %>
+                  <%= status_badge t("admin.products.out"), color: :red %>
                 <% elsif product.low_stock? %>
-                  <%= status_badge "#{product.stock} left", color: :yellow %>
+                  <%= status_badge t("admin.products.units_left", count: product.stock), color: :yellow %>
                 <% else %>
                   <span class="text-gray-600"><%= product.stock %></span>
                 <% end %>
               </td>
-              <td class="px-4 py-3"><%= boolean_badge product.published, true_text: "Live", false_text: "Draft" %></td>
+              <td class="px-4 py-3"><%= boolean_badge product.published, true_text: t("admin.common.live"), false_text: t("admin.common.draft") %></td>
               <td class="px-4 py-3 text-right">
-                <%= link_to edit_admin_product_path(product), class: "text-gray-400 hover:text-indigo-600", title: "Edit" do %>
+                <%= link_to edit_admin_product_path(product), class: "text-gray-400 hover:text-indigo-600", title: t("admin.actions.edit") do %>
                   <i class="las la-edit text-lg"></i>
                 <% end %>
               </td>
@@ -86,7 +86,7 @@
     <% if @products.empty? %>
       <div class="p-10 text-center text-gray-400">
         <i class="las la-box text-4xl block mb-2"></i>
-        No products found. <%= link_to "Create one", new_admin_product_path, class: "text-indigo-600" %>.
+        <%= t("admin.products.empty") %> <%= link_to t("admin.actions.create_one"), new_admin_product_path, class: "text-indigo-600" %>.
       </div>
     <% end %>
   </div>

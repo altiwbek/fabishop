@@ -93,3 +93,203 @@ ru:
       no_reviews: "Нет отзывов в ожидании. 👍"
       most_viewed: "Самые просматриваемые"
       views: "просмотров: %{count}"
+    actions:
+      edit: "Изменить"
+      delete: "Удалить"
+      manage: "Управлять"
+      view: "Просмотр"
+      apply: "Применить"
+      save: "Сохранить"
+      save_changes: "Сохранить изменения"
+      create: "Создать"
+      cancel: "Отмена"
+      hide: "Скрыть"
+      approve: "Одобрить"
+      create_one: "Создать"
+    common:
+      select_all: "Выбрать все"
+      bulk_actions: "Массовые действия"
+      status: "Статус"
+      featured: "Рекомендуемое"
+      active: "Активен"
+      hidden: "Скрыт"
+      live: "Активен"
+      draft: "Черновик"
+      published: "Опубликован"
+      pending: "На модерации"
+      approved: "Одобрен"
+      you: "(вы)"
+      none: "—"
+    confirm:
+      delete_named: "Удалить %{name}?"
+      remove_named: "Удалить %{name}?"
+      delete_post: "Удалить эту запись?"
+      delete_slide: "Удалить этот слайд?"
+      delete_review: "Удалить этот отзыв?"
+    titles:
+      new_product: "Новый товар"
+      edit_product: "Изменить · %{name}"
+      new_category: "Новая категория"
+      edit_category: "Изменить категорию"
+      new_brand: "Новый бренд"
+      edit_brand: "Изменить бренд"
+      new_collection: "Новая коллекция"
+      edit_collection: "Изменить коллекцию"
+      new_slide: "Новый слайд"
+      edit_slide: "Изменить слайд"
+      new_post: "Новая запись"
+      edit_post: "Изменить запись"
+      new_staff: "Новый сотрудник"
+      edit_user: "Изменить пользователя"
+      order: "Заказ %{number}"
+    roles:
+      owner: "Владелец"
+      staff: "Сотрудник"
+    products:
+      new: "Новый товар"
+      search_placeholder: "Поиск товаров…"
+      filters:
+        all: "Все"
+        published: "Опубликованные"
+        draft: "Черновики"
+        low_stock: "Мало на складе"
+      bulk:
+        publish: "Опубликовать"
+        unpublish: "Снять с публикации"
+        feature: "Отметить рекомендуемым"
+        delete: "Удалить"
+      cols:
+        product: "Товар"
+        category: "Категория"
+        price: "Цена"
+        stock: "Остаток"
+      out: "Нет"
+      units_left: "осталось %{count}"
+      empty: "Товары не найдены."
+    categories:
+      new: "Новая категория"
+      count:
+        one: "%{count} категория"
+        other: "категорий: %{count}"
+      cols:
+        name: "Название"
+        parent: "Родитель"
+        products: "Товары"
+        featured: "Рекомендуемое"
+      empty: "Пока нет категорий."
+    brands:
+      new: "Новый бренд"
+      count:
+        one: "%{count} бренд"
+        other: "брендов: %{count}"
+      cols:
+        brand: "Бренд"
+        website: "Сайт"
+        products: "Товары"
+      empty: "Пока нет брендов."
+    collections:
+      new: "Новая коллекция"
+      count:
+        one: "%{count} коллекция"
+        other: "коллекций: %{count}"
+      product_count:
+        one: "%{count} товар"
+        other: "товаров: %{count}"
+      empty: "Пока нет коллекций."
+    posts:
+      new: "Новая запись"
+      count:
+        one: "%{count} запись"
+        other: "записей: %{count}"
+      cols:
+        title: "Заголовок"
+        author: "Автор"
+        published: "Опубликовано"
+        views: "Просмотры"
+      empty: "Пока нет записей."
+    slides:
+      new: "Новый слайд"
+      count:
+        one: "%{count} слайд"
+        other: "слайдов: %{count}"
+      hint: "показывается в слайдере на главной"
+      empty: "Пока нет слайдов. Добавьте слайд для главной страницы."
+    reviews:
+      filters:
+        all: "Все"
+        pending: "На модерации"
+        approved: "Одобренные"
+      default_title: "Отзыв"
+      by: "автор: %{name}"
+      on_html: "к товару %{product}"
+      ago: "%{time} назад"
+      empty: "Здесь нет отзывов."
+    users:
+      add: "Добавить сотрудника"
+      count:
+        one: "%{count} пользователь"
+        other: "пользователей: %{count}"
+      cols:
+        name: "Имя"
+        email: "Email"
+        role: "Роль"
+    orders:
+      all_count: "Все (%{count})"
+      cols:
+        order: "Заказ"
+        customer: "Клиент"
+        date: "Дата"
+        items: "Товары"
+        total: "Итого"
+      empty: "Пока нет заказов."
+      statuses:
+        pending: "В ожидании"
+        paid: "Оплачен"
+        shipped: "Отправлен"
+        delivered: "Доставлен"
+        cancelled: "Отменён"
+    flash:
+      owner_only: "Это может делать только владелец магазина."
+      product:
+        created: "Товар создан."
+        updated: "Товар обновлён."
+        deleted: "Товар удалён."
+        bulk: "Обновлено товаров: %{count}."
+      category:
+        created: "Категория создана."
+        updated: "Категория обновлена."
+        deleted: "Категория удалена."
+      brand:
+        created: "Бренд создан."
+        updated: "Бренд обновлён."
+        deleted: "Бренд удалён."
+      collection:
+        created: "Коллекция создана."
+        updated: "Коллекция обновлена."
+        deleted: "Коллекция удалена."
+      slide:
+        created: "Слайд создан."
+        updated: "Слайд обновлён."
+        deleted: "Слайд удалён."
+      post:
+        saved: "Запись сохранена."
+        updated: "Запись обновлена."
+        deleted: "Запись удалена."
+      user:
+        created: "Пользователь создан."
+        updated: "Пользователь обновлён."
+        deleted: "Пользователь удалён."
+        self_delete: "Вы не можете удалить свой аккаунт."
+      review:
+        approved: "Отзыв одобрен."
+        hidden: "Отзыв скрыт."
+        deleted: "Отзыв удалён."
+      order:
+        status: "Заказ отмечен как «%{status}»."
+        error: "Не удалось обновить заказ."
+      collection_product:
+        added: "%{name} добавлен."
+        removed: "Товар удалён."
+      image:
+        added: "Изображения добавлены."
+        removed: "Изображение удалено."

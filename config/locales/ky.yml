@@ -93,3 +93,203 @@ ky:
       no_reviews: "Күтүп турган пикирлер жок. 👍"
       most_viewed: "Эң көп көрүлгөн"
       views: "%{count} көрүү"
+    actions:
+      edit: "Өзгөртүү"
+      delete: "Өчүрүү"
+      manage: "Башкаруу"
+      view: "Кароо"
+      apply: "Колдонуу"
+      save: "Сактоо"
+      save_changes: "Өзгөртүүлөрдү сактоо"
+      create: "Түзүү"
+      cancel: "Жокко чыгаруу"
+      hide: "Жашыруу"
+      approve: "Ырастоо"
+      create_one: "Түзүү"
+    common:
+      select_all: "Баарын тандоо"
+      bulk_actions: "Массалык аракеттер"
+      status: "Статус"
+      featured: "Сунушталган"
+      active: "Активдүү"
+      hidden: "Жашырылган"
+      live: "Активдүү"
+      draft: "Долбоор"
+      published: "Жарыяланган"
+      pending: "Модерацияда"
+      approved: "Ырасталган"
+      you: "(сиз)"
+      none: "—"
+    confirm:
+      delete_named: "%{name} өчүрүлсүнбү?"
+      remove_named: "%{name} өчүрүлсүнбү?"
+      delete_post: "Бул жазуу өчүрүлсүнбү?"
+      delete_slide: "Бул слайд өчүрүлсүнбү?"
+      delete_review: "Бул пикир өчүрүлсүнбү?"
+    titles:
+      new_product: "Жаңы товар"
+      edit_product: "Өзгөртүү · %{name}"
+      new_category: "Жаңы категория"
+      edit_category: "Категорияны өзгөртүү"
+      new_brand: "Жаңы бренд"
+      edit_brand: "Брендди өзгөртүү"
+      new_collection: "Жаңы коллекция"
+      edit_collection: "Коллекцияны өзгөртүү"
+      new_slide: "Жаңы слайд"
+      edit_slide: "Слайдды өзгөртүү"
+      new_post: "Жаңы жазуу"
+      edit_post: "Жазууну өзгөртүү"
+      new_staff: "Жаңы кызматкер"
+      edit_user: "Колдонуучуну өзгөртүү"
+      order: "Буйрутма %{number}"
+    roles:
+      owner: "Ээси"
+      staff: "Кызматкер"
+    products:
+      new: "Жаңы товар"
+      search_placeholder: "Товарларды издөө…"
+      filters:
+        all: "Баары"
+        published: "Жарыяланган"
+        draft: "Долбоорлор"
+        low_stock: "Аз калды"
+      bulk:
+        publish: "Жарыялоо"
+        unpublish: "Жарыялоону алып салуу"
+        feature: "Сунушталган деп белгилөө"
+        delete: "Өчүрүү"
+      cols:
+        product: "Товар"
+        category: "Категория"
+        price: "Баасы"
+        stock: "Калдык"
+      out: "Жок"
+      units_left: "%{count} калды"
+      empty: "Товарлар табылган жок."
+    categories:
+      new: "Жаңы категория"
+      count:
+        one: "%{count} категория"
+        other: "%{count} категория"
+      cols:
+        name: "Аталышы"
+        parent: "Ата-эне"
+        products: "Товарлар"
+        featured: "Сунушталган"
+      empty: "Азырынча категориялар жок."
+    brands:
+      new: "Жаңы бренд"
+      count:
+        one: "%{count} бренд"
+        other: "%{count} бренд"
+      cols:
+        brand: "Бренд"
+        website: "Сайт"
+        products: "Товарлар"
+      empty: "Азырынча бренддер жок."
+    collections:
+      new: "Жаңы коллекция"
+      count:
+        one: "%{count} коллекция"
+        other: "%{count} коллекция"
+      product_count:
+        one: "%{count} товар"
+        other: "%{count} товар"
+      empty: "Азырынча коллекциялар жок."
+    posts:
+      new: "Жаңы жазуу"
+      count:
+        one: "%{count} жазуу"
+        other: "%{count} жазуу"
+      cols:
+        title: "Аталышы"
+        author: "Автор"
+        published: "Жарыяланган"
+        views: "Көрүүлөр"
+      empty: "Азырынча жазуулар жок."
+    slides:
+      new: "Жаңы слайд"
+      count:
+        one: "%{count} слайд"
+        other: "%{count} слайд"
+      hint: "башкы беттеги слайдерде көрсөтүлөт"
+      empty: "Азырынча слайддар жок. Башкы бет үчүн слайд кошуңуз."
+    reviews:
+      filters:
+        all: "Баары"
+        pending: "Модерацияда"
+        approved: "Ырасталган"
+      default_title: "Пикир"
+      by: "автор: %{name}"
+      on_html: "%{product} үчүн"
+      ago: "%{time} мурун"
+      empty: "Бул жерде пикирлер жок."
+    users:
+      add: "Кызматкер кошуу"
+      count:
+        one: "%{count} колдонуучу"
+        other: "%{count} колдонуучу"
+      cols:
+        name: "Аты"
+        email: "Email"
+        role: "Ролу"
+    orders:
+      all_count: "Баары (%{count})"
+      cols:
+        order: "Буйрутма"
+        customer: "Кардар"
+        date: "Күнү"
+        items: "Товарлар"
+        total: "Жалпы"
+      empty: "Азырынча буйрутмалар жок."
+      statuses:
+        pending: "Күтүүдө"
+        paid: "Төлөндү"
+        shipped: "Жөнөтүлдү"
+        delivered: "Жеткирилди"
+        cancelled: "Жокко чыгарылды"
+    flash:
+      owner_only: "Муну дүкөндүн ээси гана жасай алат."
+      product:
+        created: "Товар түзүлдү."
+        updated: "Товар жаңыртылды."
+        deleted: "Товар өчүрүлдү."
+        bulk: "%{count} товар жаңыртылды."
+      category:
+        created: "Категория түзүлдү."
+        updated: "Категория жаңыртылды."
+        deleted: "Категория өчүрүлдү."
+      brand:
+        created: "Бренд түзүлдү."
+        updated: "Бренд жаңыртылды."
+        deleted: "Бренд өчүрүлдү."
+      collection:
+        created: "Коллекция түзүлдү."
+        updated: "Коллекция жаңыртылды."
+        deleted: "Коллекция өчүрүлдү."
+      slide:
+        created: "Слайд түзүлдү."
+        updated: "Слайд жаңыртылды."
+        deleted: "Слайд өчүрүлдү."
+      post:
+        saved: "Жазуу сакталды."
+        updated: "Жазуу жаңыртылды."
+        deleted: "Жазуу өчүрүлдү."
+      user:
+        created: "Колдонуучу түзүлдү."
+        updated: "Колдонуучу жаңыртылды."
+        deleted: "Колдонуучу өчүрүлдү."
+        self_delete: "Өз аккаунтуңузду өчүрө албайсыз."
+      review:
+        approved: "Пикир ырасталды."
+        hidden: "Пикир жашырылды."
+        deleted: "Пикир өчүрүлдү."
+      order:
+        status: "Буйрутма «%{status}» деп белгиленди."
+        error: "Буйрутманы жаңыртуу мүмкүн болбоду."
+      collection_product:
+        added: "%{name} кошулду."
+        removed: "Товар өчүрүлдү."
+      image:
+        added: "Сүрөттөр кошулду."
+        removed: "Сүрөт өчүрүлдү."
