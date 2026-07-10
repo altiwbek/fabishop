@@ -1,31 +1,383 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  language_name: "English"
+
+  nav:
+    home: "Home"
+    categories: "Categories"
+    collections: "Collections"
+    products: "Products"
+    blog: "Blog"
+
+  header:
+    call: "Call: +996 (700) 123-456"
+    links: "Links"
+    wishlist: "Wishlist"
+    track_order: "Track My Order"
+    admin_dashboard: "Admin dashboard"
+    sign_out: "Sign out"
+    staff_sign_in: "Staff sign in"
+    browse_categories: "Browse Categories"
+    search_placeholder: "Search products..."
+    search: "Search"
+    free_shipping: "Free Shipping over $99"
+    language: "Language"
+
+  footer:
+    about: "Your one-stop shop for cameras, smartwatches, smartphones and lifestyle gear — curated collections and honest reviews."
+    questions: "Got Questions? Call us 24/7"
+    shop: "Shop"
+    all_products: "All products"
+    categories: "Categories"
+    my_account: "My Account"
+    view_cart: "View Cart"
+    my_wishlist: "My Wishlist"
+    track_order: "Track My Order"
+    blog: "Blog"
+    staff_sign_in: "Staff sign in"
+    copyright: "Copyright © %{year} MegaShop Store. All Rights Reserved."
+    terms: "Terms Of Use"
+    privacy: "Privacy Policy"
+
+  common:
+    add_to_cart: "Add to cart"
+    quick_view: "Quick view"
+    add_to_wishlist: "Add to wishlist"
+    in_stock: "In stock"
+    out_of_stock: "Out of stock"
+    read_more: "Read more"
+    close: "Close"
+
+  admin:
+    tag: "Admin"
+    view_store: "View store"
+    sign_out: "Sign out"
+    nav:
+      dashboard: "Dashboard"
+      orders: "Orders"
+      catalog: "Catalog"
+      products: "Products"
+      categories: "Categories"
+      brands: "Brands"
+      collections: "Collections"
+      content: "Content"
+      sliders: "Homepage Sliders"
+      posts: "Blog Posts"
+      reviews: "Reviews"
+      settings: "Settings"
+      users: "Staff & Users"
+    stats:
+      revenue: "Revenue"
+      orders: "Orders"
+      products: "Products"
+      low_stock: "Low Stock"
+      orders_count: "%{count} orders"
+      pending: "%{count} pending"
+      published: "%{count} published"
+      out_of_stock: "%{count} out of stock"
+    dashboard:
+      by_category: "Products by Category"
+      manage: "Manage"
+      no_categories: "No products assigned to categories yet."
+      recently_added: "Recently Added"
+      live: "Live"
+      draft: "Draft"
+      recent_orders: "Recent Orders"
+      all: "All →"
+      no_orders: "No orders yet."
+      low_stock_alerts: "Low Stock Alerts"
+      units_left: "%{count} left"
+      well_stocked: "Everything is well stocked. 🎉"
+      reviews_to_moderate: "Reviews to Moderate"
+      on_product: "on %{product}"
+      moderate_all: "Moderate all →"
+      no_reviews: "No reviews waiting. 👍"
+      most_viewed: "Most Viewed"
+      views: "%{count} views"
+    actions:
+      edit: "Edit"
+      delete: "Delete"
+      manage: "Manage"
+      view: "View"
+      apply: "Apply"
+      save: "Save"
+      save_changes: "Save changes"
+      create: "Create"
+      cancel: "Cancel"
+      hide: "Hide"
+      approve: "Approve"
+      create_one: "Create one"
+    common:
+      select_all: "Select all"
+      bulk_actions: "Bulk actions"
+      status: "Status"
+      featured: "Featured"
+      active: "Active"
+      hidden: "Hidden"
+      live: "Live"
+      draft: "Draft"
+      published: "Published"
+      pending: "Pending"
+      approved: "Approved"
+      you: "(you)"
+      none: "—"
+    confirm:
+      delete_named: "Delete %{name}?"
+      remove_named: "Remove %{name}?"
+      delete_post: "Delete this post?"
+      delete_slide: "Delete this slide?"
+      delete_review: "Delete this review?"
+    titles:
+      new_product: "New Product"
+      edit_product: "Edit · %{name}"
+      new_category: "New Category"
+      edit_category: "Edit Category"
+      new_brand: "New Brand"
+      edit_brand: "Edit Brand"
+      new_collection: "New Collection"
+      edit_collection: "Edit Collection"
+      new_slide: "New Slide"
+      edit_slide: "Edit Slide"
+      new_post: "New Post"
+      edit_post: "Edit Post"
+      new_staff: "New Staff Member"
+      edit_user: "Edit User"
+      order: "Order %{number}"
+    roles:
+      owner: "Owner"
+      staff: "Staff"
+    products:
+      new: "New Product"
+      search_placeholder: "Search products…"
+      filters:
+        all: "All"
+        published: "Published"
+        draft: "Drafts"
+        low_stock: "Low stock"
+      bulk:
+        publish: "Publish"
+        unpublish: "Unpublish"
+        feature: "Mark featured"
+        delete: "Delete"
+      cols:
+        product: "Product"
+        category: "Category"
+        price: "Price"
+        stock: "Stock"
+      out: "Out"
+      units_left: "%{count} left"
+      empty: "No products found."
+    categories:
+      new: "New Category"
+      count:
+        one: "%{count} category"
+        other: "%{count} categories"
+      cols:
+        name: "Name"
+        parent: "Parent"
+        products: "Products"
+        featured: "Featured"
+      empty: "No categories yet."
+    brands:
+      new: "New Brand"
+      count:
+        one: "%{count} brand"
+        other: "%{count} brands"
+      cols:
+        brand: "Brand"
+        website: "Website"
+        products: "Products"
+      empty: "No brands yet."
+    collections:
+      new: "New Collection"
+      count:
+        one: "%{count} collection"
+        other: "%{count} collections"
+      product_count:
+        one: "%{count} product"
+        other: "%{count} products"
+      empty: "No collections yet."
+    posts:
+      new: "New Post"
+      count:
+        one: "%{count} post"
+        other: "%{count} posts"
+      cols:
+        title: "Title"
+        author: "Author"
+        published: "Published"
+        views: "Views"
+      empty: "No posts yet."
+    slides:
+      new: "New Slide"
+      count:
+        one: "%{count} slide"
+        other: "%{count} slides"
+      hint: "shown in the homepage hero carousel"
+      empty: "No slides yet. Add one to populate the homepage hero."
+    reviews:
+      filters:
+        all: "All"
+        pending: "Pending"
+        approved: "Approved"
+      default_title: "Review"
+      by: "by %{name}"
+      on_html: "on %{product}"
+      ago: "%{time} ago"
+      empty: "No reviews here."
+    users:
+      add: "Add Staff"
+      count:
+        one: "%{count} user"
+        other: "%{count} users"
+      cols:
+        name: "Name"
+        email: "Email"
+        role: "Role"
+    orders:
+      all_count: "All (%{count})"
+      cols:
+        order: "Order"
+        customer: "Customer"
+        date: "Date"
+        items: "Items"
+        total: "Total"
+      empty: "No orders yet."
+      statuses:
+        pending: "Pending"
+        paid: "Paid"
+        shipped: "Shipped"
+        delivered: "Delivered"
+        cancelled: "Cancelled"
+    show:
+      view_on_store: "View on store"
+      details: "Details"
+      brand: "Brand"
+      views: "Views"
+      rating: "Rating"
+      not_in_collection: "Not in any collection."
+      new: "New"
+      on_sale: "On sale"
+      no_flags: "No special flags."
+      publish: "Publish"
+      unpublish: "Unpublish"
+      update: "Update"
+      qty: "Qty"
+      subtotal: "Subtotal"
+      shipping: "Shipping"
+      free: "Free"
+      customer: "Customer"
+      shipping_address: "Shipping Address"
+      order_notes: "Order Notes"
+      edit_details: "Edit details"
+      products_in_collection: "Products in this collection (%{count})"
+      no_products_add: "No products yet. Add some from the panel on the right."
+      add_product: "Add a product"
+      choose_product: "Choose a product…"
+      add_to_collection: "Add to collection"
+      available_to_add: "%{count} products available to add."
+    form:
+      back: "Back"
+      delete_product_permanently: "Delete this product permanently?"
+      create_product: "Create product"
+      create_post: "Create post"
+      save_post: "Save post"
+      create_slide: "Create slide"
+      save_slide: "Save slide"
+      create_user: "Create user"
+      images: "Images"
+      images_hint: "First image is used as the main thumbnail. You can select multiple."
+      organization: "Organization"
+      pricing_stock: "Pricing & Stock"
+      visibility: "Visibility"
+      name: "Name"
+      description: "Description"
+      short_subtitle: "Short subtitle"
+      subtitle: "Subtitle"
+      title: "Title"
+      category: "Category"
+      brand_optional: "Brand (optional)"
+      collections: "Collections"
+      price: "Price"
+      compare_at_price: "Compare-at price"
+      stock: "Stock"
+      sku: "SKU"
+      position: "Position"
+      website: "Website"
+      published_visible: "Published (visible on store)"
+      featured: "Featured"
+      featured_home: "Featured on homepage"
+      new_arrival: "New arrival"
+      on_sale: "On sale"
+      parent_optional: "Parent category (optional)"
+      parent_none: "None (top level)"
+      category_image: "Category image"
+      active_visible: "Active (visible)"
+      cover_image: "Cover image"
+      background_image: "Background image"
+      subtitle_top: "Subtitle (small text on top)"
+      title_pipe_hint: "Use a | where you want a line break."
+      price_label: "Price label"
+      price_highlight: "Price / highlight"
+      button_label: "Button label"
+      button_link: "Button link"
+      active_homepage: "Active (show on homepage)"
+      excerpt_preview: "Excerpt (list preview)"
+      author: "Author"
+      published: "Published"
+      email: "Email"
+      role: "Role"
+      new_password: "New password (leave blank to keep)"
+      password: "Password"
+      confirm_password: "Confirm password"
+      leave_blank_fallback: "Leave RU/KY blank to fall back to the English value."
+      select_category: "Select category"
+      no_brand: "No brand"
+      original_price: "Original price"
+      bg_hint: "Wide landscape image works best (approx 1100×500)."
+      remove: "Remove"
+      delete_collection: "Delete this collection?"
+    flash:
+      owner_only: "Only the store owner can do that."
+      product:
+        created: "Product created."
+        updated: "Product updated."
+        deleted: "Product deleted."
+        bulk: "%{count} product(s) updated."
+      category:
+        created: "Category created."
+        updated: "Category updated."
+        deleted: "Category deleted."
+      brand:
+        created: "Brand created."
+        updated: "Brand updated."
+        deleted: "Brand deleted."
+      collection:
+        created: "Collection created."
+        updated: "Collection updated."
+        deleted: "Collection deleted."
+      slide:
+        created: "Slide created."
+        updated: "Slide updated."
+        deleted: "Slide deleted."
+      post:
+        saved: "Post saved."
+        updated: "Post updated."
+        deleted: "Post deleted."
+      user:
+        created: "User created."
+        updated: "User updated."
+        deleted: "User removed."
+        self_delete: "You can't delete your own account."
+      review:
+        approved: "Review approved."
+        hidden: "Review hidden."
+        deleted: "Review deleted."
+      order:
+        status: "Order marked as %{status}."
+        error: "Could not update order."
+      collection_product:
+        added: "%{name} added."
+        removed: "Product removed."
+      image:
+        added: "Images added."
+        removed: "Image removed."

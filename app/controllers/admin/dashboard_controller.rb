@@ -1,6 +1,6 @@
 class Admin::DashboardController < Admin::BaseController
   def index
-    @page_title = "Dashboard"
+    @page_title = t("admin.nav.dashboard")
 
     @stats = {
       products: Product.count,

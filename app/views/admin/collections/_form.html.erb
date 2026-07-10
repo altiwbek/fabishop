@@ -1,40 +1,31 @@
 <%= form_with model: [ :admin, @collection ], html: { class: "max-w-2xl" } do |f| %>
   <%= admin_form_errors(@collection) %>
   <div class="bg-white rounded-xl shadow-sm p-6 space-y-4">
-    <div>
-      <%= f.label :name, class: label_classes %>
-      <%= f.text_field :name, class: input_classes %>
-    </div>
-    <div>
-      <%= f.label :subtitle, class: label_classes %>
-      <%= f.text_field :subtitle, class: input_classes, placeholder: "e.g. Handpicked favourites" %>
-    </div>
-    <div>
-      <%= f.label :description, class: label_classes %>
-      <%= f.text_area :description, rows: 3, class: input_classes %>
-    </div>
+    <%= render "admin/shared/translated_field", form: f, attribute: :name, label: t("admin.form.name") %>
+    <%= render "admin/shared/translated_field", form: f, attribute: :subtitle, label: t("admin.form.subtitle") %>
+    <%= render "admin/shared/translated_field", form: f, attribute: :description, label: t("admin.form.description"), as: :text_area %>
     <div class="grid grid-cols-2 gap-4">
       <div>
-        <%= f.label :position, class: label_classes %>
+        <%= f.label :position, t("admin.form.position"), class: label_classes %>
         <%= f.number_field :position, class: input_classes %>
       </div>
       <div class="flex flex-col gap-2 mt-7">
         <label class="flex items-center gap-2 text-sm text-gray-700">
-          <%= f.check_box :featured, class: "rounded border-gray-300 text-indigo-600" %> Featured
+          <%= f.check_box :featured, class: "rounded border-gray-300 text-indigo-600" %> <%= t("admin.form.featured") %>
         </label>
         <label class="flex items-center gap-2 text-sm text-gray-700">
-          <%= f.check_box :active, class: "rounded border-gray-300 text-indigo-600" %> Active (visible)
+          <%= f.check_box :active, class: "rounded border-gray-300 text-indigo-600" %> <%= t("admin.form.active_visible") %>
         </label>
       </div>
     </div>
     <div>
-      <%= f.label :cover, "Cover image", class: label_classes %>
+      <%= f.label :cover, t("admin.form.cover_image"), class: label_classes %>
       <% if @collection.cover.attached? %><%= image_tag url_for(@collection.cover), class: "w-40 h-24 object-cover rounded mb-2" %><% end %>
       <%= f.file_field :cover, accept: "image/*", class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-700" %>
     </div>
   </div>
   <div class="mt-6 flex gap-3">
-    <%= f.submit(@collection.persisted? ? "Save" : "Create", class: btn_primary) %>
-    <%= link_to "Cancel", admin_collections_path, class: btn_secondary %>
+    <%= f.submit(@collection.persisted? ? t("admin.actions.save") : t("admin.actions.create"), class: btn_primary) %>
+    <%= link_to t("admin.actions.cancel"), admin_collections_path, class: btn_secondary %>
   </div>
 <% end %>

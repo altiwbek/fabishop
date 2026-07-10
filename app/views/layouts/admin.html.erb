@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="<%= I18n.locale %>" class="h-full">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,8 +26,14 @@
             <h1 class="text-lg font-semibold text-gray-900"><%= @page_title %></h1>
           </div>
           <div class="flex items-center gap-4">
+            <div class="flex items-center gap-1" title="<%= t('header.language') %>">
+              <% available_locales.each do |locale| %>
+                <%= link_to locale_short(locale), switch_locale_url(locale),
+                      class: "px-2 py-1 text-xs font-semibold rounded-md #{locale == I18n.locale ? 'bg-indigo-600 text-white' : 'text-gray-500 hover:bg-gray-100'}" %>
+              <% end %>
+            </div>
             <%= link_to root_path, target: "_blank", class: "text-sm text-gray-500 hover:text-indigo-600 flex items-center gap-1" do %>
-              <i class="las la-external-link-alt"></i> View store
+              <i class="las la-external-link-alt"></i> <%= t("admin.view_store") %>
             <% end %>
             <div class="flex items-center gap-2">
               <span class="w-9 h-9 rounded-full bg-indigo-600 text-white grid place-items-center text-sm font-semibold">
@@ -37,7 +43,7 @@
                 <div class="text-sm font-medium text-gray-900"><%= current_user&.display_name %></div>
                 <div class="text-xs text-gray-500 capitalize"><%= current_user&.role %></div>
               </div>
-              <%= button_to session_path, method: :delete, class: "ml-2 text-gray-400 hover:text-red-500", title: "Sign out" do %>
+              <%= button_to session_path, method: :delete, class: "ml-2 text-gray-400 hover:text-red-500", title: t("admin.sign_out") do %>
                 <i class="las la-sign-out-alt text-xl"></i>
               <% end %>
             </div>

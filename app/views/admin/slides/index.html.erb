@@ -1,6 +1,6 @@
 <div class="flex items-center justify-between mb-6">
-  <p class="text-gray-500 text-sm"><%= pluralize(@slides.size, "slide") %> · shown in the homepage hero carousel</p>
-  <%= link_to new_admin_slide_path, class: btn_primary do %><i class="las la-plus"></i> New Slide<% end %>
+  <p class="text-gray-500 text-sm"><%= t("admin.slides.count", count: @slides.size) %> · <%= t("admin.slides.hint") %></p>
+  <%= link_to new_admin_slide_path, class: btn_primary do %><i class="las la-plus"></i> <%= t("admin.slides.new") %><% end %>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -20,20 +20,20 @@
             <h3 class="font-semibold text-gray-900 truncate"><%= slide.title.tr("|", " ") %></h3>
           </div>
           <div class="flex flex-col items-end gap-1 shrink-0">
-            <%= boolean_badge slide.active, true_text: "Active", false_text: "Hidden" %>
+            <%= boolean_badge slide.active, true_text: t("admin.common.active"), false_text: t("admin.common.hidden") %>
             <span class="text-xs text-gray-400">#<%= slide.position %></span>
           </div>
         </div>
         <% if slide.button_label.present? %>
-          <p class="text-xs text-gray-400 mt-2"><i class="las la-mouse-pointer"></i> <%= slide.button_label %> → <%= slide.button_url.presence || "—" %></p>
+          <p class="text-xs text-gray-400 mt-2"><i class="las la-mouse-pointer"></i> <%= slide.button_label %> → <%= slide.button_url.presence || t("admin.common.none") %></p>
         <% end %>
         <div class="mt-4 flex gap-2">
-          <%= link_to "Edit", edit_admin_slide_path(slide), class: "#{btn_secondary} text-xs py-1.5 px-3" %>
-          <%= button_to "Delete", admin_slide_path(slide), method: :delete, class: "#{btn_secondary} text-xs py-1.5 px-3 text-red-600",
-                form: { data: { turbo_confirm: "Delete this slide?" } } %>
+          <%= link_to t("admin.actions.edit"), edit_admin_slide_path(slide), class: "#{btn_secondary} text-xs py-1.5 px-3" %>
+          <%= button_to t("admin.actions.delete"), admin_slide_path(slide), method: :delete, class: "#{btn_secondary} text-xs py-1.5 px-3 text-red-600",
+                form: { data: { turbo_confirm: t("admin.confirm.delete_slide") } } %>
         </div>
       </div>
     </div>
   <% end %>
 </div>
-<% if @slides.empty? %><div class="p-10 text-center text-gray-400 bg-white rounded-xl mt-4">No slides yet. Add one to populate the homepage hero.</div><% end %>
+<% if @slides.empty? %><div class="p-10 text-center text-gray-400 bg-white rounded-xl mt-4"><%= t("admin.slides.empty") %></div><% end %>

@@ -1,8 +1,8 @@
 <% stat_cards = [
-     { label: "Revenue",   value: number_to_currency(@revenue), icon: "la-dollar-sign", color: "green",  sub: "#{@orders_count} orders" },
-     { label: "Orders",    value: @orders_count,                icon: "la-shopping-bag", color: "indigo", sub: "#{@pending_orders} pending" },
-     { label: "Products",  value: @stats[:products],            icon: "la-box",          color: "indigo", sub: "#{@stats[:published]} published" },
-     { label: "Low Stock", value: @stats[:low_stock],           icon: "la-exclamation-triangle", color: "yellow", sub: "#{@stats[:out_of_stock]} out of stock" }
+     { label: t("admin.stats.revenue"),   value: number_to_currency(@revenue), icon: "la-dollar-sign", color: "green",  sub: t("admin.stats.orders_count", count: @orders_count) },
+     { label: t("admin.stats.orders"),    value: @orders_count,                icon: "la-shopping-bag", color: "indigo", sub: t("admin.stats.pending", count: @pending_orders) },
+     { label: t("admin.stats.products"),  value: @stats[:products],            icon: "la-box",          color: "indigo", sub: t("admin.stats.published", count: @stats[:published]) },
+     { label: t("admin.stats.low_stock"), value: @stats[:low_stock],           icon: "la-exclamation-triangle", color: "yellow", sub: t("admin.stats.out_of_stock", count: @stats[:out_of_stock]) }
    ] %>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-6">
@@ -25,8 +25,8 @@
   <!-- Category breakdown -->
   <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6">
     <div class="flex items-center justify-between mb-5">
-      <h3 class="font-semibold text-gray-900">Products by Category</h3>
-      <%= link_to "Manage", admin_categories_path, class: "text-sm text-indigo-600 hover:underline" %>
+      <h3 class="font-semibold text-gray-900"><%= t("admin.dashboard.by_category") %></h3>
+      <%= link_to t("admin.dashboard.manage"), admin_categories_path, class: "text-sm text-indigo-600 hover:underline" %>
     </div>
     <% if @category_breakdown.any? %>
       <div class="space-y-3">
@@ -43,11 +43,11 @@
         <% end %>
       </div>
     <% else %>
-      <p class="text-sm text-gray-400">No products assigned to categories yet.</p>
+      <p class="text-sm text-gray-400"><%= t("admin.dashboard.no_categories") %></p>
     <% end %>
 
     <hr class="my-6">
-    <h3 class="font-semibold text-gray-900 mb-4">Recently Added</h3>
+    <h3 class="font-semibold text-gray-900 mb-4"><%= t("admin.dashboard.recently_added") %></h3>
     <div class="divide-y divide-gray-100">
       <% @recent_products.each do |product| %>
         <div class="flex items-center gap-3 py-2.5">
@@ -56,7 +56,7 @@
             <%= link_to product.name, admin_product_path(product), class: "text-sm font-medium text-gray-900 hover:text-indigo-600 truncate block" %>
             <span class="text-xs text-gray-400"><%= product.category.name %></span>
           </div>
-          <%= boolean_badge product.published, true_text: "Live", false_text: "Draft" %>
+          <%= boolean_badge product.published, true_text: t("admin.dashboard.live"), false_text: t("admin.dashboard.draft") %>
           <span class="text-sm font-semibold text-gray-700"><%= number_to_currency product.price %></span>
         </div>
       <% end %>
@@ -68,9 +68,9 @@
     <div class="bg-white rounded-xl shadow-sm p-6">
       <div class="flex items-center justify-between mb-4">
         <h3 class="font-semibold text-gray-900 flex items-center gap-2">
-          <i class="las la-shopping-bag text-indigo-500"></i> Recent Orders
+          <i class="las la-shopping-bag text-indigo-500"></i> <%= t("admin.dashboard.recent_orders") %>
         </h3>
-        <%= link_to "All →", admin_orders_path, class: "text-sm text-indigo-600 hover:underline" %>
+        <%= link_to t("admin.dashboard.all"), admin_orders_path, class: "text-sm text-indigo-600 hover:underline" %>
       </div>
       <% if @recent_orders.any? %>
         <div class="space-y-3">
@@ -88,31 +88,31 @@
           <% end %>
         </div>
       <% else %>
-        <p class="text-sm text-gray-400">No orders yet.</p>
+        <p class="text-sm text-gray-400"><%= t("admin.dashboard.no_orders") %></p>
       <% end %>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm p-6">
       <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-        <i class="las la-exclamation-triangle text-yellow-500"></i> Low Stock Alerts
+        <i class="las la-exclamation-triangle text-yellow-500"></i> <%= t("admin.dashboard.low_stock_alerts") %>
       </h3>
       <% if @low_stock_products.any? %>
         <div class="space-y-3">
           <% @low_stock_products.each do |product| %>
             <div class="flex items-center justify-between">
               <%= link_to product.name, admin_product_path(product), class: "text-sm text-gray-700 hover:text-indigo-600 truncate mr-2" %>
-              <%= status_badge "#{product.stock} left", color: :yellow %>
+              <%= status_badge t("admin.dashboard.units_left", count: product.stock), color: :yellow %>
             </div>
           <% end %>
         </div>
       <% else %>
-        <p class="text-sm text-gray-400">Everything is well stocked. 🎉</p>
+        <p class="text-sm text-gray-400"><%= t("admin.dashboard.well_stocked") %></p>
       <% end %>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm p-6">
       <h3 class="font-semibold text-gray-900 mb-4 flex items-center gap-2">
-        <i class="las la-star text-indigo-500"></i> Reviews to Moderate
+        <i class="las la-star text-indigo-500"></i> <%= t("admin.dashboard.reviews_to_moderate") %>
       </h3>
       <% if @pending_reviews.any? %>
         <div class="space-y-3">
@@ -122,24 +122,24 @@
                 <% review.rating.times { %><i class="las la-star text-xs"></i><% } %>
               </div>
               <p class="text-gray-700 truncate"><%= review.title.presence || review.body %></p>
-              <span class="text-xs text-gray-400">on <%= review.product.name %></span>
+              <span class="text-xs text-gray-400"><%= t("admin.dashboard.on_product", product: review.product.name) %></span>
             </div>
           <% end %>
         </div>
-        <%= link_to "Moderate all →", admin_reviews_path, class: "inline-block mt-4 text-sm text-indigo-600 hover:underline" %>
+        <%= link_to t("admin.dashboard.moderate_all"), admin_reviews_path, class: "inline-block mt-4 text-sm text-indigo-600 hover:underline" %>
       <% else %>
-        <p class="text-sm text-gray-400">No reviews waiting. 👍</p>
+        <p class="text-sm text-gray-400"><%= t("admin.dashboard.no_reviews") %></p>
       <% end %>
     </div>
 
     <div class="bg-white rounded-xl shadow-sm p-6">
-      <h3 class="font-semibold text-gray-900 mb-4">Most Viewed</h3>
+      <h3 class="font-semibold text-gray-900 mb-4"><%= t("admin.dashboard.most_viewed") %></h3>
       <div class="space-y-2">
         <% @top_viewed.each_with_index do |product, i| %>
           <div class="flex items-center gap-2 text-sm">
             <span class="text-gray-400 w-4"><%= i + 1 %></span>
             <%= link_to product.name, admin_product_path(product), class: "flex-1 text-gray-700 hover:text-indigo-600 truncate" %>
-            <span class="text-xs text-gray-400"><%= product.views_count %> views</span>
+            <span class="text-xs text-gray-400"><%= t("admin.dashboard.views", count: product.views_count) %></span>
           </div>
         <% end %>
       </div>

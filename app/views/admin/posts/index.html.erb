@@ -1,17 +1,17 @@
 <div class="flex items-center justify-between mb-6">
-  <p class="text-gray-500 text-sm"><%= @pagy.count %> posts</p>
-  <%= link_to new_admin_post_path, class: btn_primary do %><i class="las la-plus"></i> New Post<% end %>
+  <p class="text-gray-500 text-sm"><%= t("admin.posts.count", count: @pagy.count) %></p>
+  <%= link_to new_admin_post_path, class: btn_primary do %><i class="las la-plus"></i> <%= t("admin.posts.new") %><% end %>
 </div>
 
 <div class="bg-white rounded-xl shadow-sm overflow-hidden">
   <table class="w-full text-sm">
     <thead class="text-left text-gray-500 border-b border-gray-100">
       <tr>
-        <th class="px-4 py-3">Title</th>
-        <th class="px-4 py-3">Author</th>
-        <th class="px-4 py-3">Status</th>
-        <th class="px-4 py-3">Published</th>
-        <th class="px-4 py-3">Views</th>
+        <th class="px-4 py-3"><%= t("admin.posts.cols.title") %></th>
+        <th class="px-4 py-3"><%= t("admin.posts.cols.author") %></th>
+        <th class="px-4 py-3"><%= t("admin.common.status") %></th>
+        <th class="px-4 py-3"><%= t("admin.posts.cols.published") %></th>
+        <th class="px-4 py-3"><%= t("admin.posts.cols.views") %></th>
         <th class="px-4 py-3"></th>
       </tr>
     </thead>
@@ -19,19 +19,19 @@
       <% @posts.each do |post| %>
         <tr class="hover:bg-gray-50">
           <td class="px-4 py-3 font-medium text-gray-900"><%= post.title %></td>
-          <td class="px-4 py-3 text-gray-600"><%= post.author&.display_name || "—" %></td>
-          <td class="px-4 py-3"><%= boolean_badge post.published, true_text: "Published", false_text: "Draft" %></td>
-          <td class="px-4 py-3 text-gray-500"><%= post.published_at&.strftime("%b %d, %Y") || "—" %></td>
+          <td class="px-4 py-3 text-gray-600"><%= post.author&.display_name || t("admin.common.none") %></td>
+          <td class="px-4 py-3"><%= boolean_badge post.published, true_text: t("admin.common.published"), false_text: t("admin.common.draft") %></td>
+          <td class="px-4 py-3 text-gray-500"><%= post.published_at&.strftime("%b %d, %Y") || t("admin.common.none") %></td>
           <td class="px-4 py-3"><%= post.views_count %></td>
           <td class="px-4 py-3 text-right space-x-2 whitespace-nowrap">
-            <%= link_to "Edit", edit_admin_post_path(post), class: "text-indigo-600 hover:underline" %>
-            <%= button_to "Delete", admin_post_path(post), method: :delete, class: "text-red-500 hover:underline inline",
-                  form: { class: "inline", data: { turbo_confirm: "Delete this post?" } } %>
+            <%= link_to t("admin.actions.edit"), edit_admin_post_path(post), class: "text-indigo-600 hover:underline" %>
+            <%= button_to t("admin.actions.delete"), admin_post_path(post), method: :delete, class: "text-red-500 hover:underline inline",
+                  form: { class: "inline", data: { turbo_confirm: t("admin.confirm.delete_post") } } %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
-  <% if @posts.empty? %><div class="p-10 text-center text-gray-400">No posts yet.</div><% end %>
+  <% if @posts.empty? %><div class="p-10 text-center text-gray-400"><%= t("admin.posts.empty") %></div><% end %>
 </div>
 <div class="mt-4"><%== pagy_tailwind_nav(@pagy) if @pagy.pages > 1 %></div>

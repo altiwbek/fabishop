@@ -2,7 +2,7 @@ class Admin::OrdersController < Admin::BaseController
   before_action :set_order, only: %i[ show update ]
 
   def index
-    @page_title = "Orders"
+    @page_title = t("admin.nav.orders")
     scope = Order.recent
     scope = scope.where(status: params[:status]) if params[:status].present? && Order.statuses.key?(params[:status])
     @pagy, @orders = pagy(scope, limit: 20)
@@ -10,14 +10,14 @@ class Admin::OrdersController < Admin::BaseController
   end
 
   def show
-    @page_title = "Order #{@order.number}"
+    @page_title = t("admin.titles.order", number: @order.number)
   end
 
   def update
     if @order.update(status: params.dig(:order, :status))
-      redirect_to admin_order_path(@order), notice: "Order marked as #{@order.status}."
+      redirect_to admin_order_path(@order), notice: t("admin.flash.order.status", status: t("admin.orders.statuses.#{@order.status}"))
     else
-      redirect_to admin_order_path(@order), alert: "Could not update order."
+      redirect_to admin_order_path(@order), alert: t("admin.flash.order.error")
     end
   end
 

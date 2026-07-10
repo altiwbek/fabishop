@@ -1,7 +1,7 @@
 <div class="flex items-center justify-between mb-6">
-  <p class="text-gray-500 text-sm"><%= pluralize(@users.size, "user") %></p>
+  <p class="text-gray-500 text-sm"><%= t("admin.users.count", count: @users.size) %></p>
   <% if current_user&.owner? %>
-    <%= link_to new_admin_user_path, class: btn_primary do %><i class="las la-plus"></i> Add Staff<% end %>
+    <%= link_to new_admin_user_path, class: btn_primary do %><i class="las la-plus"></i> <%= t("admin.users.add") %><% end %>
   <% end %>
 </div>
 
@@ -9,9 +9,9 @@
   <table class="w-full text-sm">
     <thead class="text-left text-gray-500 border-b border-gray-100">
       <tr>
-        <th class="px-4 py-3">Name</th>
-        <th class="px-4 py-3">Email</th>
-        <th class="px-4 py-3">Role</th>
+        <th class="px-4 py-3"><%= t("admin.users.cols.name") %></th>
+        <th class="px-4 py-3"><%= t("admin.users.cols.email") %></th>
+        <th class="px-4 py-3"><%= t("admin.users.cols.role") %></th>
         <th class="px-4 py-3"></th>
       </tr>
     </thead>
@@ -22,20 +22,20 @@
             <div class="flex items-center gap-3">
               <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 grid place-items-center text-xs font-semibold"><%= user.initials %></span>
               <span class="font-medium text-gray-900"><%= user.display_name %></span>
-              <% if user == current_user %><span class="text-xs text-gray-400">(you)</span><% end %>
+              <% if user == current_user %><span class="text-xs text-gray-400"><%= t("admin.common.you") %></span><% end %>
             </div>
           </td>
           <td class="px-4 py-3 text-gray-600"><%= user.email_address %></td>
-          <td class="px-4 py-3"><%= status_badge user.role.capitalize, color: (user.owner? ? :indigo : :gray) %></td>
+          <td class="px-4 py-3"><%= status_badge t("admin.roles.#{user.role}"), color: (user.owner? ? :indigo : :gray) %></td>
           <td class="px-4 py-3 text-right space-x-2 whitespace-nowrap">
             <% if current_user&.owner? %>
-              <%= link_to "Edit", edit_admin_user_path(user), class: "text-indigo-600 hover:underline" %>
+              <%= link_to t("admin.actions.edit"), edit_admin_user_path(user), class: "text-indigo-600 hover:underline" %>
               <% unless user == current_user %>
-                <%= button_to "Delete", admin_user_path(user), method: :delete, class: "text-red-500 hover:underline inline",
-                      form: { class: "inline", data: { turbo_confirm: "Remove #{user.display_name}?" } } %>
+                <%= button_to t("admin.actions.delete"), admin_user_path(user), method: :delete, class: "text-red-500 hover:underline inline",
+                      form: { class: "inline", data: { turbo_confirm: t("admin.confirm.remove_named", name: user.display_name) } } %>
               <% end %>
             <% else %>
-              <span class="text-gray-300">—</span>
+              <span class="text-gray-300"><%= t("admin.common.none") %></span>
             <% end %>
           </td>
         </tr>

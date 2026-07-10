@@ -1,4 +1,7 @@
 class Post < ApplicationRecord
+  extend Mobility
+  translates :title, :subtitle, :excerpt
+
   extend FriendlyId
   friendly_id :title, use: :slugged
 

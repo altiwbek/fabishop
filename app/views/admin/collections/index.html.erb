@@ -1,6 +1,6 @@
 <div class="flex items-center justify-between mb-6">
-  <p class="text-gray-500 text-sm"><%= pluralize(@collections.size, "collection") %></p>
-  <%= link_to new_admin_collection_path, class: btn_primary do %><i class="las la-plus"></i> New Collection<% end %>
+  <p class="text-gray-500 text-sm"><%= t("admin.collections.count", count: @collections.size) %></p>
+  <%= link_to new_admin_collection_path, class: btn_primary do %><i class="las la-plus"></i> <%= t("admin.collections.new") %><% end %>
 </div>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -20,17 +20,17 @@
             <p class="text-xs text-gray-400"><%= collection.subtitle %></p>
           </div>
           <div class="flex gap-1">
-            <% if collection.featured %><%= status_badge "Featured", color: :indigo %><% end %>
-            <%= boolean_badge collection.active, true_text: "Active", false_text: "Hidden" %>
+            <% if collection.featured %><%= status_badge t("admin.common.featured"), color: :indigo %><% end %>
+            <%= boolean_badge collection.active, true_text: t("admin.common.active"), false_text: t("admin.common.hidden") %>
           </div>
         </div>
-        <p class="text-sm text-gray-500 mt-2"><%= pluralize(collection.products.count, "product") %></p>
+        <p class="text-sm text-gray-500 mt-2"><%= t("admin.collections.product_count", count: collection.products.count) %></p>
         <div class="mt-4 flex gap-2">
-          <%= link_to "Manage", admin_collection_path(collection), class: "#{btn_secondary} text-xs py-1.5 px-3" %>
-          <%= link_to "Edit", edit_admin_collection_path(collection), class: "#{btn_secondary} text-xs py-1.5 px-3" %>
+          <%= link_to t("admin.actions.manage"), admin_collection_path(collection), class: "#{btn_secondary} text-xs py-1.5 px-3" %>
+          <%= link_to t("admin.actions.edit"), edit_admin_collection_path(collection), class: "#{btn_secondary} text-xs py-1.5 px-3" %>
         </div>
       </div>
     </div>
   <% end %>
 </div>
-<% if @collections.empty? %><div class="p-10 text-center text-gray-400 bg-white rounded-xl">No collections yet.</div><% end %>
+<% if @collections.empty? %><div class="p-10 text-center text-gray-400 bg-white rounded-xl"><%= t("admin.collections.empty") %></div><% end %>

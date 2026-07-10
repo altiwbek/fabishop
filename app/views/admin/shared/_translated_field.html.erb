@@ -1,0 +1,33 @@
+<%#
+  Renders one input per supported locale for a Mobility-translated attribute,
+  using the name_en / name_ru / name_ky accessors.
+
+  Locals:
+    form      - the form builder
+    attribute - base attribute name, e.g. :name
+    label     - group label (defaults to a humanized attribute)
+    as        - :text_field (default) or :text_area
+    rows      - rows for text_area (default 3)
+%>
+<% as ||= :text_field %>
+<div>
+  <span class="<%= label_classes %>"><%= label || attribute.to_s.humanize %></span>
+  <div class="space-y-2 rounded-lg border border-gray-200 p-3">
+    <% I18n.available_locales.each do |locale| %>
+      <% field = "#{attribute}_#{locale}" %>
+      <div class="flex items-start gap-2">
+        <span class="mt-2 inline-flex w-9 justify-center rounded bg-gray-100 px-1.5 py-1 text-xs font-semibold text-gray-600">
+          <%= locale_short(locale) %>
+        </span>
+        <div class="flex-1">
+          <% if as == :text_area %>
+            <%= form.text_area field, rows: (defined?(rows) && rows) || 3, class: input_classes %>
+          <% else %>
+            <%= form.text_field field, class: input_classes %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <p class="mt-1 text-xs text-gray-400"><%= t("admin.form.leave_blank_fallback") %></p>
+</div>

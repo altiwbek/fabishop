@@ -1,4 +1,7 @@
 class Product < ApplicationRecord
+  extend Mobility
+  translates :name, :subtitle
+
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -27,9 +30,13 @@ class Product < ApplicationRecord
   scope :popular,      -> { order(views_count: :desc) }
   scope :top_rated,    -> { order(rating: :desc, reviews_count: :desc) }
 
+  # Search matches the SKU plus translated name/subtitle in ANY locale (the whole
+  # translations jsonb is scanned as text), so a query hits regardless of which
+  # language the shopper is browsing in.
   scope :search, ->(q) {
     return all if q.blank?
-    where("products.name ILIKE :q OR products.subtitle ILIKE :q OR products.sku ILIKE :q", q: "%#{sanitize_sql_like(q.to_s)}%")
+    like = "%#{sanitize_sql_like(q.to_s)}%"
+    where("products.translations::text ILIKE :q OR products.sku ILIKE :q", q: like)
   }
 
   before_validation :set_published_at, if: -> { published? && published_at.blank? }

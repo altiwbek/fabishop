@@ -1,5 +1,5 @@
 <div class="flex items-center gap-2 mb-6">
-  <% [["all","All"],["pending","Pending"],["approved","Approved"]].each do |key, label| %>
+  <% [["all", t("admin.reviews.filters.all")], ["pending", t("admin.reviews.filters.pending")], ["approved", t("admin.reviews.filters.approved")]].each do |key, label| %>
     <% active = (params[:filter].presence || "all") == key %>
     <%= link_to admin_reviews_path(filter: (key == "all" ? nil : key)),
           class: "px-3 py-1.5 rounded-lg text-sm font-medium #{active ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}" do %>
@@ -15,24 +15,24 @@
         <div class="min-w-0">
           <div class="flex items-center gap-2 mb-1">
             <div class="flex text-yellow-500"><% review.rating.times do %><i class="las la-star text-sm"></i><% end %></div>
-            <span class="font-medium text-gray-900"><%= review.title.presence || "Review" %></span>
-            <%= boolean_badge review.approved, true_text: "Approved", false_text: "Pending" %>
+            <span class="font-medium text-gray-900"><%= review.title.presence || t("admin.reviews.default_title") %></span>
+            <%= boolean_badge review.approved, true_text: t("admin.common.approved"), false_text: t("admin.common.pending") %>
           </div>
           <p class="text-sm text-gray-600 mb-2"><%= review.body %></p>
           <p class="text-xs text-gray-400">
-            by <%= review.author_name %> ·
-            on <%= link_to review.product.name, admin_product_path(review.product), class: "text-indigo-600 hover:underline" %> ·
-            <%= time_ago_in_words(review.created_at) %> ago
+            <%= t("admin.reviews.by", name: review.author_name) %> ·
+            <%= t("admin.reviews.on_html", product: link_to(review.product.name, admin_product_path(review.product), class: "text-indigo-600 hover:underline")) %> ·
+            <%= t("admin.reviews.ago", time: time_ago_in_words(review.created_at)) %>
           </p>
         </div>
         <div class="flex flex-col gap-2 shrink-0">
           <%= button_to admin_review_path(review), method: :patch, class: (review.approved? ? btn_secondary : btn_primary) do %>
             <i class="las la-<%= review.approved? ? 'eye-slash' : 'check' %>"></i>
-            <%= review.approved? ? "Hide" : "Approve" %>
+            <%= review.approved? ? t("admin.actions.hide") : t("admin.actions.approve") %>
           <% end %>
           <%= button_to admin_review_path(review), method: :delete, class: "#{btn_secondary} text-red-600",
-                form: { data: { turbo_confirm: "Delete this review?" } } do %>
-            <i class="las la-trash"></i> Delete
+                form: { data: { turbo_confirm: t("admin.confirm.delete_review") } } do %>
+            <i class="las la-trash"></i> <%= t("admin.actions.delete") %>
           <% end %>
         </div>
       </div>
@@ -40,5 +40,5 @@
   <% end %>
 </div>
 
-<% if @reviews.empty? %><div class="p-10 text-center text-gray-400 bg-white rounded-xl">No reviews here.</div><% end %>
+<% if @reviews.empty? %><div class="p-10 text-center text-gray-400 bg-white rounded-xl"><%= t("admin.reviews.empty") %></div><% end %>
 <div class="mt-4"><%== pagy_tailwind_nav(@pagy) if @pagy.pages > 1 %></div>

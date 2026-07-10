@@ -1,12 +1,12 @@
 <div class="flex items-center gap-2 mb-6 flex-wrap">
   <% active = params[:status].blank? %>
-  <%= link_to "All (#{@status_counts.values.sum})", admin_orders_path,
+  <%= link_to t("admin.orders.all_count", count: @status_counts.values.sum), admin_orders_path,
         class: "px-3 py-1.5 rounded-lg text-sm font-medium #{active ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}" %>
   <% Order.statuses.keys.each do |status| %>
     <% is_active = params[:status] == status %>
     <%= link_to admin_orders_path(status: status),
-          class: "px-3 py-1.5 rounded-lg text-sm font-medium capitalize #{is_active ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}" do %>
-      <%= status %> <span class="text-xs opacity-70">(<%= @status_counts[status] || 0 %>)</span>
+          class: "px-3 py-1.5 rounded-lg text-sm font-medium #{is_active ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'}" do %>
+      <%= t("admin.orders.statuses.#{status}") %> <span class="text-xs opacity-70">(<%= @status_counts[status] || 0 %>)</span>
     <% end %>
   <% end %>
 </div>
@@ -16,12 +16,12 @@
     <table class="w-full text-sm">
       <thead class="text-left text-gray-500 border-b border-gray-100">
         <tr>
-          <th class="px-4 py-3">Order</th>
-          <th class="px-4 py-3">Customer</th>
-          <th class="px-4 py-3">Date</th>
-          <th class="px-4 py-3">Items</th>
-          <th class="px-4 py-3">Total</th>
-          <th class="px-4 py-3">Status</th>
+          <th class="px-4 py-3"><%= t("admin.orders.cols.order") %></th>
+          <th class="px-4 py-3"><%= t("admin.orders.cols.customer") %></th>
+          <th class="px-4 py-3"><%= t("admin.orders.cols.date") %></th>
+          <th class="px-4 py-3"><%= t("admin.orders.cols.items") %></th>
+          <th class="px-4 py-3"><%= t("admin.orders.cols.total") %></th>
+          <th class="px-4 py-3"><%= t("admin.common.status") %></th>
           <th class="px-4 py-3"></th>
         </tr>
       </thead>
@@ -36,15 +36,15 @@
             <td class="px-4 py-3 text-gray-500"><%= order.created_at.strftime("%b %d, %Y") %></td>
             <td class="px-4 py-3"><%= order.item_count %></td>
             <td class="px-4 py-3 font-semibold text-gray-900"><%= number_to_currency order.total %></td>
-            <td class="px-4 py-3"><%= status_badge order.status.capitalize, color: order.status_color %></td>
+            <td class="px-4 py-3"><%= status_badge t("admin.orders.statuses.#{order.status}"), color: order.status_color %></td>
             <td class="px-4 py-3 text-right">
-              <%= link_to "View", admin_order_path(order), class: "text-indigo-600 hover:underline" %>
+              <%= link_to t("admin.actions.view"), admin_order_path(order), class: "text-indigo-600 hover:underline" %>
             </td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
-  <% if @orders.empty? %><div class="p-10 text-center text-gray-400">No orders yet.</div><% end %>
+  <% if @orders.empty? %><div class="p-10 text-center text-gray-400"><%= t("admin.orders.empty") %></div><% end %>
 </div>
 <div class="mt-4"><%== pagy_tailwind_nav(@pagy) if @pagy.pages > 1 %></div>
