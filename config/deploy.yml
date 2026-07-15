@@ -1,13 +1,13 @@
 # Name of your application. Used to uniquely configure containers.
-service: electronics
+service: fabishop
 
 # Name of the container image (use your-user/app-name on external registries).
-image: electronics
+image: bar-bol/fabishop
 
 # Deploy to these servers.
 servers:
   web:
-    - 192.168.0.1
+    - 178.219.159.157
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -40,7 +40,12 @@ registry:
 env:
   secret:
     - RAILS_MASTER_KEY
+    - FABISHOP_DATABASE_HOST
+    - FABISHOP_DATABASE_PASSWORD
   clear:
+    DB_HOST: fabishop-db
+    FABISHOP_DATABASE_HOST: fabishop-db
+    FABISHOP_DATABASE_PASSWORD: password123456
     # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
     # When you start using multiple servers, you should split out job processing to a dedicated machine.
     SOLID_QUEUE_IN_PUMA: true
@@ -71,6 +76,10 @@ aliases:
 volumes:
   - "electronics_storage:/rails/storage"
 
+proxy:
+  ssl: false
+  host: 178.219.159.157     # <-- replace with your domain (DNS A record -> YOUR_SERVER_IP)
+
 # Bridge fingerprinted assets, like JS and CSS, between versions to avoid
 # hitting 404 on in-flight requests. Combines all files from new and old
 # version inside the asset_path.
@@ -95,25 +104,30 @@ builder:
 #   user: app
 
 # Use accessory services (secrets come from .kamal/secrets).
-# accessories:
-#   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     # Change to 3306 to expose port to the world instead of just local network.
-#     port: "127.0.0.1:3306:3306"
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
-#       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
-#   redis:
-#     image: valkey/valkey:8
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data
+# Accessory services run on the same host (single-server setup).
+# For higher scale, move these to a managed Postgres/Redis and delete this section.
+accessories:
+  db:
+    image: postgres:16
+    host: 178.219.159.157    # <-- same VPS IP as above
+    # Only expose Postgres on localhost, not the public internet.
+    port: "127.0.0.1:5432:5432"
+    options:
+      network-alias: fabishop-db
+    env:
+      clear:
+        POSTGRES_USER: fabishop
+        POSTGRES_DB: fabishop_production
+        FABISHOP_DATABASE_PASSWORD: password123456
+      secret:
+        - POSTGRES_PASSWORD
+        - FABISHOP_DATABASE_PASSWORD
+    directories:
+      - data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    host: 178.219.159.157    # <-- same VPS IP as above
+    port: "127.0.0.1:6379:6379"
+    directories:
+      - data:/data

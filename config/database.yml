@@ -18,14 +18,14 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: <%= ENV.fetch("ELECTRONICS_DATABASE_HOST", "localhost") %>
-  username: <%= ENV.fetch("ELECTRONICS_DATABASE_USERNAME", "yourname") %>
-  password: <%= ENV.fetch("ELECTRONICS_DATABASE_PASSWORD", "yourpassword") %>
+  host: <%= ENV.fetch("FABISHOP_DATABASE_HOST", "localhost") %>
+  username: <%= ENV.fetch("FABISHOP_DATABASE_USERNAME", "yourname") %>
+  password: <%= ENV.fetch("FABISHOP_DATABASE_PASSWORD", "yourpassword") %>
 
 
 development:
   <<: *default
-  database: electronics_development
+  database: fabishop_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -59,7 +59,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: electronics_test
+  database: fabishop_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -90,18 +90,19 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: electronics_production
-    username: electronics
-    password: <%= ENV["ELECTRONICS_DATABASE_PASSWORD"] %>
+    database: fabishop_production
+    host: fabishop-db
+    username: fabishop
+    password: password123456
   cache:
     <<: *primary_production
-    database: electronics_production_cache
+    database: fabishop_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: electronics_production_queue
+    database: fabishop_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: electronics_production_cable
+    database: fabishop_production_cable
     migrations_paths: db/cable_migrate
