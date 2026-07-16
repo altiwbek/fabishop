@@ -14,8 +14,8 @@ jobs:
       postgres:
         image: postgres:16
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: yourname
+          POSTGRES_PASSWORD: yourpassword
         ports:
           - 5432:5432
         options: >-
@@ -28,8 +28,8 @@ jobs:
       RAILS_ENV: test
       # Matches the ENV.fetch keys in config/database.yml
       ELECTRONICS_DATABASE_HOST: localhost
-      ELECTRONICS_DATABASE_USERNAME: postgres
-      ELECTRONICS_DATABASE_PASSWORD: postgres
+      ELECTRONICS_DATABASE_USERNAME: yourname
+      ELECTRONICS_DATABASE_PASSWORD: yourpassword
 
     steps:
       - name: Checkout code
