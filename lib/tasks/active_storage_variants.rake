@@ -42,5 +42,5 @@ namespace :active_storage do
     end
 
     puts "\nDone. Checked #{checked} variant(s), #{errored} error(s)."
-  end 
+  end
 end
