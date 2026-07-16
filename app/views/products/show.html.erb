@@ -20,7 +20,7 @@
           <div class="product-gallery product-gallery-vertical">
             <div class="row">
               <figure class="product-main-image">
-                <% main = product_image_url(@product) %>
+                <% main = product_image_url(@product, variant: :medium) %>
                 <img id="product-zoom" src="<%= main %>" data-zoom-image="<%= main %>" alt="<%= @product.name %>">
                 <a href="#" id="btn-product-gallery" class="btn-product-gallery"><i class="icon-arrows"></i></a>
               </figure>
@@ -28,9 +28,10 @@
               <div id="product-zoom-gallery" class="product-image-gallery">
                 <% if @product.images.attached? %>
                   <% @product.images.each_with_index do |img, i| %>
-                    <% u = url_for(img) %>
-                    <a class="product-gallery-item <%= 'active' if i.zero? %>" href="#" data-image="<%= u %>" data-zoom-image="<%= u %>">
-                      <img src="<%= u %>" alt="view <%= i + 1 %>">
+                    <% thumb = url_for(img.variant(:thumb)) %>
+                    <% zoom  = url_for(img.variant(:medium)) %>
+                    <a class="product-gallery-item <%= 'active' if i.zero? %>" href="#" data-image="<%= zoom %>" data-zoom-image="<%= zoom %>">
+                      <img src="<%= thumb %>" alt="view <%= i + 1 %>">
                     </a>
                   <% end %>
                 <% else %>

@@ -1,6 +1,6 @@
 class HomeController < StorefrontController
   def index
-    @slides = Slide.active.ordered
+    @slides = Slide.active.ordered.with_attached_image
     @featured_categories = Category.roots.ordered.limit(6)
     @new_products      = published_scope.new_arrivals.recent.limit(8).presence || published_scope.recent.limit(8)
     @featured_products = published_scope.featured.limit(8)
@@ -13,6 +13,6 @@ class HomeController < StorefrontController
   private
 
   def published_scope
-    Product.published.includes(:category, images_attachments: :blob)
+    Product.published.includes(:category).with_attached_images
   end
 end

@@ -1,11 +1,11 @@
 class CategoriesController < StorefrontController
   def index
-    @categories = Category.roots.ordered.includes(:children, image_attachment: :blob)
+    @categories = Category.roots.ordered.includes(:children).with_attached_image
   end
 
   def show
     @category = Category.friendly.find(params[:id])
-    scope = @category.all_products.published.includes(:category, :brand, images_attachments: :blob)
+    scope = @category.all_products.published.includes(:category, :brand).with_attached_images
     scope = sort(scope)
     @pagy, @products = pagy(scope)
     @brands = Brand.ordered

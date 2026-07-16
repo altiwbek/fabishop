@@ -9,7 +9,9 @@ class Category < ApplicationRecord
   has_many :children, class_name: "Category", foreign_key: :parent_id, dependent: :nullify
   has_many :products, dependent: :restrict_with_error
 
-  has_one_attached :image
+  has_one_attached :image do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 700, 500 ], saver: { quality: 78, strip: true }, preprocessed: true
+  end
 
   validates :name, presence: true
 

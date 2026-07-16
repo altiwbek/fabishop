@@ -3,12 +3,11 @@ module ProductsHelper
 
   # Returns a URL for a product's image (nth attached image), falling back to a
   # placeholder so grids never show a broken image.
-  def product_image_url(product, index: 0)
-    if product.images.attached? && product.images[index]
-      url_for(product.images[index])
-    else
-      PLACEHOLDER
-    end
+  def product_image_url(product, index: 0, variant: :thumb)
+    image = product.images[index] if product.images.attached?
+    return PLACEHOLDER unless image
+
+    url_for(variant ? image.variant(variant) : image)
   end
 
   def product_has_second_image?(product)

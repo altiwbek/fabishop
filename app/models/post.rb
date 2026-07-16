@@ -8,7 +8,9 @@ class Post < ApplicationRecord
   belongs_to :author, class_name: "User", optional: true
 
   has_rich_text :body
-  has_one_attached :cover
+  has_one_attached :cover do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 900, 500 ], saver: { quality: 78, strip: true }, preprocessed: true
+  end
 
   validates :title, presence: true
 

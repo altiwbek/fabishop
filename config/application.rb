@@ -24,9 +24,9 @@ module MegaShop
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # libvips isn't installed in this environment; use ImageMagick (mini_magick)
-    # for image analysis/variants.
-    config.active_storage.variant_processor = :mini_magick
+    # libvips is installed in the Docker image (see Dockerfile); use it for image
+    # analysis/variants — it's faster and lighter than ImageMagick.
+    config.active_storage.variant_processor = :vips
 
     # Internationalization: English (default), Russian, Kyrgyz.
     # Missing ru/ky translations fall back to English.

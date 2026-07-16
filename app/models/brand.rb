@@ -6,7 +6,9 @@ class Brand < ApplicationRecord
   friendly_id :name, use: :slugged
 
   has_many :products, dependent: :nullify
-  has_one_attached :logo
+  has_one_attached :logo do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 240, 240 ], saver: { quality: 82, strip: true }, preprocessed: true
+  end
 
   validates :name, presence: true
 

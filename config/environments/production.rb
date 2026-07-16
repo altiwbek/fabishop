@@ -24,6 +24,13 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
+  # Serve attachments/variants through proxy URLs instead of redirect URLs.
+  # Redirect URLs are signed and short-lived, so browsers can't cache them and
+  # repeat the extra redirect hop on every page load. Proxy URLs are stable and
+  # carry long Cache-Control headers, so Thruster (and browsers) cache the image
+  # bytes and stop hammering Puma. This is the main serving-layer speedup.
+  config.active_storage.resolve_model_to_route = :rails_storage_proxy
+
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # config.assume_ssl = true
 

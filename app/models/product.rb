@@ -13,7 +13,13 @@ class Product < ApplicationRecord
   has_many :reviews, dependent: :destroy
 
   has_rich_text :description
-  has_many_attached :images
+  has_many_attached :images do |attachable|
+    # Grid/card thumbnail and the larger gallery image on the product page.
+    # Serving these instead of the full-size originals is the single biggest
+    # storefront performance win. saver strips metadata; 75% quality.
+    attachable.variant :thumb,  resize_to_limit: [ 500, 500 ], saver: { quality: 75, strip: true }, preprocessed: true
+    attachable.variant :medium, resize_to_limit: [ 1000, 1000 ], saver: { quality: 80, strip: true }
+  end
 
   validates :name, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }

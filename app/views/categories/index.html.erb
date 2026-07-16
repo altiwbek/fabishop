@@ -24,7 +24,7 @@
             <%= link_to category_path(category) do %>
               <figure class="category-media">
                 <% if category.image.attached? %>
-                  <%= image_tag url_for(category.image), alt: category.name, style: "height:220px;object-fit:cover;width:100%;" %>
+                  <%= image_tag url_for(category.image.variant(:thumb)), alt: category.name, style: "height:220px;object-fit:cover;width:100%;" %>
                 <% else %>
                   <div class="d-flex align-items-center justify-content-center" style="height:220px;background:#f4f4f4;">
                     <i class="icon-category" style="font-size:5rem;color:#08c;"></i>

@@ -8,7 +8,9 @@ class Collection < ApplicationRecord
   has_many :collection_products, -> { order(:position) }, dependent: :destroy
   has_many :products, through: :collection_products
 
-  has_one_attached :cover
+  has_one_attached :cover do |attachable|
+    attachable.variant :thumb, resize_to_limit: [ 900, 560 ], saver: { quality: 78, strip: true }, preprocessed: true
+  end
 
   validates :name, presence: true
 

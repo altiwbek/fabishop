@@ -21,7 +21,7 @@ class ProductsController < StorefrontController
   private
 
   def filtered_scope
-    scope = Product.published.includes(:category, :brand, images_attachments: :blob)
+    scope = Product.published.includes(:category, :brand).with_attached_images
     scope = scope.where(category_id: params[:category_id]) if params[:category_id].present?
     scope = scope.where(brand_id: params[:brand_id]) if params[:brand_id].present?
     scope = scope.on_sale if params[:on_sale].present?

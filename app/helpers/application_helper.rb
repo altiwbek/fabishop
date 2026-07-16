@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def slide_image_url(slide, fallback: "/molla/assets/images/demos/demo-3/slider/slide-1.jpg")
-    slide.image.attached? ? url_for(slide.image) : fallback
+    slide.image.attached? ? url_for(slide.image.variant(:hero)) : fallback
   end
 
   # Human-readable native names for the languages we support, keyed by locale.
