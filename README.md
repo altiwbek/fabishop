@@ -1,4 +1,4 @@
-# MegaShop
+# Fabishop
 
 A Rails 8 e-commerce application: a customer-facing storefront plus an admin
 CRM for managing the catalog, orders, and content. The UI is built on the

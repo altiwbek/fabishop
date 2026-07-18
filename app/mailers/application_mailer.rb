@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "MegaShop Store <orders@megashop.store>"
+  default from: "Fabishop Store <orders@Fabishop.store>"
   layout "mailer"
 end

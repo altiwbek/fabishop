@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= content_for(:title).presence || "Sign in · MegaShop Admin" %></title>
+  <title><%= content_for(:title).presence || "Sign in · Fabishop Admin" %></title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
   <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
@@ -14,7 +14,7 @@
   <div class="min-h-full flex items-center justify-center p-4">
     <div class="w-full max-w-md">
       <div class="text-center mb-6">
-        <a href="<%= root_path %>" class="text-3xl font-bold text-white">MegaShop<span class="text-indigo-400">.</span></a>
+        <a href="<%= root_path %>" class="text-3xl font-bold text-white">Fabishop<span class="text-indigo-400">.</span></a>
         <p class="text-gray-400 mt-1 text-sm">Store management console</p>
       </div>
 
@@ -30,7 +30,7 @@
         <%= yield %>
       </div>
 
-      <p class="text-center text-gray-500 text-xs mt-6">© <%= Date.current.year %> MegaShop Store</p>
+      <p class="text-center text-gray-500 text-xs mt-6">© <%= Date.current.year %> Fabishop Store</p>
     </div>
   </div>
 </body>
