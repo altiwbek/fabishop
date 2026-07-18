@@ -20,7 +20,7 @@ default: &default
   max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: <%= ENV.fetch("FABISHOP_DATABASE_HOST", "localhost") %>
   username: <%= ENV.fetch("FABISHOP_DATABASE_USERNAME", "yourname") %>
-  password: <%= ENV.fetch("FABISHOP_DATABASE_PASSWORD", "yourpassword") %>
+  password: <%= ENV.fetch("FABISHOP_DATABASE_PASSWORD", "password123456") %>
 
 
 development:
@@ -91,9 +91,6 @@ production:
   primary: &primary_production
     <<: *default
     database: fabishop_production
-    host: fabishop-db
-    username: fabishop
-    password: password123456
   cache:
     <<: *primary_production
     database: fabishop_production_cache
