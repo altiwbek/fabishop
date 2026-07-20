@@ -23,9 +23,9 @@
 
     <div class="product-action product-action-dark">
       <% if product.in_stock? %>
-        <%= button_to cart_add_path(product.id), method: :post,
+        <%= link_to cart_add_path(product.id), method: :post,
               class: "btn-product btn-cart", title: "Add to cart",
-              form: { data: { turbo: true }, class: "d-inline" } do %>
+              form: { turbo_method: :delete } do %>
           <span>add to cart</span>
         <% end %>
       <% else %>
