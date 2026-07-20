@@ -3,9 +3,9 @@
 # Attaches real images from the Molla template living in public/molla.
 #
 # Translatable attributes (Mobility :container backend) are seeded in all three
-# supported locales: English (en), Russian (ru) and Kyrgyz (ky). Rich-text
-# bodies (product descriptions, post bodies) are not Mobility-translated in this
-# app, so they stay in English.
+# supported locales: English (en), Russian (ru) and Kyrgyz (ky). Product
+# descriptions are per-locale ActionText bodies (description_en/ru/ky); other
+# rich-text bodies (post bodies) stay in English.
 # ---------------------------------------------------------------------------
 
 IMG_ROOT = Rails.root.join("public", "molla", "assets", "images")
@@ -252,7 +252,8 @@ products = product_specs.each_with_index.map do |spec, i|
      en: "#{spec[:brand]} · #{ctr[:en]}",
      ru: "#{spec[:brand]} · #{ctr[:ru]}",
      ky: "#{spec[:brand]} · #{ctr[:ky]}")
-  p.description = sample_desc
+  # Rich-text description is per-locale now; seed English and let ru/ky fall back.
+  p.description_en = sample_desc
   p.save!
 
   main_indices = Array(spec[:imgs])

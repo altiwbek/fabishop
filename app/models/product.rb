@@ -12,7 +12,12 @@ class Product < ApplicationRecord
   has_many :collections, through: :collection_products
   has_many :reviews, dependent: :destroy
 
-  has_rich_text :description
+  # Rich-text description, one body per supported locale (description_en /
+  # description_ru / description_ky). Reading `description` returns the current
+  # locale's body, falling back to the default locale when it's blank — mirroring
+  # the Mobility fallbacks used for the plain translated attributes.
+  I18n.available_locales.each { |loc| has_rich_text :"description_#{loc}" }
+
   has_many_attached :images do |attachable|
     # Grid/card thumbnail and the larger gallery image on the product page.
     # Serving these instead of the full-size originals is the single biggest
@@ -62,6 +67,15 @@ class Product < ApplicationRecord
 
   def in_stock?  = stock.positive?
   def low_stock?(threshold = 5) = stock.positive? && stock <= threshold
+
+  # Localized rich-text description for the active locale, falling back to the
+  # default locale's body when the current one is empty.
+  def description
+    loc = I18n.available_locales.include?(I18n.locale) ? I18n.locale : I18n.default_locale
+    localized = public_send(:"description_#{loc}")
+    return localized if localized.body.present?
+    public_send(:"description_#{I18n.default_locale}")
+  end
 
   def primary_image
     images.attached? ? images.first : nil

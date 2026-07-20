@@ -86,7 +86,8 @@ class Admin::ProductsController < Admin::BaseController
       *translated_keys(:name, :subtitle),
       :sku, :price, :compare_at_price, :stock,
       :category_id, :brand_id, :published, :featured, :new_arrival, :on_sale,
-      :description, collection_ids: []
+      *I18n.available_locales.map { |loc| :"description_#{loc}" },
+      collection_ids: []
     )
   end
 

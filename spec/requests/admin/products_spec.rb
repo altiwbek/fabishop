@@ -74,6 +74,18 @@ RSpec.describe "Admin::Products", type: :request do
         expect(response).to redirect_to(admin_product_path(product.reload))
         expect(product.reload.name).to eq("Renamed")
       end
+
+      it "stores a rich-text description per locale" do
+        patch admin_product_path(product), params: {
+          product: { description_en: "English body", description_ru: "Русское тело" }
+        }
+
+        product.reload
+        expect(product.description_en.to_plain_text).to eq("English body")
+        I18n.with_locale(:ru) { expect(product.description.to_plain_text).to eq("Русское тело") }
+        # Kyrgyz is blank, so it falls back to the English body.
+        I18n.with_locale(:ky) { expect(product.description.to_plain_text).to eq("English body") }
+      end
     end
 
     describe "DELETE /admin/products/:id" do

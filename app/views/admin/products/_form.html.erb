@@ -7,11 +7,15 @@
       <div class="bg-white rounded-xl shadow-sm p-6 space-y-4">
         <%= render "admin/shared/translated_field", form: f, attribute: :name, label: t("admin.form.name") %>
         <%= render "admin/shared/translated_field", form: f, attribute: :subtitle, label: t("admin.form.short_subtitle") %>
-        <div>
-          <%= f.label :description, class: label_classes %>
-          <div class="trix-wrapper border border-gray-300 rounded-lg overflow-hidden">
-            <%= f.rich_text_area :description %>
-          </div>
+        <div class="space-y-4">
+          <% available_locales.each do |loc| %>
+            <div>
+              <%= f.label :"description_#{loc}", "#{t("admin.form.description")} (#{locale_short(loc)})", class: label_classes %>
+              <div class="trix-wrapper border border-gray-300 rounded-lg overflow-hidden">
+                <%= f.rich_text_area :"description_#{loc}" %>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
 
