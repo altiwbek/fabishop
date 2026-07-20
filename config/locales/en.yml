@@ -3,6 +3,7 @@ en:
 
   nav:
     home: "Home"
+    menu: "Menu"
     categories: "Categories"
     collections: "Collections"
     products: "Products"

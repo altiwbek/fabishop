@@ -1,0 +1,86 @@
+<div class="mobile-menu-overlay"></div><!-- End .mobile-menu-overlay -->
+
+<div class="mobile-menu-container">
+  <div class="mobile-menu-wrapper">
+    <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+    <%= form_with url: search_path, method: :get, class: "mobile-search", data: { turbo: false } do %>
+      <label for="mobile-search" class="sr-only"><%= t("header.search") %></label>
+      <%= search_field_tag :q, params[:q], class: "form-control", id: "mobile-search",
+            placeholder: t("header.search_placeholder") %>
+      <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+    <% end %>
+
+    <ul class="nav nav-pills-mobile nav-border-anim" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="mobile-menu-link" data-toggle="tab" href="#mobile-menu-tab" role="tab" aria-controls="mobile-menu-tab" aria-selected="true"><%= t("nav.menu") %></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="mobile-cats-link" data-toggle="tab" href="#mobile-cats-tab" role="tab" aria-controls="mobile-cats-tab" aria-selected="false"><%= t("nav.categories") %></a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel" aria-labelledby="mobile-menu-link">
+        <nav class="mobile-nav">
+          <ul class="mobile-menu">
+            <li class="<%= 'active' if current_page?(root_path) %>">
+              <%= link_to t("nav.home"), root_path %>
+            </li>
+
+            <li>
+              <%= link_to t("nav.categories"), categories_path %>
+              <% if nav_categories.any? %>
+                <ul>
+                  <% nav_categories.each do |category| %>
+                    <li>
+                      <%= link_to category.name, category_path(category) %>
+                      <% if category.children.any? %>
+                        <ul>
+                          <% category.children.ordered.each do |child| %>
+                            <li><%= link_to child.name, category_path(child) %></li>
+                          <% end %>
+                        </ul>
+                      <% end %>
+                    </li>
+                  <% end %>
+                </ul>
+              <% end %>
+            </li>
+
+            <li>
+              <%= link_to t("nav.collections"), collections_path %>
+              <% if nav_collections.any? %>
+                <ul>
+                  <% nav_collections.each do |collection| %>
+                    <li><%= link_to collection.name, collection_path(collection) %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+            </li>
+
+            <li><%= link_to t("nav.products"), products_path %></li>
+            <li><%= link_to t("nav.blog"), posts_path %></li>
+            <li><%= link_to t("header.wishlist"), wishlist_path %></li>
+            <li><%= link_to t("header.track_order"), track_path %></li>
+            <% if authenticated? %>
+              <li><%= link_to t("header.admin_dashboard"), admin_root_path %></li>
+            <% else %>
+              <li><%= link_to t("header.staff_sign_in"), new_session_path %></li>
+            <% end %>
+          </ul>
+        </nav><!-- End .mobile-nav -->
+      </div><!-- End .tab-pane -->
+
+      <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
+        <nav class="mobile-cats-nav">
+          <ul class="mobile-cats-menu">
+            <% nav_categories.each do |category| %>
+              <li><%= link_to category.name, category_path(category) %></li>
+            <% end %>
+          </ul><!-- End .mobile-cats-menu -->
+        </nav><!-- End .mobile-cats-nav -->
+      </div><!-- End .tab-pane -->
+    </div><!-- End .tab-content -->
+  </div><!-- End .mobile-menu-wrapper -->
+</div><!-- End .mobile-menu-container -->

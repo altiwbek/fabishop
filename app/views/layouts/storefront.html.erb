@@ -34,6 +34,11 @@
     <%= render "layouts/storefront/footer" %>
   </div>
 
+  <%# Mobile menu must live OUTSIDE .page-wrapper: when open, .page-wrapper gets
+      a transform, which would otherwise become the containing block for this
+      position:fixed panel and shift it off-screen. %>
+  <%= render "layouts/storefront/mobile_menu" %>
+
   <button id="scroll-top" title="Back to top"><i class="icon-arrow-up"></i></button>
 
   <!-- Molla template scripts (jQuery based) -->

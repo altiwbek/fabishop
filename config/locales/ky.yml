@@ -3,6 +3,7 @@ ky:
 
   nav:
     home: "Башкы бет"
+    menu: "Меню"
     categories: "Категориялар"
     collections: "Коллекциялар"
     products: "Товарлар"
