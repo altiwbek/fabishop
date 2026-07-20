@@ -22,9 +22,10 @@
             <% @product.images.each do |img| %>
               <div id="product_image_<%= img.id %>" class="relative group">
                 <%= image_tag url_for(img), class: "w-full h-24 object-cover rounded-lg border border-gray-200" %>
-                <%= button_to admin_product_product_image_path(@product, img.id), method: :delete,
+
+                <%= link_to admin_product_product_image_path(@product, img.id), data: { turbo_method: :delete },
                       class: "absolute -top-2 -right-2 bg-red-600 text-white w-6 h-6 rounded-full grid place-items-center text-xs opacity-0 group-hover:opacity-100 transition",
-                      form: { data: { turbo: true } }, title: t("admin.form.remove") do %>
+                      title: t("admin.form.remove") do %>
                   <i class="las la-times"></i>
                 <% end %>
               </div>
