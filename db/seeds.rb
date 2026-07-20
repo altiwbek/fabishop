@@ -4,8 +4,8 @@
 #
 # Translatable attributes (Mobility :container backend) are seeded in all three
 # supported locales: English (en), Russian (ru) and Kyrgyz (ky). Product
-# descriptions are per-locale ActionText bodies (description_en/ru/ky); other
-# rich-text bodies (post bodies) stay in English.
+# descriptions are per-locale ActionText bodies (description_en/ru/ky) and are
+# seeded in all three; other rich-text bodies (post bodies) stay in English.
 # ---------------------------------------------------------------------------
 
 IMG_ROOT = Rails.root.join("public", "molla", "assets", "images")
@@ -221,7 +221,7 @@ product_specs = [
     cat: "Gaming", brand: "Samsung", price: 349.00, imgs: [ 4 ], flags: [] }
 ]
 
-sample_desc = <<~HTML
+sample_desc_en = <<~HTML
   <p>Experience premium quality and thoughtful design. This product combines cutting-edge
   technology with everyday practicality, so you get performance you can rely on.</p>
   <ul>
@@ -230,6 +230,30 @@ sample_desc = <<~HTML
     <li>Backed by a full manufacturer warranty</li>
   </ul>
   <p>Free shipping on orders over $99 and a 30-day hassle-free return policy.</p>
+HTML
+
+sample_desc_ru = <<~HTML
+  <p>Оцените премиальное качество и продуманный дизайн. Этот продукт сочетает передовые
+  технологии с повседневной практичностью, поэтому вы получаете производительность,
+  на которую можно положиться.</p>
+  <ul>
+    <li>Премиальная сборка из прочных материалов</li>
+    <li>Долгое время работы от батареи и быстрая зарядка</li>
+    <li>Полная гарантия производителя</li>
+  </ul>
+  <p>Бесплатная доставка при заказе от $99 и возврат в течение 30 дней без хлопот.</p>
+HTML
+
+sample_desc_ky = <<~HTML
+  <p>Жогорку сапатты жана ойлонулган дизайнды сезиңиз. Бул өнүм алдыңкы технологияларды
+  күнүмдүк ыңгайлуулук менен айкалыштырат, ошондуктан сиз ишеничтүү өндүрүмдүүлүккө
+  ээ болосуз.</p>
+  <ul>
+    <li>Бекем материалдардан жасалган жогорку сапаттагы конструкция</li>
+    <li>Батареянын узак иштеши жана тез кубатталышы</li>
+    <li>Өндүрүүчүнүн толук кепилдиги менен камсыздалган</li>
+  </ul>
+  <p>$99дан жогору заказдарга акысыз жеткирүү жана 30 күндүн ичинде оңой кайтаруу.</p>
 HTML
 
 products = product_specs.each_with_index.map do |spec, i|
@@ -252,8 +276,10 @@ products = product_specs.each_with_index.map do |spec, i|
      en: "#{spec[:brand]} · #{ctr[:en]}",
      ru: "#{spec[:brand]} · #{ctr[:ru]}",
      ky: "#{spec[:brand]} · #{ctr[:ky]}")
-  # Rich-text description is per-locale now; seed English and let ru/ky fall back.
-  p.description_en = sample_desc
+  # Rich-text description is seeded in all three supported locales.
+  p.description_en = sample_desc_en
+  p.description_ru = sample_desc_ru
+  p.description_ky = sample_desc_ky
   p.save!
 
   main_indices = Array(spec[:imgs])
