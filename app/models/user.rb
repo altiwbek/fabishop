@@ -10,6 +10,12 @@ class User < ApplicationRecord
 
   validates :name, presence: true
 
+  # Persisted UI language. Blank means "no explicit choice yet" — fall back to
+  # the browser/Accept-Language detection handled in ApplicationController.
+  validates :locale,
+    inclusion: { in: ->(_) { I18n.available_locales.map(&:to_s) } },
+    allow_blank: true
+
   def display_name
     name.presence || email_address.split("@").first
   end
