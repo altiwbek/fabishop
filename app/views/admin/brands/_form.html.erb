@@ -13,7 +13,7 @@
     </div>
     <div>
       <%= f.label :logo, class: label_classes %>
-      <% if @brand.logo.attached? %><%= image_tag url_for(@brand.logo), class: "w-24 h-24 object-contain mb-2" %><% end %>
+      <% if @brand.logo.attached? && @brand.logo.blob.persisted? %><%= image_tag url_for(@brand.logo), class: "w-24 h-24 object-contain mb-2" %><% end %>
       <%= f.file_field :logo, accept: "image/*", class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-700" %>
     </div>
   </div>

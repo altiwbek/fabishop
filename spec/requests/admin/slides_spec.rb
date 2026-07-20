@@ -53,6 +53,18 @@ RSpec.describe "Admin::Slides", type: :request do
         # swallowed.
         expect(response.body).to include("Create slide")
       end
+
+      it "re-renders without error when an image is attached but validation fails" do
+        image = fixture_file_upload("test_image.png", "image/png")
+
+        expect {
+          post admin_slides_path, params: { slide: { title: "", image: image } }
+        }.not_to change(Slide, :count)
+
+        # The unsaved blob has no signed_id; the form must not try to preview it.
+        expect(response).to have_http_status(422)
+        expect(response.body).to include("Create slide")
+      end
     end
 
     describe "PATCH /admin/slides/:id" do
