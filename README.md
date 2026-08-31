@@ -53,11 +53,11 @@ bin/rails db:prepare   # create + load schema + seed
 
 | Variable | Default |
 | --- | --- |
-| `ELECTRONICS_DATABASE_HOST` | `localhost` |
-| `ELECTRONICS_DATABASE_USERNAME` | `yourname` |
-| `ELECTRONICS_DATABASE_PASSWORD` | `yourpassword` |
+| `FABISHOP_DATABASE_HOST` | `localhost` |
+| `FABISHOP_DATABASE_USERNAME` | `yourname` |
+| `FABISHOP_DATABASE_PASSWORD` | `yourpassword` |
 
-The development database is `electronics_development`.
+The development database is `fabishop_development`.
 
 ### Seed data
 

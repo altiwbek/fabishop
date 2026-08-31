@@ -17,7 +17,7 @@
 
 <div class="page-content">
   <div class="container">
-    <p class="mb-3"><%= pagy_info(@pagy) rescue "#{@products.size} results" %> for
+    <p class="mb-3"><%= pagy_info(@pagy).html_safe rescue "#{@products.size} results" %> for
       <strong>“<%= @query %>”</strong></p>
 
     <% if @products.any? %>

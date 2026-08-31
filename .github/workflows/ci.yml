@@ -27,9 +27,9 @@ jobs:
     env:
       RAILS_ENV: test
       # Matches the ENV.fetch keys in config/database.yml
-      ELECTRONICS_DATABASE_HOST: localhost
-      ELECTRONICS_DATABASE_USERNAME: yourname
-      ELECTRONICS_DATABASE_PASSWORD: yourpassword
+      FABISHOP_DATABASE_HOST: localhost
+      FABISHOP_DATABASE_USERNAME: yourname
+      FABISHOP_DATABASE_PASSWORD: yourpassword
 
     steps:
       - name: Checkout code
